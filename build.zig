@@ -21,7 +21,7 @@ pub fn build(b: *std.Build) void {
     // Standard optimization options allow the person running `zig build` to select
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
-    const optimize = b.standardOptimizeOption(.{});
+    const optimize = std.builtin.OptimizeMode.ReleaseSmall;
 
     // We will also create a module for our other entry point, 'main.zig'.
     const exe_mod = b.createModule(.{
@@ -44,8 +44,8 @@ pub fn build(b: *std.Build) void {
     exe.link_gc_sections = true;
     exe.link_data_sections = true;
     exe.link_function_sections = true;
-    exe.addAssemblyFile(b.path("startup_stm32f103xb.s"));
-    exe.setLinkerScript(b.path("STM32F103C8Tx_FLASH.ld"));
+    exe.addAssemblyFile(b.path("src/build/startup_stm32f103xb.s"));
+    exe.setLinkerScript(b.path("src/build/STM32F103C8Tx_FLASH.ld"));
     exe.entry = .{ .symbol_name = "Reset_Handler" };
     // Produce .bin file from .elf
     const bin = b.addObjCopy(exe.getEmittedBin(), .{
@@ -73,6 +73,16 @@ pub fn build(b: *std.Build) void {
     });
     run_qemu.step.dependOn(&copy_bin.step);
     b.step("qemu", "run in qemu").dependOn(&run_qemu.step);
+
+    const run_flash = b.addSystemCommand(&.{
+        "st-flash",
+        "--reset",
+        "write",
+        b.getInstallPath(copy_bin.dir, copy_bin.dest_rel_path),
+        "0x08000000",
+    });
+    run_flash.step.dependOn(&copy_bin.step);
+    b.step("flash", "Flash to microcontroller").dependOn(&run_flash.step);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default
