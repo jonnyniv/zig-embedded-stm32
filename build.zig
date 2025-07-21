@@ -16,6 +16,9 @@ pub fn build(b: *std.Build) void {
         .os_tag = .freestanding,
         .abi = .eabihf,
         .cpu_model = .{ .explicit = &std.Target.arm.cpu.cortex_m3 },
+        .cpu_features_add = std.Target.arm.featureSet(&[_]std.Target.arm.Feature{
+            .fp_armv8d16sp
+        }),
     });
 
     // Standard optimization options allow the person running `zig build` to select
