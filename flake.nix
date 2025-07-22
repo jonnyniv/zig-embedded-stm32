@@ -25,7 +25,7 @@
             env = zig2nix.zig-env.${system} {};
           in
             env.mkShell {
-              nativeBuildInputs = [syspkgs.${system}.zls];
+              nativeBuildInputs = with syspkgs.${system}; [zls screen];
             }
         )
         zig2nix.devShells.${system}
