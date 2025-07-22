@@ -4,7 +4,6 @@ const std = @import("std");
 // declaratively construct a build graph that will be executed by an external
 // runner.
 pub fn build(b: *std.Build) void {
-    const display_option = b.option(bool, "display", "graphics display for qemu") orelse false;
 
     // Standard target options allows the person running `zig build` to choose
     // what target to build for. Here we do not override the defaults, which
@@ -24,7 +23,7 @@ pub fn build(b: *std.Build) void {
     // Standard optimization options allow the person running `zig build` to select
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
-    const optimize = std.builtin.OptimizeMode.ReleaseSmall;
+    const optimize = std.builtin.OptimizeMode.ReleaseSafe;
 
     // We will also create a module for our other entry point, 'main.zig'.
     const exe_mod = b.createModule(.{
@@ -61,16 +60,14 @@ pub fn build(b: *std.Build) void {
 
     const run_qemu = b.addSystemCommand(&.{"qemu-system-arm"});
     run_qemu.addArgs(&.{
-        "--trace",
-        "translate_block",
-        "--trace",
-        "visit_*",
         "-M",
         "stm32vldiscovery",
+        "-trace",
+        "stm32l4x5_usart_*",
         "-serial",
         "stdio",
         "-display",
-        if (display_option) "gtk" else "none",
+        "none",
         "-kernel",
         b.getInstallPath(copy_bin.dir, copy_bin.dest_rel_path),
     });
