@@ -15,9 +15,7 @@ pub fn build(b: *std.Build) void {
         .os_tag = .freestanding,
         .abi = .eabihf,
         .cpu_model = .{ .explicit = &std.Target.arm.cpu.cortex_m3 },
-        .cpu_features_add = std.Target.arm.featureSet(&[_]std.Target.arm.Feature{
-            .fp_armv8d16sp
-        }),
+        .cpu_features_add = std.Target.arm.featureSet(&[_]std.Target.arm.Feature{.fp_armv8d16sp}),
     });
 
     // Standard optimization options allow the person running `zig build` to select
@@ -49,6 +47,10 @@ pub fn build(b: *std.Build) void {
     exe.addAssemblyFile(b.path("src/build/startup_stm32f103xb.s"));
     exe.setLinkerScript(b.path("src/build/STM32F103C8Tx_FLASH.ld"));
     exe.entry = .{ .symbol_name = "Reset_Handler" };
+    const assembly = b.addInstallFile(exe.getEmittedAsm(), "source.s");
+    assembly.step.dependOn(&exe.step);
+    b.default_step.dependOn(&assembly.step);
+
     // Produce .bin file from .elf
     const bin = b.addObjCopy(exe.getEmittedBin(), .{
         .format = .bin,
