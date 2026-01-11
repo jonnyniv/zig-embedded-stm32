@@ -1,15 +1,18 @@
 const std = @import("std");
 const regs = @import("registers.zig");
 
+const Writer = std.Io.Writer;
+
 const clk_freq = 8_000_000;
 const timer_prescalar = 8;
 const timer_freq = @divFloor(clk_freq, timer_prescalar);
-var serial_initialised = false;
-
 pub const std_options = std.Options{
     .log_level = .debug,
     .logFn = log,
 };
+
+// Global State
+var serial_initialised = false;
 
 fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
     if (!cond) {
@@ -20,8 +23,12 @@ fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
 fn log(comptime message_level: std.log.Level, comptime scope: @TypeOf(.enum_literal), comptime format: []const u8, args: anytype) void {
     const level_txt = comptime message_level.asText();
     const prefix2 = if (scope == .default) ": " else "(" ++ @tagName(scope) ++ "): ";
+    var buffer: [512]u8 = undefined;
+    const uart = UARTWriter(.USART1).init(&buffer);
+    var uart_writer = uart.writer;
     if (serial_initialised) {
-        UART1.writer().print(level_txt ++ prefix2 ++ format ++ "\r\n", args) catch return;
+        uart_writer.print(level_txt ++ prefix2 ++ format ++ "\r\n", args) catch return;
+        uart_writer.flush() catch return;
     }
 }
 
@@ -62,6 +69,11 @@ fn gpio_init() void {
     regs.GPIOC.CRH.modify(.{ .MODE13 = 0b10, .CNF13 = 0b01 });
     regs.GPIOA.CRL.modify(.{ .MODE7 = 0b10, .CNF7 = 0b00 });
 }
+
+const UARTOptions = struct {
+    baud: usize,
+    pin_enable: bool,
+};
 
 fn usart_init(baud: usize) void {
     // Enable Clocks
@@ -161,15 +173,15 @@ const Note = struct {
 };
 
 const Duration = packed struct {
-    fracion: u8 = 0,
     mantissa: u8 = 0,
+    fraction: u8 = 0,
 
     /// Convert duration to microseconds
     pub fn to_us(self: Duration, bpm: usize) usize {
         const us_per_minute = 1_000_000 * 60;
         const us_per_beat = @divFloor(us_per_minute, bpm);
         const mantissa_us = self.mantissa * us_per_beat;
-        const frac_us = (us_per_beat >> 8) * self.fracion;
+        const frac_us = (us_per_beat >> 8) * self.fraction;
         return mantissa_us + frac_us;
     }
 };
@@ -182,44 +194,78 @@ const SongItem = struct {
 
 const Song = struct { bpm: usize, sequence: []SongItem };
 
-const UARTError = error{
-    NotEnabled,
+const UART = enum {
+    USART1,
+    USART2,
 };
 
-fn uart_send_char(char: u8) void {
-    while (regs.USART1.SR.read().TXE == 0) {}
+fn UARTWriter(uart: UART) type {
+    return struct {
+        const Self = @This();
+        const Regs: type = switch (uart) {
+            .USART1 => regs.USART1,
+            .USART2 => regs.USART2,
+        };
 
-    regs.USART1.DR.write(.{ .DR = char });
+        writer: Writer,
+
+        pub fn init(buffer: []u8) Self {
+            return .{
+                .writer = .{
+                    .vtable = &.{
+                        .drain = Self.uart_drain,
+                    },
+                    .buffer = buffer,
+                },
+            };
+        }
+
+        const UARTError = error{
+            NotEnabled,
+        };
+
+        fn uart_send_char(char: u8) void {
+            while (Self.Regs.SR.read().TXE == 0) {}
+
+            Self.Regs.DR.write(.{ .DR = char });
+        }
+
+        fn uart_send_msg(msg: []const u8) UARTError!usize {
+            Self.Regs.CR1.modify(.{ .TE = 1 });
+            defer Self.Regs.CR1.modify(.{ .TE = 0 });
+
+            const CR1 = Self.Regs.CR1.read();
+            if (CR1.UE != 1 and CR1.TE != 1) {
+                return UARTError.NotEnabled;
+            }
+
+            var written_bytes: usize = 0;
+            for (msg) |char| {
+                uart_send_char(char);
+                written_bytes += 1;
+            }
+            while (Self.Regs.SR.read().TC == 0) {}
+            return written_bytes;
+        }
+
+        fn uart_drain(writer: *Writer, data: []const []const u8, splat: usize) Writer.Error!usize {
+            const buffered = writer.buffered();
+            var total_bytes: usize = 0;
+            if (buffered.len > 0) {
+                total_bytes += uart_send_msg(buffered) catch return Writer.Error.WriteFailed;
+                _ = writer.consumeAll();
+            }
+
+            for (data) |data_entry| {
+                total_bytes += uart_send_msg(data_entry) catch return Writer.Error.WriteFailed;
+            }
+            for (0..splat) |_| {
+                total_bytes += uart_send_msg(data[data.len - 1]) catch return Writer.Error.WriteFailed;
+            }
+            return total_bytes;
+        }
+    };
 }
-
-fn uart_send_msg(msg: []const u8) UARTError!usize {
-    regs.USART1.CR1.modify(.{ .TE = 1 });
-    defer regs.USART1.CR1.modify(.{ .TE = 0 });
-
-    const CR1 = regs.USART1.CR1.read();
-    if (CR1.UE != 1 and CR1.TE != 1) {
-        return UARTError.NotEnabled;
-    }
-
-    var written_bytes: usize = 0;
-    for (msg) |char| {
-        uart_send_char(char);
-        written_bytes += 1;
-    }
-    while (regs.USART1.SR.read().TC == 0) {}
-    return written_bytes;
-}
-
-const UART1 = struct {
-    const UART1Writer = std.io.Writer(UART1, UARTError, write);
-    pub fn writer() UART1Writer {
-        return UART1Writer{ .context = UART1{} };
-    }
-    pub fn write(self: UART1, msg: []const u8) UARTError!usize {
-        _ = self;
-        return uart_send_msg(msg);
-    }
-};
 
 fn init() void {
     // Configure System clock
@@ -242,27 +288,59 @@ export fn main() noreturn {
     init();
     clear_led();
     delay_ms(1000);
-    const c_major = [_]SongItem{
-        .{ .note = .{ .note = .A, .octave = 0 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .B, .octave = 0 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .C, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .D, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .E, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .F, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .Gs, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = .{ .note = .A, .octave = 1 }, .duration = .{ .mantissa = 1 } },
-        .{ .note = null, .duration = .{ .mantissa = 1 } },
-    };
+    //const c_major = [_]SongItem{
+    //    .{ .note = .{ .note = .A, .octave = -1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .B, .octave = -1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .C, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .D, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .E, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .F, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .Gs, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .A, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .B, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .C, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .D, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .E, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .F, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .Gs, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .A, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .B, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .C, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .D, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .E, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .F, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .Gs, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = .{ .note = .A, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
+    //    .{ .note = null, .duration = .{ .mantissa = 1 } },
+    //};
+    const scale = [_]Scale{ .A, .B, .C, .D, .E, .F, .G };
 
     const bpm = 100;
+    const interval = Duration{ .fraction = 0x60 };
+    const octaves = 3;
+
     while (true) {
-        for (c_major) |item| {
-            if (item.note) |note| {
-                note.beep();
-            } else {
-                beep_timer(0);
+        delay_ms(200);
+        var octave: i5 = -2;
+        while (true) octave_loop: {
+            for (scale) |scale_note| {
+                if (scale_note == .C) {
+                    octave += 1;
+                }
+                if (scale_note == scale[0] and octave > octaves) {
+                    octave = -2;
+                    break :octave_loop;
+                }
+                const item = SongItem{ .duration = interval, .note = .{ .note = scale_note, .octave = octave } };
+
+                if (item.note) |note| {
+                    std.log.info("Playing note {t} octave {d}", .{ note.note, note.octave });
+                    note.beep();
+                } else {
+                    beep_timer(0);
+                }
+                delay_ms(item.duration.to_us(bpm) / 1000);
             }
-            delay_ms(item.duration.to_us(bpm) / 1000);
         }
     }
 }
