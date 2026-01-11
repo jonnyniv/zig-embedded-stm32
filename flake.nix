@@ -1,34 +1,37 @@
 {
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-  inputs.zig2nix = {
-    url = "github:Cloudef/zig2nix";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.zig = {
+    url = "github:mitchellh/zig-overlay";
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    nixpkgs,
-    zig2nix,
-    ...
-  }: let
-    supportedSystems = ["x86_64-linux"];
-    forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-    syspkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
-  in {
-    formatter = forAllSystems (
-      system:
-        syspkgs.${system}.alejandra
-    );
-    devShells = forAllSystems (
-      system:
-        builtins.mapAttrs (
-          shell-name: _: let
-            env = zig2nix.zig-env.${system} {};
-          in
-            env.mkShell {
-              nativeBuildInputs = with syspkgs.${system}; [zls screen];
-            }
-        )
-        zig2nix.devShells.${system}
-    );
-  };
+  outputs =
+    {
+      nixpkgs,
+      zig,
+      ...
+    }:
+    let
+      supportedSystems = [ "x86_64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+      syspkgs = forAllSystems (system: nixpkgs.legacyPackages.${system});
+    in
+    {
+      formatter = forAllSystems (system: syspkgs.${system}.nixfmt-tree);
+      devShell = forAllSystems (
+        system:
+        let
+          pkgs = syspkgs.${system};
+        in
+        pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [
+            picocom
+            renode
+            zls
+            gcc-arm-embedded
+            zig.outputs.packages.${system}.default
+          ];
+        }
+      );
+    };
 }
