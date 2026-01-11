@@ -1,0 +1,16 @@
+using sysbus
+
+mach create
+#machine LoadPlatformDescription @platforms/cpus/stm32f103.repl
+machine LoadPlatformDescription $ORIGIN/stm32f103.repl
+emulation CreateUartPtyTerminal "term" "/tmp/uart"
+connector Connect usart1 term
+
+$bin?=@zig-out/bin/zig_embedded.elf
+
+macro reset
+"""
+    sysbus LoadELF $bin
+"""
+
+runMacro $reset
