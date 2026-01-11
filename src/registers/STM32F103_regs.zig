@@ -77,7 +77,7 @@ pub const cpu = struct {
 pub const FSMC = struct {
     const base_address = 0xa0000000;
     /// BCR1
-    const BCR1_val = packed struct {
+    pub const BCR1_val = packed struct {
         /// MBKEN [0:0]
         /// MBKEN
         MBKEN: u1 = 0,
@@ -131,7 +131,7 @@ pub const FSMC = struct {
     pub const BCR1 = Register(BCR1_val).init(base_address + 0x0);
 
     /// BTR1
-    const BTR1_val = packed struct {
+    pub const BTR1_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -160,7 +160,7 @@ pub const FSMC = struct {
     pub const BTR1 = Register(BTR1_val).init(base_address + 0x4);
 
     /// BCR2
-    const BCR2_val = packed struct {
+    pub const BCR2_val = packed struct {
         /// MBKEN [0:0]
         /// MBKEN
         MBKEN: u1 = 0,
@@ -215,7 +215,7 @@ pub const FSMC = struct {
     pub const BCR2 = Register(BCR2_val).init(base_address + 0x8);
 
     /// BTR2
-    const BTR2_val = packed struct {
+    pub const BTR2_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -244,7 +244,7 @@ pub const FSMC = struct {
     pub const BTR2 = Register(BTR2_val).init(base_address + 0xc);
 
     /// BCR3
-    const BCR3_val = packed struct {
+    pub const BCR3_val = packed struct {
         /// MBKEN [0:0]
         /// MBKEN
         MBKEN: u1 = 0,
@@ -299,7 +299,7 @@ pub const FSMC = struct {
     pub const BCR3 = Register(BCR3_val).init(base_address + 0x10);
 
     /// BTR3
-    const BTR3_val = packed struct {
+    pub const BTR3_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -328,7 +328,7 @@ pub const FSMC = struct {
     pub const BTR3 = Register(BTR3_val).init(base_address + 0x14);
 
     /// BCR4
-    const BCR4_val = packed struct {
+    pub const BCR4_val = packed struct {
         /// MBKEN [0:0]
         /// MBKEN
         MBKEN: u1 = 0,
@@ -383,7 +383,7 @@ pub const FSMC = struct {
     pub const BCR4 = Register(BCR4_val).init(base_address + 0x18);
 
     /// BTR4
-    const BTR4_val = packed struct {
+    pub const BTR4_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -412,7 +412,7 @@ pub const FSMC = struct {
     pub const BTR4 = Register(BTR4_val).init(base_address + 0x1c);
 
     /// PCR2
-    const PCR2_val = packed struct {
+    pub const PCR2_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// PWAITEN [1:1]
@@ -450,7 +450,7 @@ pub const FSMC = struct {
     pub const PCR2 = Register(PCR2_val).init(base_address + 0x60);
 
     /// SR2
-    const SR2_val = packed struct {
+    pub const SR2_val = packed struct {
         /// IRS [0:0]
         /// IRS
         IRS: u1 = 0,
@@ -482,7 +482,7 @@ pub const FSMC = struct {
     pub const SR2 = Register(SR2_val).init(base_address + 0x64);
 
     /// PMEM2
-    const PMEM2_val = packed struct {
+    pub const PMEM2_val = packed struct {
         /// MEMSETx [0:7]
         /// MEMSETx
         MEMSETx: u8 = 252,
@@ -500,7 +500,7 @@ pub const FSMC = struct {
     pub const PMEM2 = Register(PMEM2_val).init(base_address + 0x68);
 
     /// PATT2
-    const PATT2_val = packed struct {
+    pub const PATT2_val = packed struct {
         /// ATTSETx [0:7]
         /// Attribute memory x setup
         ATTSETx: u8 = 252,
@@ -518,7 +518,7 @@ pub const FSMC = struct {
     pub const PATT2 = Register(PATT2_val).init(base_address + 0x6c);
 
     /// ECCR2
-    const ECCR2_val = packed struct {
+    pub const ECCR2_val = packed struct {
         /// ECCx [0:31]
         /// ECC result
         ECCx: u32 = 0,
@@ -527,7 +527,7 @@ pub const FSMC = struct {
     pub const ECCR2 = Register(ECCR2_val).init(base_address + 0x74);
 
     /// PCR3
-    const PCR3_val = packed struct {
+    pub const PCR3_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// PWAITEN [1:1]
@@ -565,7 +565,7 @@ pub const FSMC = struct {
     pub const PCR3 = Register(PCR3_val).init(base_address + 0x80);
 
     /// SR3
-    const SR3_val = packed struct {
+    pub const SR3_val = packed struct {
         /// IRS [0:0]
         /// IRS
         IRS: u1 = 0,
@@ -597,7 +597,7 @@ pub const FSMC = struct {
     pub const SR3 = Register(SR3_val).init(base_address + 0x84);
 
     /// PMEM3
-    const PMEM3_val = packed struct {
+    pub const PMEM3_val = packed struct {
         /// MEMSETx [0:7]
         /// MEMSETx
         MEMSETx: u8 = 252,
@@ -615,7 +615,7 @@ pub const FSMC = struct {
     pub const PMEM3 = Register(PMEM3_val).init(base_address + 0x88);
 
     /// PATT3
-    const PATT3_val = packed struct {
+    pub const PATT3_val = packed struct {
         /// ATTSETx [0:7]
         /// ATTSETx
         ATTSETx: u8 = 252,
@@ -633,7 +633,7 @@ pub const FSMC = struct {
     pub const PATT3 = Register(PATT3_val).init(base_address + 0x8c);
 
     /// ECCR3
-    const ECCR3_val = packed struct {
+    pub const ECCR3_val = packed struct {
         /// ECCx [0:31]
         /// ECCx
         ECCx: u32 = 0,
@@ -642,7 +642,7 @@ pub const FSMC = struct {
     pub const ECCR3 = Register(ECCR3_val).init(base_address + 0x94);
 
     /// PCR4
-    const PCR4_val = packed struct {
+    pub const PCR4_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// PWAITEN [1:1]
@@ -680,7 +680,7 @@ pub const FSMC = struct {
     pub const PCR4 = Register(PCR4_val).init(base_address + 0xa0);
 
     /// SR4
-    const SR4_val = packed struct {
+    pub const SR4_val = packed struct {
         /// IRS [0:0]
         /// IRS
         IRS: u1 = 0,
@@ -712,7 +712,7 @@ pub const FSMC = struct {
     pub const SR4 = Register(SR4_val).init(base_address + 0xa4);
 
     /// PMEM4
-    const PMEM4_val = packed struct {
+    pub const PMEM4_val = packed struct {
         /// MEMSETx [0:7]
         /// MEMSETx
         MEMSETx: u8 = 252,
@@ -730,7 +730,7 @@ pub const FSMC = struct {
     pub const PMEM4 = Register(PMEM4_val).init(base_address + 0xa8);
 
     /// PATT4
-    const PATT4_val = packed struct {
+    pub const PATT4_val = packed struct {
         /// ATTSETx [0:7]
         /// ATTSETx
         ATTSETx: u8 = 252,
@@ -748,7 +748,7 @@ pub const FSMC = struct {
     pub const PATT4 = Register(PATT4_val).init(base_address + 0xac);
 
     /// PIO4
-    const PIO4_val = packed struct {
+    pub const PIO4_val = packed struct {
         /// IOSETx [0:7]
         /// IOSETx
         IOSETx: u8 = 252,
@@ -766,7 +766,7 @@ pub const FSMC = struct {
     pub const PIO4 = Register(PIO4_val).init(base_address + 0xb0);
 
     /// BWTR1
-    const BWTR1_val = packed struct {
+    pub const BWTR1_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -794,7 +794,7 @@ pub const FSMC = struct {
     pub const BWTR1 = Register(BWTR1_val).init(base_address + 0x104);
 
     /// BWTR2
-    const BWTR2_val = packed struct {
+    pub const BWTR2_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -822,7 +822,7 @@ pub const FSMC = struct {
     pub const BWTR2 = Register(BWTR2_val).init(base_address + 0x10c);
 
     /// BWTR3
-    const BWTR3_val = packed struct {
+    pub const BWTR3_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -850,7 +850,7 @@ pub const FSMC = struct {
     pub const BWTR3 = Register(BWTR3_val).init(base_address + 0x114);
 
     /// BWTR4
-    const BWTR4_val = packed struct {
+    pub const BWTR4_val = packed struct {
         /// ADDSET [0:3]
         /// ADDSET
         ADDSET: u4 = 15,
@@ -882,7 +882,7 @@ pub const FSMC = struct {
 pub const PWR = struct {
     const base_address = 0x40007000;
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// LPDS [0:0]
         /// Low Power Deep Sleep
         LPDS: u1 = 0,
@@ -913,7 +913,7 @@ pub const PWR = struct {
     pub const CR = Register(CR_val).init(base_address + 0x0);
 
     /// CSR
-    const CSR_val = packed struct {
+    pub const CSR_val = packed struct {
         /// WUF [0:0]
         /// Wake-Up Flag
         WUF: u1 = 0,
@@ -941,7 +941,7 @@ pub const PWR = struct {
 pub const RCC = struct {
     const base_address = 0x40021000;
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// HSION [0:0]
         /// Internal High Speed clock
         HSION: u1 = 1,
@@ -983,7 +983,7 @@ pub const RCC = struct {
     pub const CR = Register(CR_val).init(base_address + 0x0);
 
     /// CFGR
-    const CFGR_val = packed struct {
+    pub const CFGR_val = packed struct {
         /// SW [0:1]
         /// System clock Switch
         SW: u2 = 0,
@@ -1026,7 +1026,7 @@ pub const RCC = struct {
     pub const CFGR = Register(CFGR_val).init(base_address + 0x4);
 
     /// CIR
-    const CIR_val = packed struct {
+    pub const CIR_val = packed struct {
         /// LSIRDYF [0:0]
         /// LSI Ready Interrupt flag
         LSIRDYF: u1 = 0,
@@ -1091,7 +1091,7 @@ pub const RCC = struct {
     pub const CIR = Register(CIR_val).init(base_address + 0x8);
 
     /// APB2RSTR
-    const APB2RSTR_val = packed struct {
+    pub const APB2RSTR_val = packed struct {
         /// AFIORST [0:0]
         /// Alternate function I/O
         AFIORST: u1 = 0,
@@ -1158,7 +1158,7 @@ pub const RCC = struct {
     pub const APB2RSTR = Register(APB2RSTR_val).init(base_address + 0xc);
 
     /// APB1RSTR
-    const APB1RSTR_val = packed struct {
+    pub const APB1RSTR_val = packed struct {
         /// TIM2RST [0:0]
         /// Timer 2 reset
         TIM2RST: u1 = 0,
@@ -1245,7 +1245,7 @@ pub const RCC = struct {
     pub const APB1RSTR = Register(APB1RSTR_val).init(base_address + 0x10);
 
     /// AHBENR
-    const AHBENR_val = packed struct {
+    pub const AHBENR_val = packed struct {
         /// DMA1EN [0:0]
         /// DMA1 clock enable
         DMA1EN: u1 = 0,
@@ -1284,7 +1284,7 @@ pub const RCC = struct {
     pub const AHBENR = Register(AHBENR_val).init(base_address + 0x14);
 
     /// APB2ENR
-    const APB2ENR_val = packed struct {
+    pub const APB2ENR_val = packed struct {
         /// AFIOEN [0:0]
         /// Alternate function I/O clock
         AFIOEN: u1 = 0,
@@ -1351,7 +1351,7 @@ pub const RCC = struct {
     pub const APB2ENR = Register(APB2ENR_val).init(base_address + 0x18);
 
     /// APB1ENR
-    const APB1ENR_val = packed struct {
+    pub const APB1ENR_val = packed struct {
         /// TIM2EN [0:0]
         /// Timer 2 clock enable
         TIM2EN: u1 = 0,
@@ -1438,7 +1438,7 @@ pub const RCC = struct {
     pub const APB1ENR = Register(APB1ENR_val).init(base_address + 0x1c);
 
     /// BDCR
-    const BDCR_val = packed struct {
+    pub const BDCR_val = packed struct {
         /// LSEON [0:0]
         /// External Low Speed oscillator
         LSEON: u1 = 0,
@@ -1469,7 +1469,7 @@ pub const RCC = struct {
     pub const BDCR = Register(BDCR_val).init(base_address + 0x20);
 
     /// CSR
-    const CSR_val = packed struct {
+    pub const CSR_val = packed struct {
         /// LSION [0:0]
         /// Internal low speed oscillator
         LSION: u1 = 0,
@@ -1512,7 +1512,7 @@ pub const RCC = struct {
 pub const GPIOA = struct {
     const base_address = 0x40010800;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -1566,7 +1566,7 @@ pub const GPIOA = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -1620,7 +1620,7 @@ pub const GPIOA = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -1677,7 +1677,7 @@ pub const GPIOA = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -1734,7 +1734,7 @@ pub const GPIOA = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -1836,7 +1836,7 @@ pub const GPIOA = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -1893,7 +1893,7 @@ pub const GPIOA = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -1957,7 +1957,7 @@ pub const GPIOA = struct {
 pub const GPIOB = struct {
     const base_address = 0x40010c00;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -2011,7 +2011,7 @@ pub const GPIOB = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -2065,7 +2065,7 @@ pub const GPIOB = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -2122,7 +2122,7 @@ pub const GPIOB = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -2179,7 +2179,7 @@ pub const GPIOB = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -2281,7 +2281,7 @@ pub const GPIOB = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -2338,7 +2338,7 @@ pub const GPIOB = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -2402,7 +2402,7 @@ pub const GPIOB = struct {
 pub const GPIOC = struct {
     const base_address = 0x40011000;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -2456,7 +2456,7 @@ pub const GPIOC = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -2510,7 +2510,7 @@ pub const GPIOC = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -2567,7 +2567,7 @@ pub const GPIOC = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -2624,7 +2624,7 @@ pub const GPIOC = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -2726,7 +2726,7 @@ pub const GPIOC = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -2783,7 +2783,7 @@ pub const GPIOC = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -2847,7 +2847,7 @@ pub const GPIOC = struct {
 pub const GPIOD = struct {
     const base_address = 0x40011400;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -2901,7 +2901,7 @@ pub const GPIOD = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -2955,7 +2955,7 @@ pub const GPIOD = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -3012,7 +3012,7 @@ pub const GPIOD = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -3069,7 +3069,7 @@ pub const GPIOD = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -3171,7 +3171,7 @@ pub const GPIOD = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -3228,7 +3228,7 @@ pub const GPIOD = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -3292,7 +3292,7 @@ pub const GPIOD = struct {
 pub const GPIOE = struct {
     const base_address = 0x40011800;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -3346,7 +3346,7 @@ pub const GPIOE = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -3400,7 +3400,7 @@ pub const GPIOE = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -3457,7 +3457,7 @@ pub const GPIOE = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -3514,7 +3514,7 @@ pub const GPIOE = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -3616,7 +3616,7 @@ pub const GPIOE = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -3673,7 +3673,7 @@ pub const GPIOE = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -3737,7 +3737,7 @@ pub const GPIOE = struct {
 pub const GPIOF = struct {
     const base_address = 0x40011c00;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -3791,7 +3791,7 @@ pub const GPIOF = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -3845,7 +3845,7 @@ pub const GPIOF = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -3902,7 +3902,7 @@ pub const GPIOF = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -3959,7 +3959,7 @@ pub const GPIOF = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -4061,7 +4061,7 @@ pub const GPIOF = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -4118,7 +4118,7 @@ pub const GPIOF = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -4182,7 +4182,7 @@ pub const GPIOF = struct {
 pub const GPIOG = struct {
     const base_address = 0x40012000;
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// MODE0 [0:1]
         /// Port n.0 mode bits
         MODE0: u2 = 0,
@@ -4236,7 +4236,7 @@ pub const GPIOG = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x0);
 
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// MODE8 [0:1]
         /// Port n.8 mode bits
         MODE8: u2 = 0,
@@ -4290,7 +4290,7 @@ pub const GPIOG = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x4);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR0 [0:0]
         /// Port input data
         IDR0: u1 = 0,
@@ -4347,7 +4347,7 @@ pub const GPIOG = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x8);
 
     /// ODR
-    const ODR_val = packed struct {
+    pub const ODR_val = packed struct {
         /// ODR0 [0:0]
         /// Port output data
         ODR0: u1 = 0,
@@ -4404,7 +4404,7 @@ pub const GPIOG = struct {
     pub const ODR = Register(ODR_val).init(base_address + 0xc);
 
     /// BSRR
-    const BSRR_val = packed struct {
+    pub const BSRR_val = packed struct {
         /// BS0 [0:0]
         /// Set bit 0
         BS0: u1 = 0,
@@ -4506,7 +4506,7 @@ pub const GPIOG = struct {
     pub const BSRR = Register(BSRR_val).init(base_address + 0x10);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// BR0 [0:0]
         /// Reset bit 0
         BR0: u1 = 0,
@@ -4563,7 +4563,7 @@ pub const GPIOG = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x14);
 
     /// LCKR
-    const LCKR_val = packed struct {
+    pub const LCKR_val = packed struct {
         /// LCK0 [0:0]
         /// Port A Lock bit 0
         LCK0: u1 = 0,
@@ -4627,7 +4627,7 @@ pub const GPIOG = struct {
 pub const AFIO = struct {
     const base_address = 0x40010000;
     /// EVCR
-    const EVCR_val = packed struct {
+    pub const EVCR_val = packed struct {
         /// PIN [0:3]
         /// Pin selection
         PIN: u4 = 0,
@@ -4646,7 +4646,7 @@ pub const AFIO = struct {
     pub const EVCR = Register(EVCR_val).init(base_address + 0x0);
 
     /// MAPR
-    const MAPR_val = packed struct {
+    pub const MAPR_val = packed struct {
         /// SPI1_REMAP [0:0]
         /// SPI1 remapping
         SPI1_REMAP: u1 = 0,
@@ -4707,7 +4707,7 @@ pub const AFIO = struct {
     pub const MAPR = Register(MAPR_val).init(base_address + 0x4);
 
     /// EXTICR1
-    const EXTICR1_val = packed struct {
+    pub const EXTICR1_val = packed struct {
         /// EXTI0 [0:3]
         /// EXTI0 configuration
         EXTI0: u4 = 0,
@@ -4728,7 +4728,7 @@ pub const AFIO = struct {
     pub const EXTICR1 = Register(EXTICR1_val).init(base_address + 0x8);
 
     /// EXTICR2
-    const EXTICR2_val = packed struct {
+    pub const EXTICR2_val = packed struct {
         /// EXTI4 [0:3]
         /// EXTI4 configuration
         EXTI4: u4 = 0,
@@ -4749,7 +4749,7 @@ pub const AFIO = struct {
     pub const EXTICR2 = Register(EXTICR2_val).init(base_address + 0xc);
 
     /// EXTICR3
-    const EXTICR3_val = packed struct {
+    pub const EXTICR3_val = packed struct {
         /// EXTI8 [0:3]
         /// EXTI8 configuration
         EXTI8: u4 = 0,
@@ -4770,7 +4770,7 @@ pub const AFIO = struct {
     pub const EXTICR3 = Register(EXTICR3_val).init(base_address + 0x10);
 
     /// EXTICR4
-    const EXTICR4_val = packed struct {
+    pub const EXTICR4_val = packed struct {
         /// EXTI12 [0:3]
         /// EXTI12 configuration
         EXTI12: u4 = 0,
@@ -4791,7 +4791,7 @@ pub const AFIO = struct {
     pub const EXTICR4 = Register(EXTICR4_val).init(base_address + 0x14);
 
     /// MAPR2
-    const MAPR2_val = packed struct {
+    pub const MAPR2_val = packed struct {
         /// unused [0:4]
         _unused0: u5 = 0,
         /// TIM9_REMAP [5:5]
@@ -4825,7 +4825,7 @@ pub const AFIO = struct {
 pub const EXTI = struct {
     const base_address = 0x40010400;
     /// IMR
-    const IMR_val = packed struct {
+    pub const IMR_val = packed struct {
         /// MR0 [0:0]
         /// Interrupt Mask on line 0
         MR0: u1 = 0,
@@ -4891,7 +4891,7 @@ pub const EXTI = struct {
     pub const IMR = Register(IMR_val).init(base_address + 0x0);
 
     /// EMR
-    const EMR_val = packed struct {
+    pub const EMR_val = packed struct {
         /// MR0 [0:0]
         /// Event Mask on line 0
         MR0: u1 = 0,
@@ -4957,7 +4957,7 @@ pub const EXTI = struct {
     pub const EMR = Register(EMR_val).init(base_address + 0x4);
 
     /// RTSR
-    const RTSR_val = packed struct {
+    pub const RTSR_val = packed struct {
         /// TR0 [0:0]
         /// Rising trigger event configuration of
         TR0: u1 = 0,
@@ -5023,7 +5023,7 @@ pub const EXTI = struct {
     pub const RTSR = Register(RTSR_val).init(base_address + 0x8);
 
     /// FTSR
-    const FTSR_val = packed struct {
+    pub const FTSR_val = packed struct {
         /// TR0 [0:0]
         /// Falling trigger event configuration of
         TR0: u1 = 0,
@@ -5089,7 +5089,7 @@ pub const EXTI = struct {
     pub const FTSR = Register(FTSR_val).init(base_address + 0xc);
 
     /// SWIER
-    const SWIER_val = packed struct {
+    pub const SWIER_val = packed struct {
         /// SWIER0 [0:0]
         /// Software Interrupt on line
         SWIER0: u1 = 0,
@@ -5155,7 +5155,7 @@ pub const EXTI = struct {
     pub const SWIER = Register(SWIER_val).init(base_address + 0x10);
 
     /// PR
-    const PR_val = packed struct {
+    pub const PR_val = packed struct {
         /// PR0 [0:0]
         /// Pending bit 0
         PR0: u1 = 0,
@@ -5225,7 +5225,7 @@ pub const EXTI = struct {
 pub const DMA1 = struct {
     const base_address = 0x40020000;
     /// ISR
-    const ISR_val = packed struct {
+    pub const ISR_val = packed struct {
         /// GIF1 [0:0]
         /// Channel 1 Global interrupt
         GIF1: u1 = 0,
@@ -5317,7 +5317,7 @@ pub const DMA1 = struct {
     pub const ISR = Register(ISR_val).init(base_address + 0x0);
 
     /// IFCR
-    const IFCR_val = packed struct {
+    pub const IFCR_val = packed struct {
         /// CGIF1 [0:0]
         /// Channel 1 Global interrupt
         CGIF1: u1 = 0,
@@ -5409,7 +5409,7 @@ pub const DMA1 = struct {
     pub const IFCR = Register(IFCR_val).init(base_address + 0x4);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5455,7 +5455,7 @@ pub const DMA1 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x8);
 
     /// CNDTR1
-    const CNDTR1_val = packed struct {
+    pub const CNDTR1_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5467,7 +5467,7 @@ pub const DMA1 = struct {
     pub const CNDTR1 = Register(CNDTR1_val).init(base_address + 0xc);
 
     /// CPAR1
-    const CPAR1_val = packed struct {
+    pub const CPAR1_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5476,7 +5476,7 @@ pub const DMA1 = struct {
     pub const CPAR1 = Register(CPAR1_val).init(base_address + 0x10);
 
     /// CMAR1
-    const CMAR1_val = packed struct {
+    pub const CMAR1_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5485,7 +5485,7 @@ pub const DMA1 = struct {
     pub const CMAR1 = Register(CMAR1_val).init(base_address + 0x14);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5531,7 +5531,7 @@ pub const DMA1 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x1c);
 
     /// CNDTR2
-    const CNDTR2_val = packed struct {
+    pub const CNDTR2_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5543,7 +5543,7 @@ pub const DMA1 = struct {
     pub const CNDTR2 = Register(CNDTR2_val).init(base_address + 0x20);
 
     /// CPAR2
-    const CPAR2_val = packed struct {
+    pub const CPAR2_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5552,7 +5552,7 @@ pub const DMA1 = struct {
     pub const CPAR2 = Register(CPAR2_val).init(base_address + 0x24);
 
     /// CMAR2
-    const CMAR2_val = packed struct {
+    pub const CMAR2_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5561,7 +5561,7 @@ pub const DMA1 = struct {
     pub const CMAR2 = Register(CMAR2_val).init(base_address + 0x28);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5607,7 +5607,7 @@ pub const DMA1 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x30);
 
     /// CNDTR3
-    const CNDTR3_val = packed struct {
+    pub const CNDTR3_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5619,7 +5619,7 @@ pub const DMA1 = struct {
     pub const CNDTR3 = Register(CNDTR3_val).init(base_address + 0x34);
 
     /// CPAR3
-    const CPAR3_val = packed struct {
+    pub const CPAR3_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5628,7 +5628,7 @@ pub const DMA1 = struct {
     pub const CPAR3 = Register(CPAR3_val).init(base_address + 0x38);
 
     /// CMAR3
-    const CMAR3_val = packed struct {
+    pub const CMAR3_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5637,7 +5637,7 @@ pub const DMA1 = struct {
     pub const CMAR3 = Register(CMAR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5683,7 +5683,7 @@ pub const DMA1 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x44);
 
     /// CNDTR4
-    const CNDTR4_val = packed struct {
+    pub const CNDTR4_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5695,7 +5695,7 @@ pub const DMA1 = struct {
     pub const CNDTR4 = Register(CNDTR4_val).init(base_address + 0x48);
 
     /// CPAR4
-    const CPAR4_val = packed struct {
+    pub const CPAR4_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5704,7 +5704,7 @@ pub const DMA1 = struct {
     pub const CPAR4 = Register(CPAR4_val).init(base_address + 0x4c);
 
     /// CMAR4
-    const CMAR4_val = packed struct {
+    pub const CMAR4_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5713,7 +5713,7 @@ pub const DMA1 = struct {
     pub const CMAR4 = Register(CMAR4_val).init(base_address + 0x50);
 
     /// CCR5
-    const CCR5_val = packed struct {
+    pub const CCR5_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5759,7 +5759,7 @@ pub const DMA1 = struct {
     pub const CCR5 = Register(CCR5_val).init(base_address + 0x58);
 
     /// CNDTR5
-    const CNDTR5_val = packed struct {
+    pub const CNDTR5_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5771,7 +5771,7 @@ pub const DMA1 = struct {
     pub const CNDTR5 = Register(CNDTR5_val).init(base_address + 0x5c);
 
     /// CPAR5
-    const CPAR5_val = packed struct {
+    pub const CPAR5_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5780,7 +5780,7 @@ pub const DMA1 = struct {
     pub const CPAR5 = Register(CPAR5_val).init(base_address + 0x60);
 
     /// CMAR5
-    const CMAR5_val = packed struct {
+    pub const CMAR5_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5789,7 +5789,7 @@ pub const DMA1 = struct {
     pub const CMAR5 = Register(CMAR5_val).init(base_address + 0x64);
 
     /// CCR6
-    const CCR6_val = packed struct {
+    pub const CCR6_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5835,7 +5835,7 @@ pub const DMA1 = struct {
     pub const CCR6 = Register(CCR6_val).init(base_address + 0x6c);
 
     /// CNDTR6
-    const CNDTR6_val = packed struct {
+    pub const CNDTR6_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5847,7 +5847,7 @@ pub const DMA1 = struct {
     pub const CNDTR6 = Register(CNDTR6_val).init(base_address + 0x70);
 
     /// CPAR6
-    const CPAR6_val = packed struct {
+    pub const CPAR6_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5856,7 +5856,7 @@ pub const DMA1 = struct {
     pub const CPAR6 = Register(CPAR6_val).init(base_address + 0x74);
 
     /// CMAR6
-    const CMAR6_val = packed struct {
+    pub const CMAR6_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5865,7 +5865,7 @@ pub const DMA1 = struct {
     pub const CMAR6 = Register(CMAR6_val).init(base_address + 0x78);
 
     /// CCR7
-    const CCR7_val = packed struct {
+    pub const CCR7_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -5911,7 +5911,7 @@ pub const DMA1 = struct {
     pub const CCR7 = Register(CCR7_val).init(base_address + 0x80);
 
     /// CNDTR7
-    const CNDTR7_val = packed struct {
+    pub const CNDTR7_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -5923,7 +5923,7 @@ pub const DMA1 = struct {
     pub const CNDTR7 = Register(CNDTR7_val).init(base_address + 0x84);
 
     /// CPAR7
-    const CPAR7_val = packed struct {
+    pub const CPAR7_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -5932,7 +5932,7 @@ pub const DMA1 = struct {
     pub const CPAR7 = Register(CPAR7_val).init(base_address + 0x88);
 
     /// CMAR7
-    const CMAR7_val = packed struct {
+    pub const CMAR7_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -5945,7 +5945,7 @@ pub const DMA1 = struct {
 pub const DMA2 = struct {
     const base_address = 0x40020400;
     /// ISR
-    const ISR_val = packed struct {
+    pub const ISR_val = packed struct {
         /// GIF1 [0:0]
         /// Channel 1 Global interrupt
         GIF1: u1 = 0,
@@ -6037,7 +6037,7 @@ pub const DMA2 = struct {
     pub const ISR = Register(ISR_val).init(base_address + 0x0);
 
     /// IFCR
-    const IFCR_val = packed struct {
+    pub const IFCR_val = packed struct {
         /// CGIF1 [0:0]
         /// Channel 1 Global interrupt
         CGIF1: u1 = 0,
@@ -6129,7 +6129,7 @@ pub const DMA2 = struct {
     pub const IFCR = Register(IFCR_val).init(base_address + 0x4);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6175,7 +6175,7 @@ pub const DMA2 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x8);
 
     /// CNDTR1
-    const CNDTR1_val = packed struct {
+    pub const CNDTR1_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6187,7 +6187,7 @@ pub const DMA2 = struct {
     pub const CNDTR1 = Register(CNDTR1_val).init(base_address + 0xc);
 
     /// CPAR1
-    const CPAR1_val = packed struct {
+    pub const CPAR1_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6196,7 +6196,7 @@ pub const DMA2 = struct {
     pub const CPAR1 = Register(CPAR1_val).init(base_address + 0x10);
 
     /// CMAR1
-    const CMAR1_val = packed struct {
+    pub const CMAR1_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6205,7 +6205,7 @@ pub const DMA2 = struct {
     pub const CMAR1 = Register(CMAR1_val).init(base_address + 0x14);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6251,7 +6251,7 @@ pub const DMA2 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x1c);
 
     /// CNDTR2
-    const CNDTR2_val = packed struct {
+    pub const CNDTR2_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6263,7 +6263,7 @@ pub const DMA2 = struct {
     pub const CNDTR2 = Register(CNDTR2_val).init(base_address + 0x20);
 
     /// CPAR2
-    const CPAR2_val = packed struct {
+    pub const CPAR2_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6272,7 +6272,7 @@ pub const DMA2 = struct {
     pub const CPAR2 = Register(CPAR2_val).init(base_address + 0x24);
 
     /// CMAR2
-    const CMAR2_val = packed struct {
+    pub const CMAR2_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6281,7 +6281,7 @@ pub const DMA2 = struct {
     pub const CMAR2 = Register(CMAR2_val).init(base_address + 0x28);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6327,7 +6327,7 @@ pub const DMA2 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x30);
 
     /// CNDTR3
-    const CNDTR3_val = packed struct {
+    pub const CNDTR3_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6339,7 +6339,7 @@ pub const DMA2 = struct {
     pub const CNDTR3 = Register(CNDTR3_val).init(base_address + 0x34);
 
     /// CPAR3
-    const CPAR3_val = packed struct {
+    pub const CPAR3_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6348,7 +6348,7 @@ pub const DMA2 = struct {
     pub const CPAR3 = Register(CPAR3_val).init(base_address + 0x38);
 
     /// CMAR3
-    const CMAR3_val = packed struct {
+    pub const CMAR3_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6357,7 +6357,7 @@ pub const DMA2 = struct {
     pub const CMAR3 = Register(CMAR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6403,7 +6403,7 @@ pub const DMA2 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x44);
 
     /// CNDTR4
-    const CNDTR4_val = packed struct {
+    pub const CNDTR4_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6415,7 +6415,7 @@ pub const DMA2 = struct {
     pub const CNDTR4 = Register(CNDTR4_val).init(base_address + 0x48);
 
     /// CPAR4
-    const CPAR4_val = packed struct {
+    pub const CPAR4_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6424,7 +6424,7 @@ pub const DMA2 = struct {
     pub const CPAR4 = Register(CPAR4_val).init(base_address + 0x4c);
 
     /// CMAR4
-    const CMAR4_val = packed struct {
+    pub const CMAR4_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6433,7 +6433,7 @@ pub const DMA2 = struct {
     pub const CMAR4 = Register(CMAR4_val).init(base_address + 0x50);
 
     /// CCR5
-    const CCR5_val = packed struct {
+    pub const CCR5_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6479,7 +6479,7 @@ pub const DMA2 = struct {
     pub const CCR5 = Register(CCR5_val).init(base_address + 0x58);
 
     /// CNDTR5
-    const CNDTR5_val = packed struct {
+    pub const CNDTR5_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6491,7 +6491,7 @@ pub const DMA2 = struct {
     pub const CNDTR5 = Register(CNDTR5_val).init(base_address + 0x5c);
 
     /// CPAR5
-    const CPAR5_val = packed struct {
+    pub const CPAR5_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6500,7 +6500,7 @@ pub const DMA2 = struct {
     pub const CPAR5 = Register(CPAR5_val).init(base_address + 0x60);
 
     /// CMAR5
-    const CMAR5_val = packed struct {
+    pub const CMAR5_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6509,7 +6509,7 @@ pub const DMA2 = struct {
     pub const CMAR5 = Register(CMAR5_val).init(base_address + 0x64);
 
     /// CCR6
-    const CCR6_val = packed struct {
+    pub const CCR6_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6555,7 +6555,7 @@ pub const DMA2 = struct {
     pub const CCR6 = Register(CCR6_val).init(base_address + 0x6c);
 
     /// CNDTR6
-    const CNDTR6_val = packed struct {
+    pub const CNDTR6_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6567,7 +6567,7 @@ pub const DMA2 = struct {
     pub const CNDTR6 = Register(CNDTR6_val).init(base_address + 0x70);
 
     /// CPAR6
-    const CPAR6_val = packed struct {
+    pub const CPAR6_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6576,7 +6576,7 @@ pub const DMA2 = struct {
     pub const CPAR6 = Register(CPAR6_val).init(base_address + 0x74);
 
     /// CMAR6
-    const CMAR6_val = packed struct {
+    pub const CMAR6_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6585,7 +6585,7 @@ pub const DMA2 = struct {
     pub const CMAR6 = Register(CMAR6_val).init(base_address + 0x78);
 
     /// CCR7
-    const CCR7_val = packed struct {
+    pub const CCR7_val = packed struct {
         /// EN [0:0]
         /// Channel enable
         EN: u1 = 0,
@@ -6631,7 +6631,7 @@ pub const DMA2 = struct {
     pub const CCR7 = Register(CCR7_val).init(base_address + 0x80);
 
     /// CNDTR7
-    const CNDTR7_val = packed struct {
+    pub const CNDTR7_val = packed struct {
         /// NDT [0:15]
         /// Number of data to transfer
         NDT: u16 = 0,
@@ -6643,7 +6643,7 @@ pub const DMA2 = struct {
     pub const CNDTR7 = Register(CNDTR7_val).init(base_address + 0x84);
 
     /// CPAR7
-    const CPAR7_val = packed struct {
+    pub const CPAR7_val = packed struct {
         /// PA [0:31]
         /// Peripheral address
         PA: u32 = 0,
@@ -6652,7 +6652,7 @@ pub const DMA2 = struct {
     pub const CPAR7 = Register(CPAR7_val).init(base_address + 0x88);
 
     /// CMAR7
-    const CMAR7_val = packed struct {
+    pub const CMAR7_val = packed struct {
         /// MA [0:31]
         /// Memory address
         MA: u32 = 0,
@@ -6665,7 +6665,7 @@ pub const DMA2 = struct {
 pub const SDIO = struct {
     const base_address = 0x40018000;
     /// POWER
-    const POWER_val = packed struct {
+    pub const POWER_val = packed struct {
         /// PWRCTRL [0:1]
         /// PWRCTRL
         PWRCTRL: u2 = 0,
@@ -6679,7 +6679,7 @@ pub const SDIO = struct {
     pub const POWER = Register(POWER_val).init(base_address + 0x0);
 
     /// CLKCR
-    const CLKCR_val = packed struct {
+    pub const CLKCR_val = packed struct {
         /// CLKDIV [0:7]
         /// Clock divide factor
         CLKDIV: u8 = 0,
@@ -6710,7 +6710,7 @@ pub const SDIO = struct {
     pub const CLKCR = Register(CLKCR_val).init(base_address + 0x4);
 
     /// ARG
-    const ARG_val = packed struct {
+    pub const ARG_val = packed struct {
         /// CMDARG [0:31]
         /// Command argument
         CMDARG: u32 = 0,
@@ -6719,7 +6719,7 @@ pub const SDIO = struct {
     pub const ARG = Register(ARG_val).init(base_address + 0x8);
 
     /// CMD
-    const CMD_val = packed struct {
+    pub const CMD_val = packed struct {
         /// CMDINDEX [0:5]
         /// CMDINDEX
         CMDINDEX: u6 = 0,
@@ -6756,7 +6756,7 @@ pub const SDIO = struct {
     pub const CMD = Register(CMD_val).init(base_address + 0xc);
 
     /// RESPCMD
-    const RESPCMD_val = packed struct {
+    pub const RESPCMD_val = packed struct {
         /// RESPCMD [0:5]
         /// RESPCMD
         RESPCMD: u6 = 0,
@@ -6770,7 +6770,7 @@ pub const SDIO = struct {
     pub const RESPCMD = Register(RESPCMD_val).init(base_address + 0x10);
 
     /// RESPI1
-    const RESPI1_val = packed struct {
+    pub const RESPI1_val = packed struct {
         /// CARDSTATUS1 [0:31]
         /// CARDSTATUS1
         CARDSTATUS1: u32 = 0,
@@ -6779,7 +6779,7 @@ pub const SDIO = struct {
     pub const RESPI1 = Register(RESPI1_val).init(base_address + 0x14);
 
     /// RESP2
-    const RESP2_val = packed struct {
+    pub const RESP2_val = packed struct {
         /// CARDSTATUS2 [0:31]
         /// CARDSTATUS2
         CARDSTATUS2: u32 = 0,
@@ -6788,7 +6788,7 @@ pub const SDIO = struct {
     pub const RESP2 = Register(RESP2_val).init(base_address + 0x18);
 
     /// RESP3
-    const RESP3_val = packed struct {
+    pub const RESP3_val = packed struct {
         /// CARDSTATUS3 [0:31]
         /// CARDSTATUS3
         CARDSTATUS3: u32 = 0,
@@ -6797,7 +6797,7 @@ pub const SDIO = struct {
     pub const RESP3 = Register(RESP3_val).init(base_address + 0x1c);
 
     /// RESP4
-    const RESP4_val = packed struct {
+    pub const RESP4_val = packed struct {
         /// CARDSTATUS4 [0:31]
         /// CARDSTATUS4
         CARDSTATUS4: u32 = 0,
@@ -6806,7 +6806,7 @@ pub const SDIO = struct {
     pub const RESP4 = Register(RESP4_val).init(base_address + 0x20);
 
     /// DTIMER
-    const DTIMER_val = packed struct {
+    pub const DTIMER_val = packed struct {
         /// DATATIME [0:31]
         /// Data timeout period
         DATATIME: u32 = 0,
@@ -6815,7 +6815,7 @@ pub const SDIO = struct {
     pub const DTIMER = Register(DTIMER_val).init(base_address + 0x24);
 
     /// DLEN
-    const DLEN_val = packed struct {
+    pub const DLEN_val = packed struct {
         /// DATALENGTH [0:24]
         /// Data length value
         DATALENGTH: u25 = 0,
@@ -6826,7 +6826,7 @@ pub const SDIO = struct {
     pub const DLEN = Register(DLEN_val).init(base_address + 0x28);
 
     /// DCTRL
-    const DCTRL_val = packed struct {
+    pub const DCTRL_val = packed struct {
         /// DTEN [0:0]
         /// DTEN
         DTEN: u1 = 0,
@@ -6863,7 +6863,7 @@ pub const SDIO = struct {
     pub const DCTRL = Register(DCTRL_val).init(base_address + 0x2c);
 
     /// DCOUNT
-    const DCOUNT_val = packed struct {
+    pub const DCOUNT_val = packed struct {
         /// DATACOUNT [0:24]
         /// Data count value
         DATACOUNT: u25 = 0,
@@ -6874,7 +6874,7 @@ pub const SDIO = struct {
     pub const DCOUNT = Register(DCOUNT_val).init(base_address + 0x30);
 
     /// STA
-    const STA_val = packed struct {
+    pub const STA_val = packed struct {
         /// CCRCFAIL [0:0]
         /// CCRCFAIL
         CCRCFAIL: u1 = 0,
@@ -6954,7 +6954,7 @@ pub const SDIO = struct {
     pub const STA = Register(STA_val).init(base_address + 0x34);
 
     /// ICR
-    const ICR_val = packed struct {
+    pub const ICR_val = packed struct {
         /// CCRCFAILC [0:0]
         /// CCRCFAILC
         CCRCFAILC: u1 = 0,
@@ -7004,7 +7004,7 @@ pub const SDIO = struct {
     pub const ICR = Register(ICR_val).init(base_address + 0x38);
 
     /// MASK
-    const MASK_val = packed struct {
+    pub const MASK_val = packed struct {
         /// CCRCFAILIE [0:0]
         /// CCRCFAILIE
         CCRCFAILIE: u1 = 0,
@@ -7084,7 +7084,7 @@ pub const SDIO = struct {
     pub const MASK = Register(MASK_val).init(base_address + 0x3c);
 
     /// FIFOCNT
-    const FIFOCNT_val = packed struct {
+    pub const FIFOCNT_val = packed struct {
         /// FIF0COUNT [0:23]
         /// FIF0COUNT
         FIF0COUNT: u24 = 0,
@@ -7095,7 +7095,7 @@ pub const SDIO = struct {
     pub const FIFOCNT = Register(FIFOCNT_val).init(base_address + 0x48);
 
     /// FIFO
-    const FIFO_val = packed struct {
+    pub const FIFO_val = packed struct {
         /// FIFOData [0:31]
         /// FIFOData
         FIFOData: u32 = 0,
@@ -7108,7 +7108,7 @@ pub const SDIO = struct {
 pub const RTC = struct {
     const base_address = 0x40002800;
     /// CRH
-    const CRH_val = packed struct {
+    pub const CRH_val = packed struct {
         /// SECIE [0:0]
         /// Second interrupt Enable
         SECIE: u1 = 0,
@@ -7128,7 +7128,7 @@ pub const RTC = struct {
     pub const CRH = Register(CRH_val).init(base_address + 0x0);
 
     /// CRL
-    const CRL_val = packed struct {
+    pub const CRL_val = packed struct {
         /// SECF [0:0]
         /// Second Flag
         SECF: u1 = 0,
@@ -7157,7 +7157,7 @@ pub const RTC = struct {
     pub const CRL = Register(CRL_val).init(base_address + 0x4);
 
     /// PRLH
-    const PRLH_val = packed struct {
+    pub const PRLH_val = packed struct {
         /// PRLH [0:3]
         /// RTC Prescaler Load Register
         PRLH: u4 = 0,
@@ -7171,7 +7171,7 @@ pub const RTC = struct {
     pub const PRLH = Register(PRLH_val).init(base_address + 0x8);
 
     /// PRLL
-    const PRLL_val = packed struct {
+    pub const PRLL_val = packed struct {
         /// PRLL [0:15]
         /// RTC Prescaler Divider Register
         PRLL: u16 = 32768,
@@ -7183,7 +7183,7 @@ pub const RTC = struct {
     pub const PRLL = Register(PRLL_val).init(base_address + 0xc);
 
     /// DIVH
-    const DIVH_val = packed struct {
+    pub const DIVH_val = packed struct {
         /// DIVH [0:3]
         /// RTC prescaler divider register
         DIVH: u4 = 0,
@@ -7197,7 +7197,7 @@ pub const RTC = struct {
     pub const DIVH = Register(DIVH_val).init(base_address + 0x10);
 
     /// DIVL
-    const DIVL_val = packed struct {
+    pub const DIVL_val = packed struct {
         /// DIVL [0:15]
         /// RTC prescaler divider register
         DIVL: u16 = 32768,
@@ -7209,7 +7209,7 @@ pub const RTC = struct {
     pub const DIVL = Register(DIVL_val).init(base_address + 0x14);
 
     /// CNTH
-    const CNTH_val = packed struct {
+    pub const CNTH_val = packed struct {
         /// CNTH [0:15]
         /// RTC counter register high
         CNTH: u16 = 0,
@@ -7221,7 +7221,7 @@ pub const RTC = struct {
     pub const CNTH = Register(CNTH_val).init(base_address + 0x18);
 
     /// CNTL
-    const CNTL_val = packed struct {
+    pub const CNTL_val = packed struct {
         /// CNTL [0:15]
         /// RTC counter register Low
         CNTL: u16 = 0,
@@ -7233,7 +7233,7 @@ pub const RTC = struct {
     pub const CNTL = Register(CNTL_val).init(base_address + 0x1c);
 
     /// ALRH
-    const ALRH_val = packed struct {
+    pub const ALRH_val = packed struct {
         /// ALRH [0:15]
         /// RTC alarm register high
         ALRH: u16 = 65535,
@@ -7245,7 +7245,7 @@ pub const RTC = struct {
     pub const ALRH = Register(ALRH_val).init(base_address + 0x20);
 
     /// ALRL
-    const ALRL_val = packed struct {
+    pub const ALRL_val = packed struct {
         /// ALRL [0:15]
         /// RTC alarm register low
         ALRL: u16 = 65535,
@@ -7261,7 +7261,7 @@ pub const RTC = struct {
 pub const BKP = struct {
     const base_address = 0x40006c00;
     /// DR1
-    const DR1_val = packed struct {
+    pub const DR1_val = packed struct {
         /// D1 [0:15]
         /// Backup data
         D1: u16 = 0,
@@ -7273,7 +7273,7 @@ pub const BKP = struct {
     pub const DR1 = Register(DR1_val).init(base_address + 0x0);
 
     /// DR2
-    const DR2_val = packed struct {
+    pub const DR2_val = packed struct {
         /// D2 [0:15]
         /// Backup data
         D2: u16 = 0,
@@ -7285,7 +7285,7 @@ pub const BKP = struct {
     pub const DR2 = Register(DR2_val).init(base_address + 0x4);
 
     /// DR3
-    const DR3_val = packed struct {
+    pub const DR3_val = packed struct {
         /// D3 [0:15]
         /// Backup data
         D3: u16 = 0,
@@ -7297,7 +7297,7 @@ pub const BKP = struct {
     pub const DR3 = Register(DR3_val).init(base_address + 0x8);
 
     /// DR4
-    const DR4_val = packed struct {
+    pub const DR4_val = packed struct {
         /// D4 [0:15]
         /// Backup data
         D4: u16 = 0,
@@ -7309,7 +7309,7 @@ pub const BKP = struct {
     pub const DR4 = Register(DR4_val).init(base_address + 0xc);
 
     /// DR5
-    const DR5_val = packed struct {
+    pub const DR5_val = packed struct {
         /// D5 [0:15]
         /// Backup data
         D5: u16 = 0,
@@ -7321,7 +7321,7 @@ pub const BKP = struct {
     pub const DR5 = Register(DR5_val).init(base_address + 0x10);
 
     /// DR6
-    const DR6_val = packed struct {
+    pub const DR6_val = packed struct {
         /// D6 [0:15]
         /// Backup data
         D6: u16 = 0,
@@ -7333,7 +7333,7 @@ pub const BKP = struct {
     pub const DR6 = Register(DR6_val).init(base_address + 0x14);
 
     /// DR7
-    const DR7_val = packed struct {
+    pub const DR7_val = packed struct {
         /// D7 [0:15]
         /// Backup data
         D7: u16 = 0,
@@ -7345,7 +7345,7 @@ pub const BKP = struct {
     pub const DR7 = Register(DR7_val).init(base_address + 0x18);
 
     /// DR8
-    const DR8_val = packed struct {
+    pub const DR8_val = packed struct {
         /// D8 [0:15]
         /// Backup data
         D8: u16 = 0,
@@ -7357,7 +7357,7 @@ pub const BKP = struct {
     pub const DR8 = Register(DR8_val).init(base_address + 0x1c);
 
     /// DR9
-    const DR9_val = packed struct {
+    pub const DR9_val = packed struct {
         /// D9 [0:15]
         /// Backup data
         D9: u16 = 0,
@@ -7369,7 +7369,7 @@ pub const BKP = struct {
     pub const DR9 = Register(DR9_val).init(base_address + 0x20);
 
     /// DR10
-    const DR10_val = packed struct {
+    pub const DR10_val = packed struct {
         /// D10 [0:15]
         /// Backup data
         D10: u16 = 0,
@@ -7381,7 +7381,7 @@ pub const BKP = struct {
     pub const DR10 = Register(DR10_val).init(base_address + 0x24);
 
     /// DR11
-    const DR11_val = packed struct {
+    pub const DR11_val = packed struct {
         /// DR11 [0:15]
         /// Backup data
         DR11: u16 = 0,
@@ -7393,7 +7393,7 @@ pub const BKP = struct {
     pub const DR11 = Register(DR11_val).init(base_address + 0x3c);
 
     /// DR12
-    const DR12_val = packed struct {
+    pub const DR12_val = packed struct {
         /// DR12 [0:15]
         /// Backup data
         DR12: u16 = 0,
@@ -7405,7 +7405,7 @@ pub const BKP = struct {
     pub const DR12 = Register(DR12_val).init(base_address + 0x40);
 
     /// DR13
-    const DR13_val = packed struct {
+    pub const DR13_val = packed struct {
         /// DR13 [0:15]
         /// Backup data
         DR13: u16 = 0,
@@ -7417,7 +7417,7 @@ pub const BKP = struct {
     pub const DR13 = Register(DR13_val).init(base_address + 0x44);
 
     /// DR14
-    const DR14_val = packed struct {
+    pub const DR14_val = packed struct {
         /// D14 [0:15]
         /// Backup data
         D14: u16 = 0,
@@ -7429,7 +7429,7 @@ pub const BKP = struct {
     pub const DR14 = Register(DR14_val).init(base_address + 0x48);
 
     /// DR15
-    const DR15_val = packed struct {
+    pub const DR15_val = packed struct {
         /// D15 [0:15]
         /// Backup data
         D15: u16 = 0,
@@ -7441,7 +7441,7 @@ pub const BKP = struct {
     pub const DR15 = Register(DR15_val).init(base_address + 0x4c);
 
     /// DR16
-    const DR16_val = packed struct {
+    pub const DR16_val = packed struct {
         /// D16 [0:15]
         /// Backup data
         D16: u16 = 0,
@@ -7453,7 +7453,7 @@ pub const BKP = struct {
     pub const DR16 = Register(DR16_val).init(base_address + 0x50);
 
     /// DR17
-    const DR17_val = packed struct {
+    pub const DR17_val = packed struct {
         /// D17 [0:15]
         /// Backup data
         D17: u16 = 0,
@@ -7465,7 +7465,7 @@ pub const BKP = struct {
     pub const DR17 = Register(DR17_val).init(base_address + 0x54);
 
     /// DR18
-    const DR18_val = packed struct {
+    pub const DR18_val = packed struct {
         /// D18 [0:15]
         /// Backup data
         D18: u16 = 0,
@@ -7477,7 +7477,7 @@ pub const BKP = struct {
     pub const DR18 = Register(DR18_val).init(base_address + 0x58);
 
     /// DR19
-    const DR19_val = packed struct {
+    pub const DR19_val = packed struct {
         /// D19 [0:15]
         /// Backup data
         D19: u16 = 0,
@@ -7489,7 +7489,7 @@ pub const BKP = struct {
     pub const DR19 = Register(DR19_val).init(base_address + 0x5c);
 
     /// DR20
-    const DR20_val = packed struct {
+    pub const DR20_val = packed struct {
         /// D20 [0:15]
         /// Backup data
         D20: u16 = 0,
@@ -7501,7 +7501,7 @@ pub const BKP = struct {
     pub const DR20 = Register(DR20_val).init(base_address + 0x60);
 
     /// DR21
-    const DR21_val = packed struct {
+    pub const DR21_val = packed struct {
         /// D21 [0:15]
         /// Backup data
         D21: u16 = 0,
@@ -7513,7 +7513,7 @@ pub const BKP = struct {
     pub const DR21 = Register(DR21_val).init(base_address + 0x64);
 
     /// DR22
-    const DR22_val = packed struct {
+    pub const DR22_val = packed struct {
         /// D22 [0:15]
         /// Backup data
         D22: u16 = 0,
@@ -7525,7 +7525,7 @@ pub const BKP = struct {
     pub const DR22 = Register(DR22_val).init(base_address + 0x68);
 
     /// DR23
-    const DR23_val = packed struct {
+    pub const DR23_val = packed struct {
         /// D23 [0:15]
         /// Backup data
         D23: u16 = 0,
@@ -7537,7 +7537,7 @@ pub const BKP = struct {
     pub const DR23 = Register(DR23_val).init(base_address + 0x6c);
 
     /// DR24
-    const DR24_val = packed struct {
+    pub const DR24_val = packed struct {
         /// D24 [0:15]
         /// Backup data
         D24: u16 = 0,
@@ -7549,7 +7549,7 @@ pub const BKP = struct {
     pub const DR24 = Register(DR24_val).init(base_address + 0x70);
 
     /// DR25
-    const DR25_val = packed struct {
+    pub const DR25_val = packed struct {
         /// D25 [0:15]
         /// Backup data
         D25: u16 = 0,
@@ -7561,7 +7561,7 @@ pub const BKP = struct {
     pub const DR25 = Register(DR25_val).init(base_address + 0x74);
 
     /// DR26
-    const DR26_val = packed struct {
+    pub const DR26_val = packed struct {
         /// D26 [0:15]
         /// Backup data
         D26: u16 = 0,
@@ -7573,7 +7573,7 @@ pub const BKP = struct {
     pub const DR26 = Register(DR26_val).init(base_address + 0x78);
 
     /// DR27
-    const DR27_val = packed struct {
+    pub const DR27_val = packed struct {
         /// D27 [0:15]
         /// Backup data
         D27: u16 = 0,
@@ -7585,7 +7585,7 @@ pub const BKP = struct {
     pub const DR27 = Register(DR27_val).init(base_address + 0x7c);
 
     /// DR28
-    const DR28_val = packed struct {
+    pub const DR28_val = packed struct {
         /// D28 [0:15]
         /// Backup data
         D28: u16 = 0,
@@ -7597,7 +7597,7 @@ pub const BKP = struct {
     pub const DR28 = Register(DR28_val).init(base_address + 0x80);
 
     /// DR29
-    const DR29_val = packed struct {
+    pub const DR29_val = packed struct {
         /// D29 [0:15]
         /// Backup data
         D29: u16 = 0,
@@ -7609,7 +7609,7 @@ pub const BKP = struct {
     pub const DR29 = Register(DR29_val).init(base_address + 0x84);
 
     /// DR30
-    const DR30_val = packed struct {
+    pub const DR30_val = packed struct {
         /// D30 [0:15]
         /// Backup data
         D30: u16 = 0,
@@ -7621,7 +7621,7 @@ pub const BKP = struct {
     pub const DR30 = Register(DR30_val).init(base_address + 0x88);
 
     /// DR31
-    const DR31_val = packed struct {
+    pub const DR31_val = packed struct {
         /// D31 [0:15]
         /// Backup data
         D31: u16 = 0,
@@ -7633,7 +7633,7 @@ pub const BKP = struct {
     pub const DR31 = Register(DR31_val).init(base_address + 0x8c);
 
     /// DR32
-    const DR32_val = packed struct {
+    pub const DR32_val = packed struct {
         /// D32 [0:15]
         /// Backup data
         D32: u16 = 0,
@@ -7645,7 +7645,7 @@ pub const BKP = struct {
     pub const DR32 = Register(DR32_val).init(base_address + 0x90);
 
     /// DR33
-    const DR33_val = packed struct {
+    pub const DR33_val = packed struct {
         /// D33 [0:15]
         /// Backup data
         D33: u16 = 0,
@@ -7657,7 +7657,7 @@ pub const BKP = struct {
     pub const DR33 = Register(DR33_val).init(base_address + 0x94);
 
     /// DR34
-    const DR34_val = packed struct {
+    pub const DR34_val = packed struct {
         /// D34 [0:15]
         /// Backup data
         D34: u16 = 0,
@@ -7669,7 +7669,7 @@ pub const BKP = struct {
     pub const DR34 = Register(DR34_val).init(base_address + 0x98);
 
     /// DR35
-    const DR35_val = packed struct {
+    pub const DR35_val = packed struct {
         /// D35 [0:15]
         /// Backup data
         D35: u16 = 0,
@@ -7681,7 +7681,7 @@ pub const BKP = struct {
     pub const DR35 = Register(DR35_val).init(base_address + 0x9c);
 
     /// DR36
-    const DR36_val = packed struct {
+    pub const DR36_val = packed struct {
         /// D36 [0:15]
         /// Backup data
         D36: u16 = 0,
@@ -7693,7 +7693,7 @@ pub const BKP = struct {
     pub const DR36 = Register(DR36_val).init(base_address + 0xa0);
 
     /// DR37
-    const DR37_val = packed struct {
+    pub const DR37_val = packed struct {
         /// D37 [0:15]
         /// Backup data
         D37: u16 = 0,
@@ -7705,7 +7705,7 @@ pub const BKP = struct {
     pub const DR37 = Register(DR37_val).init(base_address + 0xa4);
 
     /// DR38
-    const DR38_val = packed struct {
+    pub const DR38_val = packed struct {
         /// D38 [0:15]
         /// Backup data
         D38: u16 = 0,
@@ -7717,7 +7717,7 @@ pub const BKP = struct {
     pub const DR38 = Register(DR38_val).init(base_address + 0xa8);
 
     /// DR39
-    const DR39_val = packed struct {
+    pub const DR39_val = packed struct {
         /// D39 [0:15]
         /// Backup data
         D39: u16 = 0,
@@ -7729,7 +7729,7 @@ pub const BKP = struct {
     pub const DR39 = Register(DR39_val).init(base_address + 0xac);
 
     /// DR40
-    const DR40_val = packed struct {
+    pub const DR40_val = packed struct {
         /// D40 [0:15]
         /// Backup data
         D40: u16 = 0,
@@ -7741,7 +7741,7 @@ pub const BKP = struct {
     pub const DR40 = Register(DR40_val).init(base_address + 0xb0);
 
     /// DR41
-    const DR41_val = packed struct {
+    pub const DR41_val = packed struct {
         /// D41 [0:15]
         /// Backup data
         D41: u16 = 0,
@@ -7753,7 +7753,7 @@ pub const BKP = struct {
     pub const DR41 = Register(DR41_val).init(base_address + 0xb4);
 
     /// DR42
-    const DR42_val = packed struct {
+    pub const DR42_val = packed struct {
         /// D42 [0:15]
         /// Backup data
         D42: u16 = 0,
@@ -7765,7 +7765,7 @@ pub const BKP = struct {
     pub const DR42 = Register(DR42_val).init(base_address + 0xb8);
 
     /// RTCCR
-    const RTCCR_val = packed struct {
+    pub const RTCCR_val = packed struct {
         /// CAL [0:6]
         /// Calibration value
         CAL: u7 = 0,
@@ -7787,7 +7787,7 @@ pub const BKP = struct {
     pub const RTCCR = Register(RTCCR_val).init(base_address + 0x28);
 
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// TPE [0:0]
         /// Tamper pin enable
         TPE: u1 = 0,
@@ -7804,7 +7804,7 @@ pub const BKP = struct {
     pub const CR = Register(CR_val).init(base_address + 0x2c);
 
     /// CSR
-    const CSR_val = packed struct {
+    pub const CSR_val = packed struct {
         /// CTE [0:0]
         /// Clear Tamper event
         CTE: u1 = 0,
@@ -7835,7 +7835,7 @@ pub const BKP = struct {
 pub const IWDG = struct {
     const base_address = 0x40003000;
     /// KR
-    const KR_val = packed struct {
+    pub const KR_val = packed struct {
         /// KEY [0:15]
         /// Key value
         KEY: u16 = 0,
@@ -7847,7 +7847,7 @@ pub const IWDG = struct {
     pub const KR = Register(KR_val).init(base_address + 0x0);
 
     /// PR
-    const PR_val = packed struct {
+    pub const PR_val = packed struct {
         /// PR [0:2]
         /// Prescaler divider
         PR: u3 = 0,
@@ -7861,7 +7861,7 @@ pub const IWDG = struct {
     pub const PR = Register(PR_val).init(base_address + 0x4);
 
     /// RLR
-    const RLR_val = packed struct {
+    pub const RLR_val = packed struct {
         /// RL [0:11]
         /// Watchdog counter reload
         RL: u12 = 4095,
@@ -7874,7 +7874,7 @@ pub const IWDG = struct {
     pub const RLR = Register(RLR_val).init(base_address + 0x8);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PVU [0:0]
         /// Watchdog prescaler value
         PVU: u1 = 0,
@@ -7895,7 +7895,7 @@ pub const IWDG = struct {
 pub const WWDG = struct {
     const base_address = 0x40002c00;
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// T [0:6]
         /// 7-bit counter (MSB to LSB)
         T: u7 = 127,
@@ -7911,7 +7911,7 @@ pub const WWDG = struct {
     pub const CR = Register(CR_val).init(base_address + 0x0);
 
     /// CFR
-    const CFR_val = packed struct {
+    pub const CFR_val = packed struct {
         /// W [0:6]
         /// 7-bit window value
         W: u7 = 127,
@@ -7930,7 +7930,7 @@ pub const WWDG = struct {
     pub const CFR = Register(CFR_val).init(base_address + 0x4);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// EWI [0:0]
         /// Early Wakeup Interrupt
         EWI: u1 = 0,
@@ -7948,7 +7948,7 @@ pub const WWDG = struct {
 pub const TIM1 = struct {
     const base_address = 0x40012c00;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -7982,7 +7982,7 @@ pub const TIM1 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// CCPC [0:0]
         /// Capture/compare preloaded
         CCPC: u1 = 0,
@@ -8030,7 +8030,7 @@ pub const TIM1 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -8062,7 +8062,7 @@ pub const TIM1 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -8117,7 +8117,7 @@ pub const TIM1 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -8165,7 +8165,7 @@ pub const TIM1 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -8199,7 +8199,7 @@ pub const TIM1 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -8238,7 +8238,7 @@ pub const TIM1 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -8265,7 +8265,7 @@ pub const TIM1 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -8304,7 +8304,7 @@ pub const TIM1 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/compare 3
         CC3S: u2 = 0,
@@ -8331,7 +8331,7 @@ pub const TIM1 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -8383,7 +8383,7 @@ pub const TIM1 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -8395,7 +8395,7 @@ pub const TIM1 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -8407,7 +8407,7 @@ pub const TIM1 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -8419,7 +8419,7 @@ pub const TIM1 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -8431,7 +8431,7 @@ pub const TIM1 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -8443,7 +8443,7 @@ pub const TIM1 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -8455,7 +8455,7 @@ pub const TIM1 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -8467,7 +8467,7 @@ pub const TIM1 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -8485,7 +8485,7 @@ pub const TIM1 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -8497,7 +8497,7 @@ pub const TIM1 = struct {
     pub const DMAR = Register(DMAR_val).init(base_address + 0x4c);
 
     /// RCR
-    const RCR_val = packed struct {
+    pub const RCR_val = packed struct {
         /// REP [0:7]
         /// Repetition counter value
         REP: u8 = 0,
@@ -8510,7 +8510,7 @@ pub const TIM1 = struct {
     pub const RCR = Register(RCR_val).init(base_address + 0x30);
 
     /// BDTR
-    const BDTR_val = packed struct {
+    pub const BDTR_val = packed struct {
         /// DTG [0:7]
         /// Dead-time generator setup
         DTG: u8 = 0,
@@ -8547,7 +8547,7 @@ pub const TIM1 = struct {
 pub const TIM8 = struct {
     const base_address = 0x40013400;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -8581,7 +8581,7 @@ pub const TIM8 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// CCPC [0:0]
         /// Capture/compare preloaded
         CCPC: u1 = 0,
@@ -8629,7 +8629,7 @@ pub const TIM8 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -8661,7 +8661,7 @@ pub const TIM8 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -8716,7 +8716,7 @@ pub const TIM8 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -8764,7 +8764,7 @@ pub const TIM8 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -8798,7 +8798,7 @@ pub const TIM8 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -8837,7 +8837,7 @@ pub const TIM8 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -8864,7 +8864,7 @@ pub const TIM8 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -8903,7 +8903,7 @@ pub const TIM8 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/compare 3
         CC3S: u2 = 0,
@@ -8930,7 +8930,7 @@ pub const TIM8 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -8982,7 +8982,7 @@ pub const TIM8 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -8994,7 +8994,7 @@ pub const TIM8 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -9006,7 +9006,7 @@ pub const TIM8 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -9018,7 +9018,7 @@ pub const TIM8 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -9030,7 +9030,7 @@ pub const TIM8 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -9042,7 +9042,7 @@ pub const TIM8 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -9054,7 +9054,7 @@ pub const TIM8 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -9066,7 +9066,7 @@ pub const TIM8 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -9084,7 +9084,7 @@ pub const TIM8 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -9096,7 +9096,7 @@ pub const TIM8 = struct {
     pub const DMAR = Register(DMAR_val).init(base_address + 0x4c);
 
     /// RCR
-    const RCR_val = packed struct {
+    pub const RCR_val = packed struct {
         /// REP [0:7]
         /// Repetition counter value
         REP: u8 = 0,
@@ -9109,7 +9109,7 @@ pub const TIM8 = struct {
     pub const RCR = Register(RCR_val).init(base_address + 0x30);
 
     /// BDTR
-    const BDTR_val = packed struct {
+    pub const BDTR_val = packed struct {
         /// DTG [0:7]
         /// Dead-time generator setup
         DTG: u8 = 0,
@@ -9146,7 +9146,7 @@ pub const TIM8 = struct {
 pub const TIM2 = struct {
     const base_address = 0x40000000;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -9180,7 +9180,7 @@ pub const TIM2 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// CCDS [3:3]
@@ -9201,7 +9201,7 @@ pub const TIM2 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -9233,7 +9233,7 @@ pub const TIM2 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -9285,7 +9285,7 @@ pub const TIM2 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -9330,7 +9330,7 @@ pub const TIM2 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -9361,7 +9361,7 @@ pub const TIM2 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -9400,7 +9400,7 @@ pub const TIM2 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -9427,7 +9427,7 @@ pub const TIM2 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -9466,7 +9466,7 @@ pub const TIM2 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -9493,7 +9493,7 @@ pub const TIM2 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -9533,7 +9533,7 @@ pub const TIM2 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -9545,7 +9545,7 @@ pub const TIM2 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -9557,7 +9557,7 @@ pub const TIM2 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -9569,7 +9569,7 @@ pub const TIM2 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -9581,7 +9581,7 @@ pub const TIM2 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -9593,7 +9593,7 @@ pub const TIM2 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -9605,7 +9605,7 @@ pub const TIM2 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -9617,7 +9617,7 @@ pub const TIM2 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -9635,7 +9635,7 @@ pub const TIM2 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -9651,7 +9651,7 @@ pub const TIM2 = struct {
 pub const TIM3 = struct {
     const base_address = 0x40000400;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -9685,7 +9685,7 @@ pub const TIM3 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// CCDS [3:3]
@@ -9706,7 +9706,7 @@ pub const TIM3 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -9738,7 +9738,7 @@ pub const TIM3 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -9790,7 +9790,7 @@ pub const TIM3 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -9835,7 +9835,7 @@ pub const TIM3 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -9866,7 +9866,7 @@ pub const TIM3 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -9905,7 +9905,7 @@ pub const TIM3 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -9932,7 +9932,7 @@ pub const TIM3 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -9971,7 +9971,7 @@ pub const TIM3 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -9998,7 +9998,7 @@ pub const TIM3 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -10038,7 +10038,7 @@ pub const TIM3 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -10050,7 +10050,7 @@ pub const TIM3 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -10062,7 +10062,7 @@ pub const TIM3 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -10074,7 +10074,7 @@ pub const TIM3 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -10086,7 +10086,7 @@ pub const TIM3 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -10098,7 +10098,7 @@ pub const TIM3 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -10110,7 +10110,7 @@ pub const TIM3 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -10122,7 +10122,7 @@ pub const TIM3 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -10140,7 +10140,7 @@ pub const TIM3 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -10156,7 +10156,7 @@ pub const TIM3 = struct {
 pub const TIM4 = struct {
     const base_address = 0x40000800;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -10190,7 +10190,7 @@ pub const TIM4 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// CCDS [3:3]
@@ -10211,7 +10211,7 @@ pub const TIM4 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -10243,7 +10243,7 @@ pub const TIM4 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -10295,7 +10295,7 @@ pub const TIM4 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -10340,7 +10340,7 @@ pub const TIM4 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -10371,7 +10371,7 @@ pub const TIM4 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -10410,7 +10410,7 @@ pub const TIM4 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -10437,7 +10437,7 @@ pub const TIM4 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -10476,7 +10476,7 @@ pub const TIM4 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -10503,7 +10503,7 @@ pub const TIM4 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -10543,7 +10543,7 @@ pub const TIM4 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -10555,7 +10555,7 @@ pub const TIM4 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -10567,7 +10567,7 @@ pub const TIM4 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -10579,7 +10579,7 @@ pub const TIM4 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -10591,7 +10591,7 @@ pub const TIM4 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -10603,7 +10603,7 @@ pub const TIM4 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -10615,7 +10615,7 @@ pub const TIM4 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -10627,7 +10627,7 @@ pub const TIM4 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -10645,7 +10645,7 @@ pub const TIM4 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -10661,7 +10661,7 @@ pub const TIM4 = struct {
 pub const TIM5 = struct {
     const base_address = 0x40000c00;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -10695,7 +10695,7 @@ pub const TIM5 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// CCDS [3:3]
@@ -10716,7 +10716,7 @@ pub const TIM5 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -10748,7 +10748,7 @@ pub const TIM5 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -10800,7 +10800,7 @@ pub const TIM5 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -10845,7 +10845,7 @@ pub const TIM5 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -10876,7 +10876,7 @@ pub const TIM5 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -10915,7 +10915,7 @@ pub const TIM5 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -10942,7 +10942,7 @@ pub const TIM5 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCMR2_Output
-    const CCMR2_Output_val = packed struct {
+    pub const CCMR2_Output_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -10981,7 +10981,7 @@ pub const TIM5 = struct {
     pub const CCMR2_Output = Register(CCMR2_Output_val).init(base_address + 0x1c);
 
     /// CCMR2_Input
-    const CCMR2_Input_val = packed struct {
+    pub const CCMR2_Input_val = packed struct {
         /// CC3S [0:1]
         /// Capture/Compare 3
         CC3S: u2 = 0,
@@ -11008,7 +11008,7 @@ pub const TIM5 = struct {
     pub const CCMR2_Input = Register(CCMR2_Input_val).init(base_address + 0x1c);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -11048,7 +11048,7 @@ pub const TIM5 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -11060,7 +11060,7 @@ pub const TIM5 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -11072,7 +11072,7 @@ pub const TIM5 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -11084,7 +11084,7 @@ pub const TIM5 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -11096,7 +11096,7 @@ pub const TIM5 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -11108,7 +11108,7 @@ pub const TIM5 = struct {
     pub const CCR2 = Register(CCR2_val).init(base_address + 0x38);
 
     /// CCR3
-    const CCR3_val = packed struct {
+    pub const CCR3_val = packed struct {
         /// CCR3 [0:15]
         /// Capture/Compare value
         CCR3: u16 = 0,
@@ -11120,7 +11120,7 @@ pub const TIM5 = struct {
     pub const CCR3 = Register(CCR3_val).init(base_address + 0x3c);
 
     /// CCR4
-    const CCR4_val = packed struct {
+    pub const CCR4_val = packed struct {
         /// CCR4 [0:15]
         /// Capture/Compare value
         CCR4: u16 = 0,
@@ -11132,7 +11132,7 @@ pub const TIM5 = struct {
     pub const CCR4 = Register(CCR4_val).init(base_address + 0x40);
 
     /// DCR
-    const DCR_val = packed struct {
+    pub const DCR_val = packed struct {
         /// DBA [0:4]
         /// DMA base address
         DBA: u5 = 0,
@@ -11150,7 +11150,7 @@ pub const TIM5 = struct {
     pub const DCR = Register(DCR_val).init(base_address + 0x48);
 
     /// DMAR
-    const DMAR_val = packed struct {
+    pub const DMAR_val = packed struct {
         /// DMAB [0:15]
         /// DMA register for burst
         DMAB: u16 = 0,
@@ -11166,7 +11166,7 @@ pub const TIM5 = struct {
 pub const TIM9 = struct {
     const base_address = 0x40014c00;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -11196,7 +11196,7 @@ pub const TIM9 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -11212,7 +11212,7 @@ pub const TIM9 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -11233,7 +11233,7 @@ pub const TIM9 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -11258,7 +11258,7 @@ pub const TIM9 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -11291,7 +11291,7 @@ pub const TIM9 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -11316,7 +11316,7 @@ pub const TIM9 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11352,7 +11352,7 @@ pub const TIM9 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11379,7 +11379,7 @@ pub const TIM9 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -11411,7 +11411,7 @@ pub const TIM9 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -11423,7 +11423,7 @@ pub const TIM9 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -11435,7 +11435,7 @@ pub const TIM9 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -11447,7 +11447,7 @@ pub const TIM9 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -11459,7 +11459,7 @@ pub const TIM9 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -11475,7 +11475,7 @@ pub const TIM9 = struct {
 pub const TIM12 = struct {
     const base_address = 0x40001800;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -11505,7 +11505,7 @@ pub const TIM12 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -11521,7 +11521,7 @@ pub const TIM12 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SMCR
-    const SMCR_val = packed struct {
+    pub const SMCR_val = packed struct {
         /// SMS [0:2]
         /// Slave mode selection
         SMS: u3 = 0,
@@ -11542,7 +11542,7 @@ pub const TIM12 = struct {
     pub const SMCR = Register(SMCR_val).init(base_address + 0x8);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -11567,7 +11567,7 @@ pub const TIM12 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -11600,7 +11600,7 @@ pub const TIM12 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -11625,7 +11625,7 @@ pub const TIM12 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11661,7 +11661,7 @@ pub const TIM12 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11688,7 +11688,7 @@ pub const TIM12 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -11720,7 +11720,7 @@ pub const TIM12 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -11732,7 +11732,7 @@ pub const TIM12 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -11744,7 +11744,7 @@ pub const TIM12 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -11756,7 +11756,7 @@ pub const TIM12 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -11768,7 +11768,7 @@ pub const TIM12 = struct {
     pub const CCR1 = Register(CCR1_val).init(base_address + 0x34);
 
     /// CCR2
-    const CCR2_val = packed struct {
+    pub const CCR2_val = packed struct {
         /// CCR2 [0:15]
         /// Capture/Compare 2 value
         CCR2: u16 = 0,
@@ -11784,7 +11784,7 @@ pub const TIM12 = struct {
 pub const TIM10 = struct {
     const base_address = 0x40015000;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -11811,7 +11811,7 @@ pub const TIM10 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -11827,7 +11827,7 @@ pub const TIM10 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -11844,7 +11844,7 @@ pub const TIM10 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -11866,7 +11866,7 @@ pub const TIM10 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -11883,7 +11883,7 @@ pub const TIM10 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11905,7 +11905,7 @@ pub const TIM10 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -11924,7 +11924,7 @@ pub const TIM10 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -11946,7 +11946,7 @@ pub const TIM10 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -11958,7 +11958,7 @@ pub const TIM10 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -11970,7 +11970,7 @@ pub const TIM10 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -11982,7 +11982,7 @@ pub const TIM10 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -11998,7 +11998,7 @@ pub const TIM10 = struct {
 pub const TIM11 = struct {
     const base_address = 0x40015400;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -12025,7 +12025,7 @@ pub const TIM11 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -12041,7 +12041,7 @@ pub const TIM11 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -12058,7 +12058,7 @@ pub const TIM11 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -12080,7 +12080,7 @@ pub const TIM11 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -12097,7 +12097,7 @@ pub const TIM11 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12119,7 +12119,7 @@ pub const TIM11 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12138,7 +12138,7 @@ pub const TIM11 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -12160,7 +12160,7 @@ pub const TIM11 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -12172,7 +12172,7 @@ pub const TIM11 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -12184,7 +12184,7 @@ pub const TIM11 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -12196,7 +12196,7 @@ pub const TIM11 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -12212,7 +12212,7 @@ pub const TIM11 = struct {
 pub const TIM13 = struct {
     const base_address = 0x40001c00;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -12239,7 +12239,7 @@ pub const TIM13 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -12255,7 +12255,7 @@ pub const TIM13 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -12272,7 +12272,7 @@ pub const TIM13 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -12294,7 +12294,7 @@ pub const TIM13 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -12311,7 +12311,7 @@ pub const TIM13 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12333,7 +12333,7 @@ pub const TIM13 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12352,7 +12352,7 @@ pub const TIM13 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -12374,7 +12374,7 @@ pub const TIM13 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -12386,7 +12386,7 @@ pub const TIM13 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -12398,7 +12398,7 @@ pub const TIM13 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -12410,7 +12410,7 @@ pub const TIM13 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -12426,7 +12426,7 @@ pub const TIM13 = struct {
 pub const TIM14 = struct {
     const base_address = 0x40002000;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -12453,7 +12453,7 @@ pub const TIM14 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -12469,7 +12469,7 @@ pub const TIM14 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -12486,7 +12486,7 @@ pub const TIM14 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -12508,7 +12508,7 @@ pub const TIM14 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -12525,7 +12525,7 @@ pub const TIM14 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CCMR1_Output
-    const CCMR1_Output_val = packed struct {
+    pub const CCMR1_Output_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12547,7 +12547,7 @@ pub const TIM14 = struct {
     pub const CCMR1_Output = Register(CCMR1_Output_val).init(base_address + 0x18);
 
     /// CCMR1_Input
-    const CCMR1_Input_val = packed struct {
+    pub const CCMR1_Input_val = packed struct {
         /// CC1S [0:1]
         /// Capture/Compare 1
         CC1S: u2 = 0,
@@ -12566,7 +12566,7 @@ pub const TIM14 = struct {
     pub const CCMR1_Input = Register(CCMR1_Input_val).init(base_address + 0x18);
 
     /// CCER
-    const CCER_val = packed struct {
+    pub const CCER_val = packed struct {
         /// CC1E [0:0]
         /// Capture/Compare 1 output
         CC1E: u1 = 0,
@@ -12588,7 +12588,7 @@ pub const TIM14 = struct {
     pub const CCER = Register(CCER_val).init(base_address + 0x20);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// counter value
         CNT: u16 = 0,
@@ -12600,7 +12600,7 @@ pub const TIM14 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -12612,7 +12612,7 @@ pub const TIM14 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Auto-reload value
         ARR: u16 = 0,
@@ -12624,7 +12624,7 @@ pub const TIM14 = struct {
     pub const ARR = Register(ARR_val).init(base_address + 0x2c);
 
     /// CCR1
-    const CCR1_val = packed struct {
+    pub const CCR1_val = packed struct {
         /// CCR1 [0:15]
         /// Capture/Compare 1 value
         CCR1: u16 = 0,
@@ -12640,7 +12640,7 @@ pub const TIM14 = struct {
 pub const TIM6 = struct {
     const base_address = 0x40001000;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -12667,7 +12667,7 @@ pub const TIM6 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -12683,7 +12683,7 @@ pub const TIM6 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -12701,7 +12701,7 @@ pub const TIM6 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -12715,7 +12715,7 @@ pub const TIM6 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -12729,7 +12729,7 @@ pub const TIM6 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// Low counter value
         CNT: u16 = 0,
@@ -12741,7 +12741,7 @@ pub const TIM6 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -12753,7 +12753,7 @@ pub const TIM6 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Low Auto-reload value
         ARR: u16 = 0,
@@ -12769,7 +12769,7 @@ pub const TIM6 = struct {
 pub const TIM7 = struct {
     const base_address = 0x40001400;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CEN [0:0]
         /// Counter enable
         CEN: u1 = 0,
@@ -12796,7 +12796,7 @@ pub const TIM7 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// MMS [4:6]
@@ -12812,7 +12812,7 @@ pub const TIM7 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// DIER
-    const DIER_val = packed struct {
+    pub const DIER_val = packed struct {
         /// UIE [0:0]
         /// Update interrupt enable
         UIE: u1 = 0,
@@ -12830,7 +12830,7 @@ pub const TIM7 = struct {
     pub const DIER = Register(DIER_val).init(base_address + 0xc);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// UIF [0:0]
         /// Update interrupt flag
         UIF: u1 = 0,
@@ -12844,7 +12844,7 @@ pub const TIM7 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x10);
 
     /// EGR
-    const EGR_val = packed struct {
+    pub const EGR_val = packed struct {
         /// UG [0:0]
         /// Update generation
         UG: u1 = 0,
@@ -12858,7 +12858,7 @@ pub const TIM7 = struct {
     pub const EGR = Register(EGR_val).init(base_address + 0x14);
 
     /// CNT
-    const CNT_val = packed struct {
+    pub const CNT_val = packed struct {
         /// CNT [0:15]
         /// Low counter value
         CNT: u16 = 0,
@@ -12870,7 +12870,7 @@ pub const TIM7 = struct {
     pub const CNT = Register(CNT_val).init(base_address + 0x24);
 
     /// PSC
-    const PSC_val = packed struct {
+    pub const PSC_val = packed struct {
         /// PSC [0:15]
         /// Prescaler value
         PSC: u16 = 0,
@@ -12882,7 +12882,7 @@ pub const TIM7 = struct {
     pub const PSC = Register(PSC_val).init(base_address + 0x28);
 
     /// ARR
-    const ARR_val = packed struct {
+    pub const ARR_val = packed struct {
         /// ARR [0:15]
         /// Low Auto-reload value
         ARR: u16 = 0,
@@ -12898,7 +12898,7 @@ pub const TIM7 = struct {
 pub const I2C1 = struct {
     const base_address = 0x40005400;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// PE [0:0]
         /// Peripheral enable
         PE: u1 = 0,
@@ -12953,7 +12953,7 @@ pub const I2C1 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// FREQ [0:5]
         /// Peripheral clock frequency
         FREQ: u6 = 0,
@@ -12983,7 +12983,7 @@ pub const I2C1 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// OAR1
-    const OAR1_val = packed struct {
+    pub const OAR1_val = packed struct {
         /// ADD0 [0:0]
         /// Interface address
         ADD0: u1 = 0,
@@ -13006,7 +13006,7 @@ pub const I2C1 = struct {
     pub const OAR1 = Register(OAR1_val).init(base_address + 0x8);
 
     /// OAR2
-    const OAR2_val = packed struct {
+    pub const OAR2_val = packed struct {
         /// ENDUAL [0:0]
         /// Dual addressing mode
         ENDUAL: u1 = 0,
@@ -13022,7 +13022,7 @@ pub const I2C1 = struct {
     pub const OAR2 = Register(OAR2_val).init(base_address + 0xc);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:7]
         /// 8-bit data register
         DR: u8 = 0,
@@ -13035,7 +13035,7 @@ pub const I2C1 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x10);
 
     /// SR1
-    const SR1_val = packed struct {
+    pub const SR1_val = packed struct {
         /// SB [0:0]
         /// Start bit (Master mode)
         SB: u1 = 0,
@@ -13090,7 +13090,7 @@ pub const I2C1 = struct {
     pub const SR1 = Register(SR1_val).init(base_address + 0x14);
 
     /// SR2
-    const SR2_val = packed struct {
+    pub const SR2_val = packed struct {
         /// MSL [0:0]
         /// Master/slave
         MSL: u1 = 0,
@@ -13125,7 +13125,7 @@ pub const I2C1 = struct {
     pub const SR2 = Register(SR2_val).init(base_address + 0x18);
 
     /// CCR
-    const CCR_val = packed struct {
+    pub const CCR_val = packed struct {
         /// CCR [0:11]
         /// Clock control register in Fast/Standard
         CCR: u12 = 0,
@@ -13145,7 +13145,7 @@ pub const I2C1 = struct {
     pub const CCR = Register(CCR_val).init(base_address + 0x1c);
 
     /// TRISE
-    const TRISE_val = packed struct {
+    pub const TRISE_val = packed struct {
         /// TRISE [0:5]
         /// Maximum rise time in Fast/Standard mode
         TRISE: u6 = 2,
@@ -13163,7 +13163,7 @@ pub const I2C1 = struct {
 pub const I2C2 = struct {
     const base_address = 0x40005800;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// PE [0:0]
         /// Peripheral enable
         PE: u1 = 0,
@@ -13218,7 +13218,7 @@ pub const I2C2 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// FREQ [0:5]
         /// Peripheral clock frequency
         FREQ: u6 = 0,
@@ -13248,7 +13248,7 @@ pub const I2C2 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// OAR1
-    const OAR1_val = packed struct {
+    pub const OAR1_val = packed struct {
         /// ADD0 [0:0]
         /// Interface address
         ADD0: u1 = 0,
@@ -13271,7 +13271,7 @@ pub const I2C2 = struct {
     pub const OAR1 = Register(OAR1_val).init(base_address + 0x8);
 
     /// OAR2
-    const OAR2_val = packed struct {
+    pub const OAR2_val = packed struct {
         /// ENDUAL [0:0]
         /// Dual addressing mode
         ENDUAL: u1 = 0,
@@ -13287,7 +13287,7 @@ pub const I2C2 = struct {
     pub const OAR2 = Register(OAR2_val).init(base_address + 0xc);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:7]
         /// 8-bit data register
         DR: u8 = 0,
@@ -13300,7 +13300,7 @@ pub const I2C2 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x10);
 
     /// SR1
-    const SR1_val = packed struct {
+    pub const SR1_val = packed struct {
         /// SB [0:0]
         /// Start bit (Master mode)
         SB: u1 = 0,
@@ -13355,7 +13355,7 @@ pub const I2C2 = struct {
     pub const SR1 = Register(SR1_val).init(base_address + 0x14);
 
     /// SR2
-    const SR2_val = packed struct {
+    pub const SR2_val = packed struct {
         /// MSL [0:0]
         /// Master/slave
         MSL: u1 = 0,
@@ -13390,7 +13390,7 @@ pub const I2C2 = struct {
     pub const SR2 = Register(SR2_val).init(base_address + 0x18);
 
     /// CCR
-    const CCR_val = packed struct {
+    pub const CCR_val = packed struct {
         /// CCR [0:11]
         /// Clock control register in Fast/Standard
         CCR: u12 = 0,
@@ -13410,7 +13410,7 @@ pub const I2C2 = struct {
     pub const CCR = Register(CCR_val).init(base_address + 0x1c);
 
     /// TRISE
-    const TRISE_val = packed struct {
+    pub const TRISE_val = packed struct {
         /// TRISE [0:5]
         /// Maximum rise time in Fast/Standard mode
         TRISE: u6 = 2,
@@ -13428,7 +13428,7 @@ pub const I2C2 = struct {
 pub const SPI1 = struct {
     const base_address = 0x40013000;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CPHA [0:0]
         /// Clock phase
         CPHA: u1 = 0,
@@ -13479,7 +13479,7 @@ pub const SPI1 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// RXDMAEN [0:0]
         /// Rx buffer DMA enable
         RXDMAEN: u1 = 0,
@@ -13509,7 +13509,7 @@ pub const SPI1 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// RXNE [0:0]
         /// Receive buffer not empty
         RXNE: u1 = 0,
@@ -13543,7 +13543,7 @@ pub const SPI1 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x8);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:15]
         /// Data register
         DR: u16 = 0,
@@ -13555,7 +13555,7 @@ pub const SPI1 = struct {
     pub const DR = Register(DR_val).init(base_address + 0xc);
 
     /// CRCPR
-    const CRCPR_val = packed struct {
+    pub const CRCPR_val = packed struct {
         /// CRCPOLY [0:15]
         /// CRC polynomial register
         CRCPOLY: u16 = 7,
@@ -13567,7 +13567,7 @@ pub const SPI1 = struct {
     pub const CRCPR = Register(CRCPR_val).init(base_address + 0x10);
 
     /// RXCRCR
-    const RXCRCR_val = packed struct {
+    pub const RXCRCR_val = packed struct {
         /// RxCRC [0:15]
         /// Rx CRC register
         RxCRC: u16 = 0,
@@ -13579,7 +13579,7 @@ pub const SPI1 = struct {
     pub const RXCRCR = Register(RXCRCR_val).init(base_address + 0x14);
 
     /// TXCRCR
-    const TXCRCR_val = packed struct {
+    pub const TXCRCR_val = packed struct {
         /// TxCRC [0:15]
         /// Tx CRC register
         TxCRC: u16 = 0,
@@ -13591,7 +13591,7 @@ pub const SPI1 = struct {
     pub const TXCRCR = Register(TXCRCR_val).init(base_address + 0x18);
 
     /// I2SCFGR
-    const I2SCFGR_val = packed struct {
+    pub const I2SCFGR_val = packed struct {
         /// CHLEN [0:0]
         /// Channel length (number of bits per audio
         CHLEN: u1 = 0,
@@ -13627,7 +13627,7 @@ pub const SPI1 = struct {
     pub const I2SCFGR = Register(I2SCFGR_val).init(base_address + 0x1c);
 
     /// I2SPR
-    const I2SPR_val = packed struct {
+    pub const I2SPR_val = packed struct {
         /// I2SDIV [0:7]
         /// I2S Linear prescaler
         I2SDIV: u8 = 16,
@@ -13650,7 +13650,7 @@ pub const SPI1 = struct {
 pub const SPI2 = struct {
     const base_address = 0x40003800;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CPHA [0:0]
         /// Clock phase
         CPHA: u1 = 0,
@@ -13701,7 +13701,7 @@ pub const SPI2 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// RXDMAEN [0:0]
         /// Rx buffer DMA enable
         RXDMAEN: u1 = 0,
@@ -13731,7 +13731,7 @@ pub const SPI2 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// RXNE [0:0]
         /// Receive buffer not empty
         RXNE: u1 = 0,
@@ -13765,7 +13765,7 @@ pub const SPI2 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x8);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:15]
         /// Data register
         DR: u16 = 0,
@@ -13777,7 +13777,7 @@ pub const SPI2 = struct {
     pub const DR = Register(DR_val).init(base_address + 0xc);
 
     /// CRCPR
-    const CRCPR_val = packed struct {
+    pub const CRCPR_val = packed struct {
         /// CRCPOLY [0:15]
         /// CRC polynomial register
         CRCPOLY: u16 = 7,
@@ -13789,7 +13789,7 @@ pub const SPI2 = struct {
     pub const CRCPR = Register(CRCPR_val).init(base_address + 0x10);
 
     /// RXCRCR
-    const RXCRCR_val = packed struct {
+    pub const RXCRCR_val = packed struct {
         /// RxCRC [0:15]
         /// Rx CRC register
         RxCRC: u16 = 0,
@@ -13801,7 +13801,7 @@ pub const SPI2 = struct {
     pub const RXCRCR = Register(RXCRCR_val).init(base_address + 0x14);
 
     /// TXCRCR
-    const TXCRCR_val = packed struct {
+    pub const TXCRCR_val = packed struct {
         /// TxCRC [0:15]
         /// Tx CRC register
         TxCRC: u16 = 0,
@@ -13813,7 +13813,7 @@ pub const SPI2 = struct {
     pub const TXCRCR = Register(TXCRCR_val).init(base_address + 0x18);
 
     /// I2SCFGR
-    const I2SCFGR_val = packed struct {
+    pub const I2SCFGR_val = packed struct {
         /// CHLEN [0:0]
         /// Channel length (number of bits per audio
         CHLEN: u1 = 0,
@@ -13849,7 +13849,7 @@ pub const SPI2 = struct {
     pub const I2SCFGR = Register(I2SCFGR_val).init(base_address + 0x1c);
 
     /// I2SPR
-    const I2SPR_val = packed struct {
+    pub const I2SPR_val = packed struct {
         /// I2SDIV [0:7]
         /// I2S Linear prescaler
         I2SDIV: u8 = 16,
@@ -13872,7 +13872,7 @@ pub const SPI2 = struct {
 pub const SPI3 = struct {
     const base_address = 0x40003c00;
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// CPHA [0:0]
         /// Clock phase
         CPHA: u1 = 0,
@@ -13923,7 +13923,7 @@ pub const SPI3 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x0);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// RXDMAEN [0:0]
         /// Rx buffer DMA enable
         RXDMAEN: u1 = 0,
@@ -13953,7 +13953,7 @@ pub const SPI3 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x4);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// RXNE [0:0]
         /// Receive buffer not empty
         RXNE: u1 = 0,
@@ -13987,7 +13987,7 @@ pub const SPI3 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x8);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:15]
         /// Data register
         DR: u16 = 0,
@@ -13999,7 +13999,7 @@ pub const SPI3 = struct {
     pub const DR = Register(DR_val).init(base_address + 0xc);
 
     /// CRCPR
-    const CRCPR_val = packed struct {
+    pub const CRCPR_val = packed struct {
         /// CRCPOLY [0:15]
         /// CRC polynomial register
         CRCPOLY: u16 = 7,
@@ -14011,7 +14011,7 @@ pub const SPI3 = struct {
     pub const CRCPR = Register(CRCPR_val).init(base_address + 0x10);
 
     /// RXCRCR
-    const RXCRCR_val = packed struct {
+    pub const RXCRCR_val = packed struct {
         /// RxCRC [0:15]
         /// Rx CRC register
         RxCRC: u16 = 0,
@@ -14023,7 +14023,7 @@ pub const SPI3 = struct {
     pub const RXCRCR = Register(RXCRCR_val).init(base_address + 0x14);
 
     /// TXCRCR
-    const TXCRCR_val = packed struct {
+    pub const TXCRCR_val = packed struct {
         /// TxCRC [0:15]
         /// Tx CRC register
         TxCRC: u16 = 0,
@@ -14035,7 +14035,7 @@ pub const SPI3 = struct {
     pub const TXCRCR = Register(TXCRCR_val).init(base_address + 0x18);
 
     /// I2SCFGR
-    const I2SCFGR_val = packed struct {
+    pub const I2SCFGR_val = packed struct {
         /// CHLEN [0:0]
         /// Channel length (number of bits per audio
         CHLEN: u1 = 0,
@@ -14071,7 +14071,7 @@ pub const SPI3 = struct {
     pub const I2SCFGR = Register(I2SCFGR_val).init(base_address + 0x1c);
 
     /// I2SPR
-    const I2SPR_val = packed struct {
+    pub const I2SPR_val = packed struct {
         /// I2SDIV [0:7]
         /// I2S Linear prescaler
         I2SDIV: u8 = 16,
@@ -14094,7 +14094,7 @@ pub const SPI3 = struct {
 pub const USART1 = struct {
     const base_address = 0x40013800;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PE [0:0]
         /// Parity error
         PE: u1 = 0,
@@ -14134,7 +14134,7 @@ pub const USART1 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:8]
         /// Data value
         DR: u9 = 0,
@@ -14147,7 +14147,7 @@ pub const USART1 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x4);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// DIV_Fraction [0:3]
         /// fraction of USARTDIV
         DIV_Fraction: u4 = 0,
@@ -14162,7 +14162,7 @@ pub const USART1 = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x8);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// SBK [0:0]
         /// Send break
         SBK: u1 = 0,
@@ -14214,7 +14214,7 @@ pub const USART1 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0xc);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADD [0:3]
         /// Address of the USART node
         ADD: u4 = 0,
@@ -14255,7 +14255,7 @@ pub const USART1 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x10);
 
     /// CR3
-    const CR3_val = packed struct {
+    pub const CR3_val = packed struct {
         /// EIE [0:0]
         /// Error interrupt enable
         EIE: u1 = 0,
@@ -14298,7 +14298,7 @@ pub const USART1 = struct {
     pub const CR3 = Register(CR3_val).init(base_address + 0x14);
 
     /// GTPR
-    const GTPR_val = packed struct {
+    pub const GTPR_val = packed struct {
         /// PSC [0:7]
         /// Prescaler value
         PSC: u8 = 0,
@@ -14317,7 +14317,7 @@ pub const USART1 = struct {
 pub const USART2 = struct {
     const base_address = 0x40004400;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PE [0:0]
         /// Parity error
         PE: u1 = 0,
@@ -14357,7 +14357,7 @@ pub const USART2 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:8]
         /// Data value
         DR: u9 = 0,
@@ -14370,7 +14370,7 @@ pub const USART2 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x4);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// DIV_Fraction [0:3]
         /// fraction of USARTDIV
         DIV_Fraction: u4 = 0,
@@ -14385,7 +14385,7 @@ pub const USART2 = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x8);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// SBK [0:0]
         /// Send break
         SBK: u1 = 0,
@@ -14437,7 +14437,7 @@ pub const USART2 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0xc);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADD [0:3]
         /// Address of the USART node
         ADD: u4 = 0,
@@ -14478,7 +14478,7 @@ pub const USART2 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x10);
 
     /// CR3
-    const CR3_val = packed struct {
+    pub const CR3_val = packed struct {
         /// EIE [0:0]
         /// Error interrupt enable
         EIE: u1 = 0,
@@ -14521,7 +14521,7 @@ pub const USART2 = struct {
     pub const CR3 = Register(CR3_val).init(base_address + 0x14);
 
     /// GTPR
-    const GTPR_val = packed struct {
+    pub const GTPR_val = packed struct {
         /// PSC [0:7]
         /// Prescaler value
         PSC: u8 = 0,
@@ -14540,7 +14540,7 @@ pub const USART2 = struct {
 pub const USART3 = struct {
     const base_address = 0x40004800;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PE [0:0]
         /// Parity error
         PE: u1 = 0,
@@ -14580,7 +14580,7 @@ pub const USART3 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:8]
         /// Data value
         DR: u9 = 0,
@@ -14593,7 +14593,7 @@ pub const USART3 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x4);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// DIV_Fraction [0:3]
         /// fraction of USARTDIV
         DIV_Fraction: u4 = 0,
@@ -14608,7 +14608,7 @@ pub const USART3 = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x8);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// SBK [0:0]
         /// Send break
         SBK: u1 = 0,
@@ -14660,7 +14660,7 @@ pub const USART3 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0xc);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADD [0:3]
         /// Address of the USART node
         ADD: u4 = 0,
@@ -14701,7 +14701,7 @@ pub const USART3 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x10);
 
     /// CR3
-    const CR3_val = packed struct {
+    pub const CR3_val = packed struct {
         /// EIE [0:0]
         /// Error interrupt enable
         EIE: u1 = 0,
@@ -14744,7 +14744,7 @@ pub const USART3 = struct {
     pub const CR3 = Register(CR3_val).init(base_address + 0x14);
 
     /// GTPR
-    const GTPR_val = packed struct {
+    pub const GTPR_val = packed struct {
         /// PSC [0:7]
         /// Prescaler value
         PSC: u8 = 0,
@@ -14763,7 +14763,7 @@ pub const USART3 = struct {
 pub const ADC1 = struct {
     const base_address = 0x40012400;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// AWD [0:0]
         /// Analog watchdog flag
         AWD: u1 = 0,
@@ -14789,7 +14789,7 @@ pub const ADC1 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// AWDCH [0:4]
         /// Analog watchdog channel select
         AWDCH: u5 = 0,
@@ -14838,7 +14838,7 @@ pub const ADC1 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x4);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADON [0:0]
         /// A/D converter ON / OFF
         ADON: u1 = 0,
@@ -14891,7 +14891,7 @@ pub const ADC1 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x8);
 
     /// SMPR1
-    const SMPR1_val = packed struct {
+    pub const SMPR1_val = packed struct {
         /// SMP10 [0:2]
         /// Channel 10 sample time
         SMP10: u3 = 0,
@@ -14923,7 +14923,7 @@ pub const ADC1 = struct {
     pub const SMPR1 = Register(SMPR1_val).init(base_address + 0xc);
 
     /// SMPR2
-    const SMPR2_val = packed struct {
+    pub const SMPR2_val = packed struct {
         /// SMP0 [0:2]
         /// Channel 0 sample time
         SMP0: u3 = 0,
@@ -14961,7 +14961,7 @@ pub const ADC1 = struct {
     pub const SMPR2 = Register(SMPR2_val).init(base_address + 0x10);
 
     /// JOFR1
-    const JOFR1_val = packed struct {
+    pub const JOFR1_val = packed struct {
         /// JOFFSET1 [0:11]
         /// Data offset for injected channel
         JOFFSET1: u12 = 0,
@@ -14974,7 +14974,7 @@ pub const ADC1 = struct {
     pub const JOFR1 = Register(JOFR1_val).init(base_address + 0x14);
 
     /// JOFR2
-    const JOFR2_val = packed struct {
+    pub const JOFR2_val = packed struct {
         /// JOFFSET2 [0:11]
         /// Data offset for injected channel
         JOFFSET2: u12 = 0,
@@ -14987,7 +14987,7 @@ pub const ADC1 = struct {
     pub const JOFR2 = Register(JOFR2_val).init(base_address + 0x18);
 
     /// JOFR3
-    const JOFR3_val = packed struct {
+    pub const JOFR3_val = packed struct {
         /// JOFFSET3 [0:11]
         /// Data offset for injected channel
         JOFFSET3: u12 = 0,
@@ -15000,7 +15000,7 @@ pub const ADC1 = struct {
     pub const JOFR3 = Register(JOFR3_val).init(base_address + 0x1c);
 
     /// JOFR4
-    const JOFR4_val = packed struct {
+    pub const JOFR4_val = packed struct {
         /// JOFFSET4 [0:11]
         /// Data offset for injected channel
         JOFFSET4: u12 = 0,
@@ -15013,7 +15013,7 @@ pub const ADC1 = struct {
     pub const JOFR4 = Register(JOFR4_val).init(base_address + 0x20);
 
     /// HTR
-    const HTR_val = packed struct {
+    pub const HTR_val = packed struct {
         /// HT [0:11]
         /// Analog watchdog higher
         HT: u12 = 4095,
@@ -15026,7 +15026,7 @@ pub const ADC1 = struct {
     pub const HTR = Register(HTR_val).init(base_address + 0x24);
 
     /// LTR
-    const LTR_val = packed struct {
+    pub const LTR_val = packed struct {
         /// LT [0:11]
         /// Analog watchdog lower
         LT: u12 = 0,
@@ -15039,7 +15039,7 @@ pub const ADC1 = struct {
     pub const LTR = Register(LTR_val).init(base_address + 0x28);
 
     /// SQR1
-    const SQR1_val = packed struct {
+    pub const SQR1_val = packed struct {
         /// SQ13 [0:4]
         /// 13th conversion in regular
         SQ13: u5 = 0,
@@ -15062,7 +15062,7 @@ pub const ADC1 = struct {
     pub const SQR1 = Register(SQR1_val).init(base_address + 0x2c);
 
     /// SQR2
-    const SQR2_val = packed struct {
+    pub const SQR2_val = packed struct {
         /// SQ7 [0:4]
         /// 7th conversion in regular
         SQ7: u5 = 0,
@@ -15088,7 +15088,7 @@ pub const ADC1 = struct {
     pub const SQR2 = Register(SQR2_val).init(base_address + 0x30);
 
     /// SQR3
-    const SQR3_val = packed struct {
+    pub const SQR3_val = packed struct {
         /// SQ1 [0:4]
         /// 1st conversion in regular
         SQ1: u5 = 0,
@@ -15114,7 +15114,7 @@ pub const ADC1 = struct {
     pub const SQR3 = Register(SQR3_val).init(base_address + 0x34);
 
     /// JSQR
-    const JSQR_val = packed struct {
+    pub const JSQR_val = packed struct {
         /// JSQ1 [0:4]
         /// 1st conversion in injected
         JSQ1: u5 = 0,
@@ -15138,7 +15138,7 @@ pub const ADC1 = struct {
     pub const JSQR = Register(JSQR_val).init(base_address + 0x38);
 
     /// JDR1
-    const JDR1_val = packed struct {
+    pub const JDR1_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15150,7 +15150,7 @@ pub const ADC1 = struct {
     pub const JDR1 = Register(JDR1_val).init(base_address + 0x3c);
 
     /// JDR2
-    const JDR2_val = packed struct {
+    pub const JDR2_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15162,7 +15162,7 @@ pub const ADC1 = struct {
     pub const JDR2 = Register(JDR2_val).init(base_address + 0x40);
 
     /// JDR3
-    const JDR3_val = packed struct {
+    pub const JDR3_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15174,7 +15174,7 @@ pub const ADC1 = struct {
     pub const JDR3 = Register(JDR3_val).init(base_address + 0x44);
 
     /// JDR4
-    const JDR4_val = packed struct {
+    pub const JDR4_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15186,7 +15186,7 @@ pub const ADC1 = struct {
     pub const JDR4 = Register(JDR4_val).init(base_address + 0x48);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DATA [0:15]
         /// Regular data
         DATA: u16 = 0,
@@ -15202,7 +15202,7 @@ pub const ADC1 = struct {
 pub const ADC2 = struct {
     const base_address = 0x40012800;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// AWD [0:0]
         /// Analog watchdog flag
         AWD: u1 = 0,
@@ -15228,7 +15228,7 @@ pub const ADC2 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// AWDCH [0:4]
         /// Analog watchdog channel select
         AWDCH: u5 = 0,
@@ -15274,7 +15274,7 @@ pub const ADC2 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x4);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADON [0:0]
         /// A/D converter ON / OFF
         ADON: u1 = 0,
@@ -15327,7 +15327,7 @@ pub const ADC2 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x8);
 
     /// SMPR1
-    const SMPR1_val = packed struct {
+    pub const SMPR1_val = packed struct {
         /// SMP10 [0:2]
         /// Channel 10 sample time
         SMP10: u3 = 0,
@@ -15359,7 +15359,7 @@ pub const ADC2 = struct {
     pub const SMPR1 = Register(SMPR1_val).init(base_address + 0xc);
 
     /// SMPR2
-    const SMPR2_val = packed struct {
+    pub const SMPR2_val = packed struct {
         /// SMP0 [0:2]
         /// Channel 0 sample time
         SMP0: u3 = 0,
@@ -15397,7 +15397,7 @@ pub const ADC2 = struct {
     pub const SMPR2 = Register(SMPR2_val).init(base_address + 0x10);
 
     /// JOFR1
-    const JOFR1_val = packed struct {
+    pub const JOFR1_val = packed struct {
         /// JOFFSET1 [0:11]
         /// Data offset for injected channel
         JOFFSET1: u12 = 0,
@@ -15410,7 +15410,7 @@ pub const ADC2 = struct {
     pub const JOFR1 = Register(JOFR1_val).init(base_address + 0x14);
 
     /// JOFR2
-    const JOFR2_val = packed struct {
+    pub const JOFR2_val = packed struct {
         /// JOFFSET2 [0:11]
         /// Data offset for injected channel
         JOFFSET2: u12 = 0,
@@ -15423,7 +15423,7 @@ pub const ADC2 = struct {
     pub const JOFR2 = Register(JOFR2_val).init(base_address + 0x18);
 
     /// JOFR3
-    const JOFR3_val = packed struct {
+    pub const JOFR3_val = packed struct {
         /// JOFFSET3 [0:11]
         /// Data offset for injected channel
         JOFFSET3: u12 = 0,
@@ -15436,7 +15436,7 @@ pub const ADC2 = struct {
     pub const JOFR3 = Register(JOFR3_val).init(base_address + 0x1c);
 
     /// JOFR4
-    const JOFR4_val = packed struct {
+    pub const JOFR4_val = packed struct {
         /// JOFFSET4 [0:11]
         /// Data offset for injected channel
         JOFFSET4: u12 = 0,
@@ -15449,7 +15449,7 @@ pub const ADC2 = struct {
     pub const JOFR4 = Register(JOFR4_val).init(base_address + 0x20);
 
     /// HTR
-    const HTR_val = packed struct {
+    pub const HTR_val = packed struct {
         /// HT [0:11]
         /// Analog watchdog higher
         HT: u12 = 4095,
@@ -15462,7 +15462,7 @@ pub const ADC2 = struct {
     pub const HTR = Register(HTR_val).init(base_address + 0x24);
 
     /// LTR
-    const LTR_val = packed struct {
+    pub const LTR_val = packed struct {
         /// LT [0:11]
         /// Analog watchdog lower
         LT: u12 = 0,
@@ -15475,7 +15475,7 @@ pub const ADC2 = struct {
     pub const LTR = Register(LTR_val).init(base_address + 0x28);
 
     /// SQR1
-    const SQR1_val = packed struct {
+    pub const SQR1_val = packed struct {
         /// SQ13 [0:4]
         /// 13th conversion in regular
         SQ13: u5 = 0,
@@ -15498,7 +15498,7 @@ pub const ADC2 = struct {
     pub const SQR1 = Register(SQR1_val).init(base_address + 0x2c);
 
     /// SQR2
-    const SQR2_val = packed struct {
+    pub const SQR2_val = packed struct {
         /// SQ7 [0:4]
         /// 7th conversion in regular
         SQ7: u5 = 0,
@@ -15524,7 +15524,7 @@ pub const ADC2 = struct {
     pub const SQR2 = Register(SQR2_val).init(base_address + 0x30);
 
     /// SQR3
-    const SQR3_val = packed struct {
+    pub const SQR3_val = packed struct {
         /// SQ1 [0:4]
         /// 1st conversion in regular
         SQ1: u5 = 0,
@@ -15550,7 +15550,7 @@ pub const ADC2 = struct {
     pub const SQR3 = Register(SQR3_val).init(base_address + 0x34);
 
     /// JSQR
-    const JSQR_val = packed struct {
+    pub const JSQR_val = packed struct {
         /// JSQ1 [0:4]
         /// 1st conversion in injected
         JSQ1: u5 = 0,
@@ -15574,7 +15574,7 @@ pub const ADC2 = struct {
     pub const JSQR = Register(JSQR_val).init(base_address + 0x38);
 
     /// JDR1
-    const JDR1_val = packed struct {
+    pub const JDR1_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15586,7 +15586,7 @@ pub const ADC2 = struct {
     pub const JDR1 = Register(JDR1_val).init(base_address + 0x3c);
 
     /// JDR2
-    const JDR2_val = packed struct {
+    pub const JDR2_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15598,7 +15598,7 @@ pub const ADC2 = struct {
     pub const JDR2 = Register(JDR2_val).init(base_address + 0x40);
 
     /// JDR3
-    const JDR3_val = packed struct {
+    pub const JDR3_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15610,7 +15610,7 @@ pub const ADC2 = struct {
     pub const JDR3 = Register(JDR3_val).init(base_address + 0x44);
 
     /// JDR4
-    const JDR4_val = packed struct {
+    pub const JDR4_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -15622,7 +15622,7 @@ pub const ADC2 = struct {
     pub const JDR4 = Register(JDR4_val).init(base_address + 0x48);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DATA [0:15]
         /// Regular data
         DATA: u16 = 0,
@@ -15638,7 +15638,7 @@ pub const ADC2 = struct {
 pub const ADC3 = struct {
     const base_address = 0x40013c00;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// AWD [0:0]
         /// Analog watchdog flag
         AWD: u1 = 0,
@@ -15664,7 +15664,7 @@ pub const ADC3 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// AWDCH [0:4]
         /// Analog watchdog channel select
         AWDCH: u5 = 0,
@@ -15710,7 +15710,7 @@ pub const ADC3 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0x4);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADON [0:0]
         /// A/D converter ON / OFF
         ADON: u1 = 0,
@@ -15763,7 +15763,7 @@ pub const ADC3 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x8);
 
     /// SMPR1
-    const SMPR1_val = packed struct {
+    pub const SMPR1_val = packed struct {
         /// SMP10 [0:2]
         /// Channel 10 sample time
         SMP10: u3 = 0,
@@ -15795,7 +15795,7 @@ pub const ADC3 = struct {
     pub const SMPR1 = Register(SMPR1_val).init(base_address + 0xc);
 
     /// SMPR2
-    const SMPR2_val = packed struct {
+    pub const SMPR2_val = packed struct {
         /// SMP0 [0:2]
         /// Channel 0 sample time
         SMP0: u3 = 0,
@@ -15833,7 +15833,7 @@ pub const ADC3 = struct {
     pub const SMPR2 = Register(SMPR2_val).init(base_address + 0x10);
 
     /// JOFR1
-    const JOFR1_val = packed struct {
+    pub const JOFR1_val = packed struct {
         /// JOFFSET1 [0:11]
         /// Data offset for injected channel
         JOFFSET1: u12 = 0,
@@ -15846,7 +15846,7 @@ pub const ADC3 = struct {
     pub const JOFR1 = Register(JOFR1_val).init(base_address + 0x14);
 
     /// JOFR2
-    const JOFR2_val = packed struct {
+    pub const JOFR2_val = packed struct {
         /// JOFFSET2 [0:11]
         /// Data offset for injected channel
         JOFFSET2: u12 = 0,
@@ -15859,7 +15859,7 @@ pub const ADC3 = struct {
     pub const JOFR2 = Register(JOFR2_val).init(base_address + 0x18);
 
     /// JOFR3
-    const JOFR3_val = packed struct {
+    pub const JOFR3_val = packed struct {
         /// JOFFSET3 [0:11]
         /// Data offset for injected channel
         JOFFSET3: u12 = 0,
@@ -15872,7 +15872,7 @@ pub const ADC3 = struct {
     pub const JOFR3 = Register(JOFR3_val).init(base_address + 0x1c);
 
     /// JOFR4
-    const JOFR4_val = packed struct {
+    pub const JOFR4_val = packed struct {
         /// JOFFSET4 [0:11]
         /// Data offset for injected channel
         JOFFSET4: u12 = 0,
@@ -15885,7 +15885,7 @@ pub const ADC3 = struct {
     pub const JOFR4 = Register(JOFR4_val).init(base_address + 0x20);
 
     /// HTR
-    const HTR_val = packed struct {
+    pub const HTR_val = packed struct {
         /// HT [0:11]
         /// Analog watchdog higher
         HT: u12 = 4095,
@@ -15898,7 +15898,7 @@ pub const ADC3 = struct {
     pub const HTR = Register(HTR_val).init(base_address + 0x24);
 
     /// LTR
-    const LTR_val = packed struct {
+    pub const LTR_val = packed struct {
         /// LT [0:11]
         /// Analog watchdog lower
         LT: u12 = 0,
@@ -15911,7 +15911,7 @@ pub const ADC3 = struct {
     pub const LTR = Register(LTR_val).init(base_address + 0x28);
 
     /// SQR1
-    const SQR1_val = packed struct {
+    pub const SQR1_val = packed struct {
         /// SQ13 [0:4]
         /// 13th conversion in regular
         SQ13: u5 = 0,
@@ -15934,7 +15934,7 @@ pub const ADC3 = struct {
     pub const SQR1 = Register(SQR1_val).init(base_address + 0x2c);
 
     /// SQR2
-    const SQR2_val = packed struct {
+    pub const SQR2_val = packed struct {
         /// SQ7 [0:4]
         /// 7th conversion in regular
         SQ7: u5 = 0,
@@ -15960,7 +15960,7 @@ pub const ADC3 = struct {
     pub const SQR2 = Register(SQR2_val).init(base_address + 0x30);
 
     /// SQR3
-    const SQR3_val = packed struct {
+    pub const SQR3_val = packed struct {
         /// SQ1 [0:4]
         /// 1st conversion in regular
         SQ1: u5 = 0,
@@ -15986,7 +15986,7 @@ pub const ADC3 = struct {
     pub const SQR3 = Register(SQR3_val).init(base_address + 0x34);
 
     /// JSQR
-    const JSQR_val = packed struct {
+    pub const JSQR_val = packed struct {
         /// JSQ1 [0:4]
         /// 1st conversion in injected
         JSQ1: u5 = 0,
@@ -16010,7 +16010,7 @@ pub const ADC3 = struct {
     pub const JSQR = Register(JSQR_val).init(base_address + 0x38);
 
     /// JDR1
-    const JDR1_val = packed struct {
+    pub const JDR1_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -16022,7 +16022,7 @@ pub const ADC3 = struct {
     pub const JDR1 = Register(JDR1_val).init(base_address + 0x3c);
 
     /// JDR2
-    const JDR2_val = packed struct {
+    pub const JDR2_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -16034,7 +16034,7 @@ pub const ADC3 = struct {
     pub const JDR2 = Register(JDR2_val).init(base_address + 0x40);
 
     /// JDR3
-    const JDR3_val = packed struct {
+    pub const JDR3_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -16046,7 +16046,7 @@ pub const ADC3 = struct {
     pub const JDR3 = Register(JDR3_val).init(base_address + 0x44);
 
     /// JDR4
-    const JDR4_val = packed struct {
+    pub const JDR4_val = packed struct {
         /// JDATA [0:15]
         /// Injected data
         JDATA: u16 = 0,
@@ -16058,7 +16058,7 @@ pub const ADC3 = struct {
     pub const JDR4 = Register(JDR4_val).init(base_address + 0x48);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DATA [0:15]
         /// Regular data
         DATA: u16 = 0,
@@ -16074,7 +16074,7 @@ pub const ADC3 = struct {
 pub const CAN1 = struct {
     const base_address = 0x40006400;
     /// CAN_MCR
-    const CAN_MCR_val = packed struct {
+    pub const CAN_MCR_val = packed struct {
         /// INRQ [0:0]
         /// INRQ
         INRQ: u1 = 0,
@@ -16115,7 +16115,7 @@ pub const CAN1 = struct {
     pub const CAN_MCR = Register(CAN_MCR_val).init(base_address + 0x0);
 
     /// CAN_MSR
-    const CAN_MSR_val = packed struct {
+    pub const CAN_MSR_val = packed struct {
         /// INAK [0:0]
         /// INAK
         INAK: u1 = 0,
@@ -16154,7 +16154,7 @@ pub const CAN1 = struct {
     pub const CAN_MSR = Register(CAN_MSR_val).init(base_address + 0x4);
 
     /// CAN_TSR
-    const CAN_TSR_val = packed struct {
+    pub const CAN_TSR_val = packed struct {
         /// RQCP0 [0:0]
         /// RQCP0
         RQCP0: u1 = 0,
@@ -16232,7 +16232,7 @@ pub const CAN1 = struct {
     pub const CAN_TSR = Register(CAN_TSR_val).init(base_address + 0x8);
 
     /// CAN_RF0R
-    const CAN_RF0R_val = packed struct {
+    pub const CAN_RF0R_val = packed struct {
         /// FMP0 [0:1]
         /// FMP0
         FMP0: u2 = 0,
@@ -16257,7 +16257,7 @@ pub const CAN1 = struct {
     pub const CAN_RF0R = Register(CAN_RF0R_val).init(base_address + 0xc);
 
     /// CAN_RF1R
-    const CAN_RF1R_val = packed struct {
+    pub const CAN_RF1R_val = packed struct {
         /// FMP1 [0:1]
         /// FMP1
         FMP1: u2 = 0,
@@ -16282,7 +16282,7 @@ pub const CAN1 = struct {
     pub const CAN_RF1R = Register(CAN_RF1R_val).init(base_address + 0x10);
 
     /// CAN_IER
-    const CAN_IER_val = packed struct {
+    pub const CAN_IER_val = packed struct {
         /// TMEIE [0:0]
         /// TMEIE
         TMEIE: u1 = 0,
@@ -16337,7 +16337,7 @@ pub const CAN1 = struct {
     pub const CAN_IER = Register(CAN_IER_val).init(base_address + 0x14);
 
     /// CAN_ESR
-    const CAN_ESR_val = packed struct {
+    pub const CAN_ESR_val = packed struct {
         /// EWGF [0:0]
         /// EWGF
         EWGF: u1 = 0,
@@ -16366,7 +16366,7 @@ pub const CAN1 = struct {
     pub const CAN_ESR = Register(CAN_ESR_val).init(base_address + 0x18);
 
     /// CAN_BTR
-    const CAN_BTR_val = packed struct {
+    pub const CAN_BTR_val = packed struct {
         /// BRP [0:9]
         /// BRP
         BRP: u10 = 0,
@@ -16396,7 +16396,7 @@ pub const CAN1 = struct {
     pub const CAN_BTR = Register(CAN_BTR_val).init(base_address + 0x1c);
 
     /// CAN_TI0R
-    const CAN_TI0R_val = packed struct {
+    pub const CAN_TI0R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -16417,7 +16417,7 @@ pub const CAN1 = struct {
     pub const CAN_TI0R = Register(CAN_TI0R_val).init(base_address + 0x180);
 
     /// CAN_TDT0R
-    const CAN_TDT0R_val = packed struct {
+    pub const CAN_TDT0R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -16436,7 +16436,7 @@ pub const CAN1 = struct {
     pub const CAN_TDT0R = Register(CAN_TDT0R_val).init(base_address + 0x184);
 
     /// CAN_TDL0R
-    const CAN_TDL0R_val = packed struct {
+    pub const CAN_TDL0R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -16454,7 +16454,7 @@ pub const CAN1 = struct {
     pub const CAN_TDL0R = Register(CAN_TDL0R_val).init(base_address + 0x188);
 
     /// CAN_TDH0R
-    const CAN_TDH0R_val = packed struct {
+    pub const CAN_TDH0R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -16472,7 +16472,7 @@ pub const CAN1 = struct {
     pub const CAN_TDH0R = Register(CAN_TDH0R_val).init(base_address + 0x18c);
 
     /// CAN_TI1R
-    const CAN_TI1R_val = packed struct {
+    pub const CAN_TI1R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -16493,7 +16493,7 @@ pub const CAN1 = struct {
     pub const CAN_TI1R = Register(CAN_TI1R_val).init(base_address + 0x190);
 
     /// CAN_TDT1R
-    const CAN_TDT1R_val = packed struct {
+    pub const CAN_TDT1R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -16512,7 +16512,7 @@ pub const CAN1 = struct {
     pub const CAN_TDT1R = Register(CAN_TDT1R_val).init(base_address + 0x194);
 
     /// CAN_TDL1R
-    const CAN_TDL1R_val = packed struct {
+    pub const CAN_TDL1R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -16530,7 +16530,7 @@ pub const CAN1 = struct {
     pub const CAN_TDL1R = Register(CAN_TDL1R_val).init(base_address + 0x198);
 
     /// CAN_TDH1R
-    const CAN_TDH1R_val = packed struct {
+    pub const CAN_TDH1R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -16548,7 +16548,7 @@ pub const CAN1 = struct {
     pub const CAN_TDH1R = Register(CAN_TDH1R_val).init(base_address + 0x19c);
 
     /// CAN_TI2R
-    const CAN_TI2R_val = packed struct {
+    pub const CAN_TI2R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -16569,7 +16569,7 @@ pub const CAN1 = struct {
     pub const CAN_TI2R = Register(CAN_TI2R_val).init(base_address + 0x1a0);
 
     /// CAN_TDT2R
-    const CAN_TDT2R_val = packed struct {
+    pub const CAN_TDT2R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -16588,7 +16588,7 @@ pub const CAN1 = struct {
     pub const CAN_TDT2R = Register(CAN_TDT2R_val).init(base_address + 0x1a4);
 
     /// CAN_TDL2R
-    const CAN_TDL2R_val = packed struct {
+    pub const CAN_TDL2R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -16606,7 +16606,7 @@ pub const CAN1 = struct {
     pub const CAN_TDL2R = Register(CAN_TDL2R_val).init(base_address + 0x1a8);
 
     /// CAN_TDH2R
-    const CAN_TDH2R_val = packed struct {
+    pub const CAN_TDH2R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -16624,7 +16624,7 @@ pub const CAN1 = struct {
     pub const CAN_TDH2R = Register(CAN_TDH2R_val).init(base_address + 0x1ac);
 
     /// CAN_RI0R
-    const CAN_RI0R_val = packed struct {
+    pub const CAN_RI0R_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// RTR [1:1]
@@ -16644,7 +16644,7 @@ pub const CAN1 = struct {
     pub const CAN_RI0R = Register(CAN_RI0R_val).init(base_address + 0x1b0);
 
     /// CAN_RDT0R
-    const CAN_RDT0R_val = packed struct {
+    pub const CAN_RDT0R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -16661,7 +16661,7 @@ pub const CAN1 = struct {
     pub const CAN_RDT0R = Register(CAN_RDT0R_val).init(base_address + 0x1b4);
 
     /// CAN_RDL0R
-    const CAN_RDL0R_val = packed struct {
+    pub const CAN_RDL0R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -16679,7 +16679,7 @@ pub const CAN1 = struct {
     pub const CAN_RDL0R = Register(CAN_RDL0R_val).init(base_address + 0x1b8);
 
     /// CAN_RDH0R
-    const CAN_RDH0R_val = packed struct {
+    pub const CAN_RDH0R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -16697,7 +16697,7 @@ pub const CAN1 = struct {
     pub const CAN_RDH0R = Register(CAN_RDH0R_val).init(base_address + 0x1bc);
 
     /// CAN_RI1R
-    const CAN_RI1R_val = packed struct {
+    pub const CAN_RI1R_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// RTR [1:1]
@@ -16717,7 +16717,7 @@ pub const CAN1 = struct {
     pub const CAN_RI1R = Register(CAN_RI1R_val).init(base_address + 0x1c0);
 
     /// CAN_RDT1R
-    const CAN_RDT1R_val = packed struct {
+    pub const CAN_RDT1R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -16734,7 +16734,7 @@ pub const CAN1 = struct {
     pub const CAN_RDT1R = Register(CAN_RDT1R_val).init(base_address + 0x1c4);
 
     /// CAN_RDL1R
-    const CAN_RDL1R_val = packed struct {
+    pub const CAN_RDL1R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -16752,7 +16752,7 @@ pub const CAN1 = struct {
     pub const CAN_RDL1R = Register(CAN_RDL1R_val).init(base_address + 0x1c8);
 
     /// CAN_RDH1R
-    const CAN_RDH1R_val = packed struct {
+    pub const CAN_RDH1R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -16770,7 +16770,7 @@ pub const CAN1 = struct {
     pub const CAN_RDH1R = Register(CAN_RDH1R_val).init(base_address + 0x1cc);
 
     /// CAN_FMR
-    const CAN_FMR_val = packed struct {
+    pub const CAN_FMR_val = packed struct {
         /// FINIT [0:0]
         /// FINIT
         FINIT: u1 = 0,
@@ -16784,7 +16784,7 @@ pub const CAN1 = struct {
     pub const CAN_FMR = Register(CAN_FMR_val).init(base_address + 0x200);
 
     /// CAN_FM1R
-    const CAN_FM1R_val = packed struct {
+    pub const CAN_FM1R_val = packed struct {
         /// FBM0 [0:0]
         /// Filter mode
         FBM0: u1 = 0,
@@ -16836,7 +16836,7 @@ pub const CAN1 = struct {
     pub const CAN_FM1R = Register(CAN_FM1R_val).init(base_address + 0x204);
 
     /// CAN_FS1R
-    const CAN_FS1R_val = packed struct {
+    pub const CAN_FS1R_val = packed struct {
         /// FSC0 [0:0]
         /// Filter scale configuration
         FSC0: u1 = 0,
@@ -16888,7 +16888,7 @@ pub const CAN1 = struct {
     pub const CAN_FS1R = Register(CAN_FS1R_val).init(base_address + 0x20c);
 
     /// CAN_FFA1R
-    const CAN_FFA1R_val = packed struct {
+    pub const CAN_FFA1R_val = packed struct {
         /// FFA0 [0:0]
         /// Filter FIFO assignment for filter
         FFA0: u1 = 0,
@@ -16940,7 +16940,7 @@ pub const CAN1 = struct {
     pub const CAN_FFA1R = Register(CAN_FFA1R_val).init(base_address + 0x214);
 
     /// CAN_FA1R
-    const CAN_FA1R_val = packed struct {
+    pub const CAN_FA1R_val = packed struct {
         /// FACT0 [0:0]
         /// Filter active
         FACT0: u1 = 0,
@@ -16992,7 +16992,7 @@ pub const CAN1 = struct {
     pub const CAN_FA1R = Register(CAN_FA1R_val).init(base_address + 0x21c);
 
     /// F0R1
-    const F0R1_val = packed struct {
+    pub const F0R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17094,7 +17094,7 @@ pub const CAN1 = struct {
     pub const F0R1 = Register(F0R1_val).init(base_address + 0x240);
 
     /// F0R2
-    const F0R2_val = packed struct {
+    pub const F0R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17196,7 +17196,7 @@ pub const CAN1 = struct {
     pub const F0R2 = Register(F0R2_val).init(base_address + 0x244);
 
     /// F1R1
-    const F1R1_val = packed struct {
+    pub const F1R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17298,7 +17298,7 @@ pub const CAN1 = struct {
     pub const F1R1 = Register(F1R1_val).init(base_address + 0x248);
 
     /// F1R2
-    const F1R2_val = packed struct {
+    pub const F1R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17400,7 +17400,7 @@ pub const CAN1 = struct {
     pub const F1R2 = Register(F1R2_val).init(base_address + 0x24c);
 
     /// F2R1
-    const F2R1_val = packed struct {
+    pub const F2R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17502,7 +17502,7 @@ pub const CAN1 = struct {
     pub const F2R1 = Register(F2R1_val).init(base_address + 0x250);
 
     /// F2R2
-    const F2R2_val = packed struct {
+    pub const F2R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17604,7 +17604,7 @@ pub const CAN1 = struct {
     pub const F2R2 = Register(F2R2_val).init(base_address + 0x254);
 
     /// F3R1
-    const F3R1_val = packed struct {
+    pub const F3R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17706,7 +17706,7 @@ pub const CAN1 = struct {
     pub const F3R1 = Register(F3R1_val).init(base_address + 0x258);
 
     /// F3R2
-    const F3R2_val = packed struct {
+    pub const F3R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17808,7 +17808,7 @@ pub const CAN1 = struct {
     pub const F3R2 = Register(F3R2_val).init(base_address + 0x25c);
 
     /// F4R1
-    const F4R1_val = packed struct {
+    pub const F4R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -17910,7 +17910,7 @@ pub const CAN1 = struct {
     pub const F4R1 = Register(F4R1_val).init(base_address + 0x260);
 
     /// F4R2
-    const F4R2_val = packed struct {
+    pub const F4R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18012,7 +18012,7 @@ pub const CAN1 = struct {
     pub const F4R2 = Register(F4R2_val).init(base_address + 0x264);
 
     /// F5R1
-    const F5R1_val = packed struct {
+    pub const F5R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18114,7 +18114,7 @@ pub const CAN1 = struct {
     pub const F5R1 = Register(F5R1_val).init(base_address + 0x268);
 
     /// F5R2
-    const F5R2_val = packed struct {
+    pub const F5R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18216,7 +18216,7 @@ pub const CAN1 = struct {
     pub const F5R2 = Register(F5R2_val).init(base_address + 0x26c);
 
     /// F6R1
-    const F6R1_val = packed struct {
+    pub const F6R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18318,7 +18318,7 @@ pub const CAN1 = struct {
     pub const F6R1 = Register(F6R1_val).init(base_address + 0x270);
 
     /// F6R2
-    const F6R2_val = packed struct {
+    pub const F6R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18420,7 +18420,7 @@ pub const CAN1 = struct {
     pub const F6R2 = Register(F6R2_val).init(base_address + 0x274);
 
     /// F7R1
-    const F7R1_val = packed struct {
+    pub const F7R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18522,7 +18522,7 @@ pub const CAN1 = struct {
     pub const F7R1 = Register(F7R1_val).init(base_address + 0x278);
 
     /// F7R2
-    const F7R2_val = packed struct {
+    pub const F7R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18624,7 +18624,7 @@ pub const CAN1 = struct {
     pub const F7R2 = Register(F7R2_val).init(base_address + 0x27c);
 
     /// F8R1
-    const F8R1_val = packed struct {
+    pub const F8R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18726,7 +18726,7 @@ pub const CAN1 = struct {
     pub const F8R1 = Register(F8R1_val).init(base_address + 0x280);
 
     /// F8R2
-    const F8R2_val = packed struct {
+    pub const F8R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18828,7 +18828,7 @@ pub const CAN1 = struct {
     pub const F8R2 = Register(F8R2_val).init(base_address + 0x284);
 
     /// F9R1
-    const F9R1_val = packed struct {
+    pub const F9R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -18930,7 +18930,7 @@ pub const CAN1 = struct {
     pub const F9R1 = Register(F9R1_val).init(base_address + 0x288);
 
     /// F9R2
-    const F9R2_val = packed struct {
+    pub const F9R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19032,7 +19032,7 @@ pub const CAN1 = struct {
     pub const F9R2 = Register(F9R2_val).init(base_address + 0x28c);
 
     /// F10R1
-    const F10R1_val = packed struct {
+    pub const F10R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19134,7 +19134,7 @@ pub const CAN1 = struct {
     pub const F10R1 = Register(F10R1_val).init(base_address + 0x290);
 
     /// F10R2
-    const F10R2_val = packed struct {
+    pub const F10R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19236,7 +19236,7 @@ pub const CAN1 = struct {
     pub const F10R2 = Register(F10R2_val).init(base_address + 0x294);
 
     /// F11R1
-    const F11R1_val = packed struct {
+    pub const F11R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19338,7 +19338,7 @@ pub const CAN1 = struct {
     pub const F11R1 = Register(F11R1_val).init(base_address + 0x298);
 
     /// F11R2
-    const F11R2_val = packed struct {
+    pub const F11R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19440,7 +19440,7 @@ pub const CAN1 = struct {
     pub const F11R2 = Register(F11R2_val).init(base_address + 0x29c);
 
     /// F12R1
-    const F12R1_val = packed struct {
+    pub const F12R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19542,7 +19542,7 @@ pub const CAN1 = struct {
     pub const F12R1 = Register(F12R1_val).init(base_address + 0x2a0);
 
     /// F12R2
-    const F12R2_val = packed struct {
+    pub const F12R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19644,7 +19644,7 @@ pub const CAN1 = struct {
     pub const F12R2 = Register(F12R2_val).init(base_address + 0x2a4);
 
     /// F13R1
-    const F13R1_val = packed struct {
+    pub const F13R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19746,7 +19746,7 @@ pub const CAN1 = struct {
     pub const F13R1 = Register(F13R1_val).init(base_address + 0x2a8);
 
     /// F13R2
-    const F13R2_val = packed struct {
+    pub const F13R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -19852,7 +19852,7 @@ pub const CAN1 = struct {
 pub const CAN2 = struct {
     const base_address = 0x40006800;
     /// CAN_MCR
-    const CAN_MCR_val = packed struct {
+    pub const CAN_MCR_val = packed struct {
         /// INRQ [0:0]
         /// INRQ
         INRQ: u1 = 0,
@@ -19893,7 +19893,7 @@ pub const CAN2 = struct {
     pub const CAN_MCR = Register(CAN_MCR_val).init(base_address + 0x0);
 
     /// CAN_MSR
-    const CAN_MSR_val = packed struct {
+    pub const CAN_MSR_val = packed struct {
         /// INAK [0:0]
         /// INAK
         INAK: u1 = 0,
@@ -19932,7 +19932,7 @@ pub const CAN2 = struct {
     pub const CAN_MSR = Register(CAN_MSR_val).init(base_address + 0x4);
 
     /// CAN_TSR
-    const CAN_TSR_val = packed struct {
+    pub const CAN_TSR_val = packed struct {
         /// RQCP0 [0:0]
         /// RQCP0
         RQCP0: u1 = 0,
@@ -20010,7 +20010,7 @@ pub const CAN2 = struct {
     pub const CAN_TSR = Register(CAN_TSR_val).init(base_address + 0x8);
 
     /// CAN_RF0R
-    const CAN_RF0R_val = packed struct {
+    pub const CAN_RF0R_val = packed struct {
         /// FMP0 [0:1]
         /// FMP0
         FMP0: u2 = 0,
@@ -20035,7 +20035,7 @@ pub const CAN2 = struct {
     pub const CAN_RF0R = Register(CAN_RF0R_val).init(base_address + 0xc);
 
     /// CAN_RF1R
-    const CAN_RF1R_val = packed struct {
+    pub const CAN_RF1R_val = packed struct {
         /// FMP1 [0:1]
         /// FMP1
         FMP1: u2 = 0,
@@ -20060,7 +20060,7 @@ pub const CAN2 = struct {
     pub const CAN_RF1R = Register(CAN_RF1R_val).init(base_address + 0x10);
 
     /// CAN_IER
-    const CAN_IER_val = packed struct {
+    pub const CAN_IER_val = packed struct {
         /// TMEIE [0:0]
         /// TMEIE
         TMEIE: u1 = 0,
@@ -20115,7 +20115,7 @@ pub const CAN2 = struct {
     pub const CAN_IER = Register(CAN_IER_val).init(base_address + 0x14);
 
     /// CAN_ESR
-    const CAN_ESR_val = packed struct {
+    pub const CAN_ESR_val = packed struct {
         /// EWGF [0:0]
         /// EWGF
         EWGF: u1 = 0,
@@ -20144,7 +20144,7 @@ pub const CAN2 = struct {
     pub const CAN_ESR = Register(CAN_ESR_val).init(base_address + 0x18);
 
     /// CAN_BTR
-    const CAN_BTR_val = packed struct {
+    pub const CAN_BTR_val = packed struct {
         /// BRP [0:9]
         /// BRP
         BRP: u10 = 0,
@@ -20174,7 +20174,7 @@ pub const CAN2 = struct {
     pub const CAN_BTR = Register(CAN_BTR_val).init(base_address + 0x1c);
 
     /// CAN_TI0R
-    const CAN_TI0R_val = packed struct {
+    pub const CAN_TI0R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -20195,7 +20195,7 @@ pub const CAN2 = struct {
     pub const CAN_TI0R = Register(CAN_TI0R_val).init(base_address + 0x180);
 
     /// CAN_TDT0R
-    const CAN_TDT0R_val = packed struct {
+    pub const CAN_TDT0R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -20214,7 +20214,7 @@ pub const CAN2 = struct {
     pub const CAN_TDT0R = Register(CAN_TDT0R_val).init(base_address + 0x184);
 
     /// CAN_TDL0R
-    const CAN_TDL0R_val = packed struct {
+    pub const CAN_TDL0R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -20232,7 +20232,7 @@ pub const CAN2 = struct {
     pub const CAN_TDL0R = Register(CAN_TDL0R_val).init(base_address + 0x188);
 
     /// CAN_TDH0R
-    const CAN_TDH0R_val = packed struct {
+    pub const CAN_TDH0R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -20250,7 +20250,7 @@ pub const CAN2 = struct {
     pub const CAN_TDH0R = Register(CAN_TDH0R_val).init(base_address + 0x18c);
 
     /// CAN_TI1R
-    const CAN_TI1R_val = packed struct {
+    pub const CAN_TI1R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -20271,7 +20271,7 @@ pub const CAN2 = struct {
     pub const CAN_TI1R = Register(CAN_TI1R_val).init(base_address + 0x190);
 
     /// CAN_TDT1R
-    const CAN_TDT1R_val = packed struct {
+    pub const CAN_TDT1R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -20290,7 +20290,7 @@ pub const CAN2 = struct {
     pub const CAN_TDT1R = Register(CAN_TDT1R_val).init(base_address + 0x194);
 
     /// CAN_TDL1R
-    const CAN_TDL1R_val = packed struct {
+    pub const CAN_TDL1R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -20308,7 +20308,7 @@ pub const CAN2 = struct {
     pub const CAN_TDL1R = Register(CAN_TDL1R_val).init(base_address + 0x198);
 
     /// CAN_TDH1R
-    const CAN_TDH1R_val = packed struct {
+    pub const CAN_TDH1R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -20326,7 +20326,7 @@ pub const CAN2 = struct {
     pub const CAN_TDH1R = Register(CAN_TDH1R_val).init(base_address + 0x19c);
 
     /// CAN_TI2R
-    const CAN_TI2R_val = packed struct {
+    pub const CAN_TI2R_val = packed struct {
         /// TXRQ [0:0]
         /// TXRQ
         TXRQ: u1 = 0,
@@ -20347,7 +20347,7 @@ pub const CAN2 = struct {
     pub const CAN_TI2R = Register(CAN_TI2R_val).init(base_address + 0x1a0);
 
     /// CAN_TDT2R
-    const CAN_TDT2R_val = packed struct {
+    pub const CAN_TDT2R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -20366,7 +20366,7 @@ pub const CAN2 = struct {
     pub const CAN_TDT2R = Register(CAN_TDT2R_val).init(base_address + 0x1a4);
 
     /// CAN_TDL2R
-    const CAN_TDL2R_val = packed struct {
+    pub const CAN_TDL2R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -20384,7 +20384,7 @@ pub const CAN2 = struct {
     pub const CAN_TDL2R = Register(CAN_TDL2R_val).init(base_address + 0x1a8);
 
     /// CAN_TDH2R
-    const CAN_TDH2R_val = packed struct {
+    pub const CAN_TDH2R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -20402,7 +20402,7 @@ pub const CAN2 = struct {
     pub const CAN_TDH2R = Register(CAN_TDH2R_val).init(base_address + 0x1ac);
 
     /// CAN_RI0R
-    const CAN_RI0R_val = packed struct {
+    pub const CAN_RI0R_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// RTR [1:1]
@@ -20422,7 +20422,7 @@ pub const CAN2 = struct {
     pub const CAN_RI0R = Register(CAN_RI0R_val).init(base_address + 0x1b0);
 
     /// CAN_RDT0R
-    const CAN_RDT0R_val = packed struct {
+    pub const CAN_RDT0R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -20439,7 +20439,7 @@ pub const CAN2 = struct {
     pub const CAN_RDT0R = Register(CAN_RDT0R_val).init(base_address + 0x1b4);
 
     /// CAN_RDL0R
-    const CAN_RDL0R_val = packed struct {
+    pub const CAN_RDL0R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -20457,7 +20457,7 @@ pub const CAN2 = struct {
     pub const CAN_RDL0R = Register(CAN_RDL0R_val).init(base_address + 0x1b8);
 
     /// CAN_RDH0R
-    const CAN_RDH0R_val = packed struct {
+    pub const CAN_RDH0R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -20475,7 +20475,7 @@ pub const CAN2 = struct {
     pub const CAN_RDH0R = Register(CAN_RDH0R_val).init(base_address + 0x1bc);
 
     /// CAN_RI1R
-    const CAN_RI1R_val = packed struct {
+    pub const CAN_RI1R_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// RTR [1:1]
@@ -20495,7 +20495,7 @@ pub const CAN2 = struct {
     pub const CAN_RI1R = Register(CAN_RI1R_val).init(base_address + 0x1c0);
 
     /// CAN_RDT1R
-    const CAN_RDT1R_val = packed struct {
+    pub const CAN_RDT1R_val = packed struct {
         /// DLC [0:3]
         /// DLC
         DLC: u4 = 0,
@@ -20512,7 +20512,7 @@ pub const CAN2 = struct {
     pub const CAN_RDT1R = Register(CAN_RDT1R_val).init(base_address + 0x1c4);
 
     /// CAN_RDL1R
-    const CAN_RDL1R_val = packed struct {
+    pub const CAN_RDL1R_val = packed struct {
         /// DATA0 [0:7]
         /// DATA0
         DATA0: u8 = 0,
@@ -20530,7 +20530,7 @@ pub const CAN2 = struct {
     pub const CAN_RDL1R = Register(CAN_RDL1R_val).init(base_address + 0x1c8);
 
     /// CAN_RDH1R
-    const CAN_RDH1R_val = packed struct {
+    pub const CAN_RDH1R_val = packed struct {
         /// DATA4 [0:7]
         /// DATA4
         DATA4: u8 = 0,
@@ -20548,7 +20548,7 @@ pub const CAN2 = struct {
     pub const CAN_RDH1R = Register(CAN_RDH1R_val).init(base_address + 0x1cc);
 
     /// CAN_FMR
-    const CAN_FMR_val = packed struct {
+    pub const CAN_FMR_val = packed struct {
         /// FINIT [0:0]
         /// FINIT
         FINIT: u1 = 0,
@@ -20562,7 +20562,7 @@ pub const CAN2 = struct {
     pub const CAN_FMR = Register(CAN_FMR_val).init(base_address + 0x200);
 
     /// CAN_FM1R
-    const CAN_FM1R_val = packed struct {
+    pub const CAN_FM1R_val = packed struct {
         /// FBM0 [0:0]
         /// Filter mode
         FBM0: u1 = 0,
@@ -20614,7 +20614,7 @@ pub const CAN2 = struct {
     pub const CAN_FM1R = Register(CAN_FM1R_val).init(base_address + 0x204);
 
     /// CAN_FS1R
-    const CAN_FS1R_val = packed struct {
+    pub const CAN_FS1R_val = packed struct {
         /// FSC0 [0:0]
         /// Filter scale configuration
         FSC0: u1 = 0,
@@ -20666,7 +20666,7 @@ pub const CAN2 = struct {
     pub const CAN_FS1R = Register(CAN_FS1R_val).init(base_address + 0x20c);
 
     /// CAN_FFA1R
-    const CAN_FFA1R_val = packed struct {
+    pub const CAN_FFA1R_val = packed struct {
         /// FFA0 [0:0]
         /// Filter FIFO assignment for filter
         FFA0: u1 = 0,
@@ -20718,7 +20718,7 @@ pub const CAN2 = struct {
     pub const CAN_FFA1R = Register(CAN_FFA1R_val).init(base_address + 0x214);
 
     /// CAN_FA1R
-    const CAN_FA1R_val = packed struct {
+    pub const CAN_FA1R_val = packed struct {
         /// FACT0 [0:0]
         /// Filter active
         FACT0: u1 = 0,
@@ -20770,7 +20770,7 @@ pub const CAN2 = struct {
     pub const CAN_FA1R = Register(CAN_FA1R_val).init(base_address + 0x21c);
 
     /// F0R1
-    const F0R1_val = packed struct {
+    pub const F0R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -20872,7 +20872,7 @@ pub const CAN2 = struct {
     pub const F0R1 = Register(F0R1_val).init(base_address + 0x240);
 
     /// F0R2
-    const F0R2_val = packed struct {
+    pub const F0R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -20974,7 +20974,7 @@ pub const CAN2 = struct {
     pub const F0R2 = Register(F0R2_val).init(base_address + 0x244);
 
     /// F1R1
-    const F1R1_val = packed struct {
+    pub const F1R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21076,7 +21076,7 @@ pub const CAN2 = struct {
     pub const F1R1 = Register(F1R1_val).init(base_address + 0x248);
 
     /// F1R2
-    const F1R2_val = packed struct {
+    pub const F1R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21178,7 +21178,7 @@ pub const CAN2 = struct {
     pub const F1R2 = Register(F1R2_val).init(base_address + 0x24c);
 
     /// F2R1
-    const F2R1_val = packed struct {
+    pub const F2R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21280,7 +21280,7 @@ pub const CAN2 = struct {
     pub const F2R1 = Register(F2R1_val).init(base_address + 0x250);
 
     /// F2R2
-    const F2R2_val = packed struct {
+    pub const F2R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21382,7 +21382,7 @@ pub const CAN2 = struct {
     pub const F2R2 = Register(F2R2_val).init(base_address + 0x254);
 
     /// F3R1
-    const F3R1_val = packed struct {
+    pub const F3R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21484,7 +21484,7 @@ pub const CAN2 = struct {
     pub const F3R1 = Register(F3R1_val).init(base_address + 0x258);
 
     /// F3R2
-    const F3R2_val = packed struct {
+    pub const F3R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21586,7 +21586,7 @@ pub const CAN2 = struct {
     pub const F3R2 = Register(F3R2_val).init(base_address + 0x25c);
 
     /// F4R1
-    const F4R1_val = packed struct {
+    pub const F4R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21688,7 +21688,7 @@ pub const CAN2 = struct {
     pub const F4R1 = Register(F4R1_val).init(base_address + 0x260);
 
     /// F4R2
-    const F4R2_val = packed struct {
+    pub const F4R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21790,7 +21790,7 @@ pub const CAN2 = struct {
     pub const F4R2 = Register(F4R2_val).init(base_address + 0x264);
 
     /// F5R1
-    const F5R1_val = packed struct {
+    pub const F5R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21892,7 +21892,7 @@ pub const CAN2 = struct {
     pub const F5R1 = Register(F5R1_val).init(base_address + 0x268);
 
     /// F5R2
-    const F5R2_val = packed struct {
+    pub const F5R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -21994,7 +21994,7 @@ pub const CAN2 = struct {
     pub const F5R2 = Register(F5R2_val).init(base_address + 0x26c);
 
     /// F6R1
-    const F6R1_val = packed struct {
+    pub const F6R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22096,7 +22096,7 @@ pub const CAN2 = struct {
     pub const F6R1 = Register(F6R1_val).init(base_address + 0x270);
 
     /// F6R2
-    const F6R2_val = packed struct {
+    pub const F6R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22198,7 +22198,7 @@ pub const CAN2 = struct {
     pub const F6R2 = Register(F6R2_val).init(base_address + 0x274);
 
     /// F7R1
-    const F7R1_val = packed struct {
+    pub const F7R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22300,7 +22300,7 @@ pub const CAN2 = struct {
     pub const F7R1 = Register(F7R1_val).init(base_address + 0x278);
 
     /// F7R2
-    const F7R2_val = packed struct {
+    pub const F7R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22402,7 +22402,7 @@ pub const CAN2 = struct {
     pub const F7R2 = Register(F7R2_val).init(base_address + 0x27c);
 
     /// F8R1
-    const F8R1_val = packed struct {
+    pub const F8R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22504,7 +22504,7 @@ pub const CAN2 = struct {
     pub const F8R1 = Register(F8R1_val).init(base_address + 0x280);
 
     /// F8R2
-    const F8R2_val = packed struct {
+    pub const F8R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22606,7 +22606,7 @@ pub const CAN2 = struct {
     pub const F8R2 = Register(F8R2_val).init(base_address + 0x284);
 
     /// F9R1
-    const F9R1_val = packed struct {
+    pub const F9R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22708,7 +22708,7 @@ pub const CAN2 = struct {
     pub const F9R1 = Register(F9R1_val).init(base_address + 0x288);
 
     /// F9R2
-    const F9R2_val = packed struct {
+    pub const F9R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22810,7 +22810,7 @@ pub const CAN2 = struct {
     pub const F9R2 = Register(F9R2_val).init(base_address + 0x28c);
 
     /// F10R1
-    const F10R1_val = packed struct {
+    pub const F10R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -22912,7 +22912,7 @@ pub const CAN2 = struct {
     pub const F10R1 = Register(F10R1_val).init(base_address + 0x290);
 
     /// F10R2
-    const F10R2_val = packed struct {
+    pub const F10R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23014,7 +23014,7 @@ pub const CAN2 = struct {
     pub const F10R2 = Register(F10R2_val).init(base_address + 0x294);
 
     /// F11R1
-    const F11R1_val = packed struct {
+    pub const F11R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23116,7 +23116,7 @@ pub const CAN2 = struct {
     pub const F11R1 = Register(F11R1_val).init(base_address + 0x298);
 
     /// F11R2
-    const F11R2_val = packed struct {
+    pub const F11R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23218,7 +23218,7 @@ pub const CAN2 = struct {
     pub const F11R2 = Register(F11R2_val).init(base_address + 0x29c);
 
     /// F12R1
-    const F12R1_val = packed struct {
+    pub const F12R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23320,7 +23320,7 @@ pub const CAN2 = struct {
     pub const F12R1 = Register(F12R1_val).init(base_address + 0x2a0);
 
     /// F12R2
-    const F12R2_val = packed struct {
+    pub const F12R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23422,7 +23422,7 @@ pub const CAN2 = struct {
     pub const F12R2 = Register(F12R2_val).init(base_address + 0x2a4);
 
     /// F13R1
-    const F13R1_val = packed struct {
+    pub const F13R1_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23524,7 +23524,7 @@ pub const CAN2 = struct {
     pub const F13R1 = Register(F13R1_val).init(base_address + 0x2a8);
 
     /// F13R2
-    const F13R2_val = packed struct {
+    pub const F13R2_val = packed struct {
         /// FB0 [0:0]
         /// Filter bits
         FB0: u1 = 0,
@@ -23630,7 +23630,7 @@ pub const CAN2 = struct {
 pub const DAC = struct {
     const base_address = 0x40007400;
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// EN1 [0:0]
         /// DAC channel1 enable
         EN1: u1 = 0,
@@ -23682,7 +23682,7 @@ pub const DAC = struct {
     pub const CR = Register(CR_val).init(base_address + 0x0);
 
     /// SWTRIGR
-    const SWTRIGR_val = packed struct {
+    pub const SWTRIGR_val = packed struct {
         /// SWTRIG1 [0:0]
         /// DAC channel1 software
         SWTRIG1: u1 = 0,
@@ -23699,7 +23699,7 @@ pub const DAC = struct {
     pub const SWTRIGR = Register(SWTRIGR_val).init(base_address + 0x4);
 
     /// DHR12R1
-    const DHR12R1_val = packed struct {
+    pub const DHR12R1_val = packed struct {
         /// DACC1DHR [0:11]
         /// DAC channel1 12-bit right-aligned
         DACC1DHR: u12 = 0,
@@ -23712,7 +23712,7 @@ pub const DAC = struct {
     pub const DHR12R1 = Register(DHR12R1_val).init(base_address + 0x8);
 
     /// DHR12L1
-    const DHR12L1_val = packed struct {
+    pub const DHR12L1_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// DACC1DHR [4:15]
@@ -23726,7 +23726,7 @@ pub const DAC = struct {
     pub const DHR12L1 = Register(DHR12L1_val).init(base_address + 0xc);
 
     /// DHR8R1
-    const DHR8R1_val = packed struct {
+    pub const DHR8R1_val = packed struct {
         /// DACC1DHR [0:7]
         /// DAC channel1 8-bit right-aligned
         DACC1DHR: u8 = 0,
@@ -23739,7 +23739,7 @@ pub const DAC = struct {
     pub const DHR8R1 = Register(DHR8R1_val).init(base_address + 0x10);
 
     /// DHR12R2
-    const DHR12R2_val = packed struct {
+    pub const DHR12R2_val = packed struct {
         /// DACC2DHR [0:11]
         /// DAC channel2 12-bit right-aligned
         DACC2DHR: u12 = 0,
@@ -23752,7 +23752,7 @@ pub const DAC = struct {
     pub const DHR12R2 = Register(DHR12R2_val).init(base_address + 0x14);
 
     /// DHR12L2
-    const DHR12L2_val = packed struct {
+    pub const DHR12L2_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// DACC2DHR [4:15]
@@ -23766,7 +23766,7 @@ pub const DAC = struct {
     pub const DHR12L2 = Register(DHR12L2_val).init(base_address + 0x18);
 
     /// DHR8R2
-    const DHR8R2_val = packed struct {
+    pub const DHR8R2_val = packed struct {
         /// DACC2DHR [0:7]
         /// DAC channel2 8-bit right-aligned
         DACC2DHR: u8 = 0,
@@ -23779,7 +23779,7 @@ pub const DAC = struct {
     pub const DHR8R2 = Register(DHR8R2_val).init(base_address + 0x1c);
 
     /// DHR12RD
-    const DHR12RD_val = packed struct {
+    pub const DHR12RD_val = packed struct {
         /// DACC1DHR [0:11]
         /// DAC channel1 12-bit right-aligned
         DACC1DHR: u12 = 0,
@@ -23795,7 +23795,7 @@ pub const DAC = struct {
     pub const DHR12RD = Register(DHR12RD_val).init(base_address + 0x20);
 
     /// DHR12LD
-    const DHR12LD_val = packed struct {
+    pub const DHR12LD_val = packed struct {
         /// unused [0:3]
         _unused0: u4 = 0,
         /// DACC1DHR [4:15]
@@ -23811,7 +23811,7 @@ pub const DAC = struct {
     pub const DHR12LD = Register(DHR12LD_val).init(base_address + 0x24);
 
     /// DHR8RD
-    const DHR8RD_val = packed struct {
+    pub const DHR8RD_val = packed struct {
         /// DACC1DHR [0:7]
         /// DAC channel1 8-bit right-aligned
         DACC1DHR: u8 = 0,
@@ -23826,7 +23826,7 @@ pub const DAC = struct {
     pub const DHR8RD = Register(DHR8RD_val).init(base_address + 0x28);
 
     /// DOR1
-    const DOR1_val = packed struct {
+    pub const DOR1_val = packed struct {
         /// DACC1DOR [0:11]
         /// DAC channel1 data output
         DACC1DOR: u12 = 0,
@@ -23839,7 +23839,7 @@ pub const DAC = struct {
     pub const DOR1 = Register(DOR1_val).init(base_address + 0x2c);
 
     /// DOR2
-    const DOR2_val = packed struct {
+    pub const DOR2_val = packed struct {
         /// DACC2DOR [0:11]
         /// DAC channel2 data output
         DACC2DOR: u12 = 0,
@@ -23856,7 +23856,7 @@ pub const DAC = struct {
 pub const DBG = struct {
     const base_address = 0xe0042000;
     /// IDCODE
-    const IDCODE_val = packed struct {
+    pub const IDCODE_val = packed struct {
         /// DEV_ID [0:11]
         /// DEV_ID
         DEV_ID: u12 = 0,
@@ -23870,7 +23870,7 @@ pub const DBG = struct {
     pub const IDCODE = Register(IDCODE_val).init(base_address + 0x0);
 
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// DBG_SLEEP [0:0]
         /// DBG_SLEEP
         DBG_SLEEP: u1 = 0,
@@ -23942,7 +23942,7 @@ pub const DBG = struct {
 pub const UART4 = struct {
     const base_address = 0x40004c00;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PE [0:0]
         /// Parity error
         PE: u1 = 0,
@@ -23979,7 +23979,7 @@ pub const UART4 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:8]
         /// DR
         DR: u9 = 0,
@@ -23992,7 +23992,7 @@ pub const UART4 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x4);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// DIV_Fraction [0:3]
         /// DIV_Fraction
         DIV_Fraction: u4 = 0,
@@ -24007,7 +24007,7 @@ pub const UART4 = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x8);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// SBK [0:0]
         /// Send break
         SBK: u1 = 0,
@@ -24059,7 +24059,7 @@ pub const UART4 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0xc);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADD [0:3]
         /// Address of the USART node
         ADD: u4 = 0,
@@ -24089,7 +24089,7 @@ pub const UART4 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x10);
 
     /// CR3
-    const CR3_val = packed struct {
+    pub const CR3_val = packed struct {
         /// EIE [0:0]
         /// Error interrupt enable
         EIE: u1 = 0,
@@ -24123,7 +24123,7 @@ pub const UART4 = struct {
 pub const UART5 = struct {
     const base_address = 0x40005000;
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// PE [0:0]
         /// PE
         PE: u1 = 0,
@@ -24160,7 +24160,7 @@ pub const UART5 = struct {
     pub const SR = Register(SR_val).init(base_address + 0x0);
 
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:8]
         /// DR
         DR: u9 = 0,
@@ -24173,7 +24173,7 @@ pub const UART5 = struct {
     pub const DR = Register(DR_val).init(base_address + 0x4);
 
     /// BRR
-    const BRR_val = packed struct {
+    pub const BRR_val = packed struct {
         /// DIV_Fraction [0:3]
         /// DIV_Fraction
         DIV_Fraction: u4 = 0,
@@ -24188,7 +24188,7 @@ pub const UART5 = struct {
     pub const BRR = Register(BRR_val).init(base_address + 0x8);
 
     /// CR1
-    const CR1_val = packed struct {
+    pub const CR1_val = packed struct {
         /// SBK [0:0]
         /// SBK
         SBK: u1 = 0,
@@ -24240,7 +24240,7 @@ pub const UART5 = struct {
     pub const CR1 = Register(CR1_val).init(base_address + 0xc);
 
     /// CR2
-    const CR2_val = packed struct {
+    pub const CR2_val = packed struct {
         /// ADD [0:3]
         /// ADD
         ADD: u4 = 0,
@@ -24270,7 +24270,7 @@ pub const UART5 = struct {
     pub const CR2 = Register(CR2_val).init(base_address + 0x10);
 
     /// CR3
-    const CR3_val = packed struct {
+    pub const CR3_val = packed struct {
         /// EIE [0:0]
         /// Error interrupt enable
         EIE: u1 = 0,
@@ -24301,7 +24301,7 @@ pub const UART5 = struct {
 pub const CRC = struct {
     const base_address = 0x40023000;
     /// DR
-    const DR_val = packed struct {
+    pub const DR_val = packed struct {
         /// DR [0:31]
         /// Data Register
         DR: u32 = 4294967295,
@@ -24310,7 +24310,7 @@ pub const CRC = struct {
     pub const DR = Register(DR_val).init(base_address + 0x0);
 
     /// IDR
-    const IDR_val = packed struct {
+    pub const IDR_val = packed struct {
         /// IDR [0:7]
         /// Independent Data register
         IDR: u8 = 0,
@@ -24323,7 +24323,7 @@ pub const CRC = struct {
     pub const IDR = Register(IDR_val).init(base_address + 0x4);
 
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// RESET [0:0]
         /// Reset bit
         RESET: u1 = 0,
@@ -24341,7 +24341,7 @@ pub const CRC = struct {
 pub const FLASH = struct {
     const base_address = 0x40022000;
     /// ACR
-    const ACR_val = packed struct {
+    pub const ACR_val = packed struct {
         /// LATENCY [0:2]
         /// Latency
         LATENCY: u3 = 0,
@@ -24364,7 +24364,7 @@ pub const FLASH = struct {
     pub const ACR = Register(ACR_val).init(base_address + 0x0);
 
     /// KEYR
-    const KEYR_val = packed struct {
+    pub const KEYR_val = packed struct {
         /// KEY [0:31]
         /// FPEC key
         KEY: u32 = 0,
@@ -24373,7 +24373,7 @@ pub const FLASH = struct {
     pub const KEYR = Register(KEYR_val).init(base_address + 0x4);
 
     /// OPTKEYR
-    const OPTKEYR_val = packed struct {
+    pub const OPTKEYR_val = packed struct {
         /// OPTKEY [0:31]
         /// Option byte key
         OPTKEY: u32 = 0,
@@ -24382,7 +24382,7 @@ pub const FLASH = struct {
     pub const OPTKEYR = Register(OPTKEYR_val).init(base_address + 0x8);
 
     /// SR
-    const SR_val = packed struct {
+    pub const SR_val = packed struct {
         /// BSY [0:0]
         /// Busy
         BSY: u1 = 0,
@@ -24409,7 +24409,7 @@ pub const FLASH = struct {
     pub const SR = Register(SR_val).init(base_address + 0xc);
 
     /// CR
-    const CR_val = packed struct {
+    pub const CR_val = packed struct {
         /// PG [0:0]
         /// Programming
         PG: u1 = 0,
@@ -24455,7 +24455,7 @@ pub const FLASH = struct {
     pub const CR = Register(CR_val).init(base_address + 0x10);
 
     /// AR
-    const AR_val = packed struct {
+    pub const AR_val = packed struct {
         /// FAR [0:31]
         /// Flash Address
         FAR: u32 = 0,
@@ -24464,7 +24464,7 @@ pub const FLASH = struct {
     pub const AR = Register(AR_val).init(base_address + 0x14);
 
     /// OBR
-    const OBR_val = packed struct {
+    pub const OBR_val = packed struct {
         /// OPTERR [0:0]
         /// Option byte error
         OPTERR: u1 = 0,
@@ -24496,7 +24496,7 @@ pub const FLASH = struct {
     pub const OBR = Register(OBR_val).init(base_address + 0x1c);
 
     /// WRPR
-    const WRPR_val = packed struct {
+    pub const WRPR_val = packed struct {
         /// WRP [0:31]
         /// Write protect
         WRP: u32 = 4294967295,
@@ -24509,7 +24509,7 @@ pub const FLASH = struct {
 pub const USB = struct {
     const base_address = 0x40005c00;
     /// EP0R
-    const EP0R_val = packed struct {
+    pub const EP0R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24548,7 +24548,7 @@ pub const USB = struct {
     pub const EP0R = Register(EP0R_val).init(base_address + 0x0);
 
     /// EP1R
-    const EP1R_val = packed struct {
+    pub const EP1R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24587,7 +24587,7 @@ pub const USB = struct {
     pub const EP1R = Register(EP1R_val).init(base_address + 0x4);
 
     /// EP2R
-    const EP2R_val = packed struct {
+    pub const EP2R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24626,7 +24626,7 @@ pub const USB = struct {
     pub const EP2R = Register(EP2R_val).init(base_address + 0x8);
 
     /// EP3R
-    const EP3R_val = packed struct {
+    pub const EP3R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24665,7 +24665,7 @@ pub const USB = struct {
     pub const EP3R = Register(EP3R_val).init(base_address + 0xc);
 
     /// EP4R
-    const EP4R_val = packed struct {
+    pub const EP4R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24704,7 +24704,7 @@ pub const USB = struct {
     pub const EP4R = Register(EP4R_val).init(base_address + 0x10);
 
     /// EP5R
-    const EP5R_val = packed struct {
+    pub const EP5R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24743,7 +24743,7 @@ pub const USB = struct {
     pub const EP5R = Register(EP5R_val).init(base_address + 0x14);
 
     /// EP6R
-    const EP6R_val = packed struct {
+    pub const EP6R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24782,7 +24782,7 @@ pub const USB = struct {
     pub const EP6R = Register(EP6R_val).init(base_address + 0x18);
 
     /// EP7R
-    const EP7R_val = packed struct {
+    pub const EP7R_val = packed struct {
         /// EA [0:3]
         /// Endpoint address
         EA: u4 = 0,
@@ -24821,7 +24821,7 @@ pub const USB = struct {
     pub const EP7R = Register(EP7R_val).init(base_address + 0x1c);
 
     /// CNTR
-    const CNTR_val = packed struct {
+    pub const CNTR_val = packed struct {
         /// FRES [0:0]
         /// Force USB Reset
         FRES: u1 = 1,
@@ -24871,7 +24871,7 @@ pub const USB = struct {
     pub const CNTR = Register(CNTR_val).init(base_address + 0x40);
 
     /// ISTR
-    const ISTR_val = packed struct {
+    pub const ISTR_val = packed struct {
         /// EP_ID [0:3]
         /// Endpoint Identifier
         EP_ID: u4 = 0,
@@ -24912,7 +24912,7 @@ pub const USB = struct {
     pub const ISTR = Register(ISTR_val).init(base_address + 0x44);
 
     /// FNR
-    const FNR_val = packed struct {
+    pub const FNR_val = packed struct {
         /// FN [0:10]
         /// Frame number
         FN: u11 = 0,
@@ -24936,7 +24936,7 @@ pub const USB = struct {
     pub const FNR = Register(FNR_val).init(base_address + 0x48);
 
     /// DADDR
-    const DADDR_val = packed struct {
+    pub const DADDR_val = packed struct {
         /// ADD [0:6]
         /// Device address
         ADD: u7 = 0,
@@ -24952,7 +24952,7 @@ pub const USB = struct {
     pub const DADDR = Register(DADDR_val).init(base_address + 0x4c);
 
     /// BTABLE
-    const BTABLE_val = packed struct {
+    pub const BTABLE_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// BTABLE [3:15]
@@ -24970,7 +24970,7 @@ pub const USB = struct {
 pub const OTG_FS_DEVICE = struct {
     const base_address = 0x50000800;
     /// FS_DCFG
-    const FS_DCFG_val = packed struct {
+    pub const FS_DCFG_val = packed struct {
         /// DSPD [0:1]
         /// Device speed
         DSPD: u2 = 0,
@@ -24994,7 +24994,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DCFG = Register(FS_DCFG_val).init(base_address + 0x0);
 
     /// FS_DCTL
-    const FS_DCTL_val = packed struct {
+    pub const FS_DCTL_val = packed struct {
         /// RWUSIG [0:0]
         /// Remote wakeup signaling
         RWUSIG: u1 = 0,
@@ -25034,7 +25034,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DCTL = Register(FS_DCTL_val).init(base_address + 0x4);
 
     /// FS_DSTS
-    const FS_DSTS_val = packed struct {
+    pub const FS_DSTS_val = packed struct {
         /// SUSPSTS [0:0]
         /// Suspend status
         SUSPSTS: u1 = 0,
@@ -25057,7 +25057,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DSTS = Register(FS_DSTS_val).init(base_address + 0x8);
 
     /// FS_DIEPMSK
-    const FS_DIEPMSK_val = packed struct {
+    pub const FS_DIEPMSK_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed interrupt
         XFRCM: u1 = 0,
@@ -25088,7 +25088,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DIEPMSK = Register(FS_DIEPMSK_val).init(base_address + 0x10);
 
     /// FS_DOEPMSK
-    const FS_DOEPMSK_val = packed struct {
+    pub const FS_DOEPMSK_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed interrupt
         XFRCM: u1 = 0,
@@ -25113,7 +25113,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DOEPMSK = Register(FS_DOEPMSK_val).init(base_address + 0x14);
 
     /// FS_DAINT
-    const FS_DAINT_val = packed struct {
+    pub const FS_DAINT_val = packed struct {
         /// IEPINT [0:15]
         /// IN endpoint interrupt bits
         IEPINT: u16 = 0,
@@ -25125,7 +25125,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DAINT = Register(FS_DAINT_val).init(base_address + 0x18);
 
     /// FS_DAINTMSK
-    const FS_DAINTMSK_val = packed struct {
+    pub const FS_DAINTMSK_val = packed struct {
         /// IEPM [0:15]
         /// IN EP interrupt mask bits
         IEPM: u16 = 0,
@@ -25137,7 +25137,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DAINTMSK = Register(FS_DAINTMSK_val).init(base_address + 0x1c);
 
     /// DVBUSDIS
-    const DVBUSDIS_val = packed struct {
+    pub const DVBUSDIS_val = packed struct {
         /// VBUSDT [0:15]
         /// Device VBUS discharge time
         VBUSDT: u16 = 6103,
@@ -25149,7 +25149,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DVBUSDIS = Register(DVBUSDIS_val).init(base_address + 0x28);
 
     /// DVBUSPULSE
-    const DVBUSPULSE_val = packed struct {
+    pub const DVBUSPULSE_val = packed struct {
         /// DVBUSP [0:11]
         /// Device VBUS pulsing time
         DVBUSP: u12 = 1464,
@@ -25162,7 +25162,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DVBUSPULSE = Register(DVBUSPULSE_val).init(base_address + 0x2c);
 
     /// DIEPEMPMSK
-    const DIEPEMPMSK_val = packed struct {
+    pub const DIEPEMPMSK_val = packed struct {
         /// INEPTXFEM [0:15]
         /// IN EP Tx FIFO empty interrupt mask
         INEPTXFEM: u16 = 0,
@@ -25174,7 +25174,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPEMPMSK = Register(DIEPEMPMSK_val).init(base_address + 0x34);
 
     /// FS_DIEPCTL0
-    const FS_DIEPCTL0_val = packed struct {
+    pub const FS_DIEPCTL0_val = packed struct {
         /// MPSIZ [0:1]
         /// Maximum packet size
         MPSIZ: u2 = 0,
@@ -25219,7 +25219,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const FS_DIEPCTL0 = Register(FS_DIEPCTL0_val).init(base_address + 0x100);
 
     /// DIEPCTL1
-    const DIEPCTL1_val = packed struct {
+    pub const DIEPCTL1_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25268,7 +25268,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPCTL1 = Register(DIEPCTL1_val).init(base_address + 0x120);
 
     /// DIEPCTL2
-    const DIEPCTL2_val = packed struct {
+    pub const DIEPCTL2_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25317,7 +25317,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPCTL2 = Register(DIEPCTL2_val).init(base_address + 0x140);
 
     /// DIEPCTL3
-    const DIEPCTL3_val = packed struct {
+    pub const DIEPCTL3_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25366,7 +25366,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPCTL3 = Register(DIEPCTL3_val).init(base_address + 0x160);
 
     /// DOEPCTL0
-    const DOEPCTL0_val = packed struct {
+    pub const DOEPCTL0_val = packed struct {
         /// MPSIZ [0:1]
         /// MPSIZ
         MPSIZ: u2 = 0,
@@ -25412,7 +25412,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPCTL0 = Register(DOEPCTL0_val).init(base_address + 0x300);
 
     /// DOEPCTL1
-    const DOEPCTL1_val = packed struct {
+    pub const DOEPCTL1_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25462,7 +25462,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPCTL1 = Register(DOEPCTL1_val).init(base_address + 0x320);
 
     /// DOEPCTL2
-    const DOEPCTL2_val = packed struct {
+    pub const DOEPCTL2_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25512,7 +25512,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPCTL2 = Register(DOEPCTL2_val).init(base_address + 0x340);
 
     /// DOEPCTL3
-    const DOEPCTL3_val = packed struct {
+    pub const DOEPCTL3_val = packed struct {
         /// MPSIZ [0:10]
         /// MPSIZ
         MPSIZ: u11 = 0,
@@ -25562,7 +25562,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPCTL3 = Register(DOEPCTL3_val).init(base_address + 0x360);
 
     /// DIEPINT0
-    const DIEPINT0_val = packed struct {
+    pub const DIEPINT0_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25594,7 +25594,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPINT0 = Register(DIEPINT0_val).init(base_address + 0x108);
 
     /// DIEPINT1
-    const DIEPINT1_val = packed struct {
+    pub const DIEPINT1_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25626,7 +25626,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPINT1 = Register(DIEPINT1_val).init(base_address + 0x128);
 
     /// DIEPINT2
-    const DIEPINT2_val = packed struct {
+    pub const DIEPINT2_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25658,7 +25658,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPINT2 = Register(DIEPINT2_val).init(base_address + 0x148);
 
     /// DIEPINT3
-    const DIEPINT3_val = packed struct {
+    pub const DIEPINT3_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25690,7 +25690,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPINT3 = Register(DIEPINT3_val).init(base_address + 0x168);
 
     /// DOEPINT0
-    const DOEPINT0_val = packed struct {
+    pub const DOEPINT0_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25720,7 +25720,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPINT0 = Register(DOEPINT0_val).init(base_address + 0x308);
 
     /// DOEPINT1
-    const DOEPINT1_val = packed struct {
+    pub const DOEPINT1_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25750,7 +25750,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPINT1 = Register(DOEPINT1_val).init(base_address + 0x328);
 
     /// DOEPINT2
-    const DOEPINT2_val = packed struct {
+    pub const DOEPINT2_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25780,7 +25780,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPINT2 = Register(DOEPINT2_val).init(base_address + 0x348);
 
     /// DOEPINT3
-    const DOEPINT3_val = packed struct {
+    pub const DOEPINT3_val = packed struct {
         /// XFRC [0:0]
         /// XFRC
         XFRC: u1 = 0,
@@ -25810,7 +25810,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPINT3 = Register(DOEPINT3_val).init(base_address + 0x368);
 
     /// DIEPTSIZ0
-    const DIEPTSIZ0_val = packed struct {
+    pub const DIEPTSIZ0_val = packed struct {
         /// XFRSIZ [0:6]
         /// Transfer size
         XFRSIZ: u7 = 0,
@@ -25829,7 +25829,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPTSIZ0 = Register(DIEPTSIZ0_val).init(base_address + 0x110);
 
     /// DOEPTSIZ0
-    const DOEPTSIZ0_val = packed struct {
+    pub const DOEPTSIZ0_val = packed struct {
         /// XFRSIZ [0:6]
         /// Transfer size
         XFRSIZ: u7 = 0,
@@ -25853,7 +25853,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPTSIZ0 = Register(DOEPTSIZ0_val).init(base_address + 0x310);
 
     /// DIEPTSIZ1
-    const DIEPTSIZ1_val = packed struct {
+    pub const DIEPTSIZ1_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -25870,7 +25870,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPTSIZ1 = Register(DIEPTSIZ1_val).init(base_address + 0x130);
 
     /// DIEPTSIZ2
-    const DIEPTSIZ2_val = packed struct {
+    pub const DIEPTSIZ2_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -25887,7 +25887,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPTSIZ2 = Register(DIEPTSIZ2_val).init(base_address + 0x150);
 
     /// DIEPTSIZ3
-    const DIEPTSIZ3_val = packed struct {
+    pub const DIEPTSIZ3_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -25904,7 +25904,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DIEPTSIZ3 = Register(DIEPTSIZ3_val).init(base_address + 0x170);
 
     /// DTXFSTS0
-    const DTXFSTS0_val = packed struct {
+    pub const DTXFSTS0_val = packed struct {
         /// INEPTFSAV [0:15]
         /// IN endpoint TxFIFO space
         INEPTFSAV: u16 = 0,
@@ -25916,7 +25916,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DTXFSTS0 = Register(DTXFSTS0_val).init(base_address + 0x118);
 
     /// DTXFSTS1
-    const DTXFSTS1_val = packed struct {
+    pub const DTXFSTS1_val = packed struct {
         /// INEPTFSAV [0:15]
         /// IN endpoint TxFIFO space
         INEPTFSAV: u16 = 0,
@@ -25928,7 +25928,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DTXFSTS1 = Register(DTXFSTS1_val).init(base_address + 0x138);
 
     /// DTXFSTS2
-    const DTXFSTS2_val = packed struct {
+    pub const DTXFSTS2_val = packed struct {
         /// INEPTFSAV [0:15]
         /// IN endpoint TxFIFO space
         INEPTFSAV: u16 = 0,
@@ -25940,7 +25940,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DTXFSTS2 = Register(DTXFSTS2_val).init(base_address + 0x158);
 
     /// DTXFSTS3
-    const DTXFSTS3_val = packed struct {
+    pub const DTXFSTS3_val = packed struct {
         /// INEPTFSAV [0:15]
         /// IN endpoint TxFIFO space
         INEPTFSAV: u16 = 0,
@@ -25952,7 +25952,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DTXFSTS3 = Register(DTXFSTS3_val).init(base_address + 0x178);
 
     /// DOEPTSIZ1
-    const DOEPTSIZ1_val = packed struct {
+    pub const DOEPTSIZ1_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -25969,7 +25969,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPTSIZ1 = Register(DOEPTSIZ1_val).init(base_address + 0x330);
 
     /// DOEPTSIZ2
-    const DOEPTSIZ2_val = packed struct {
+    pub const DOEPTSIZ2_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -25986,7 +25986,7 @@ pub const OTG_FS_DEVICE = struct {
     pub const DOEPTSIZ2 = Register(DOEPTSIZ2_val).init(base_address + 0x350);
 
     /// DOEPTSIZ3
-    const DOEPTSIZ3_val = packed struct {
+    pub const DOEPTSIZ3_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -26007,7 +26007,7 @@ pub const OTG_FS_DEVICE = struct {
 pub const OTG_FS_GLOBAL = struct {
     const base_address = 0x50000000;
     /// FS_GOTGCTL
-    const FS_GOTGCTL_val = packed struct {
+    pub const FS_GOTGCTL_val = packed struct {
         /// SRQSCS [0:0]
         /// Session request success
         SRQSCS: u1 = 0,
@@ -26050,7 +26050,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GOTGCTL = Register(FS_GOTGCTL_val).init(base_address + 0x0);
 
     /// FS_GOTGINT
-    const FS_GOTGINT_val = packed struct {
+    pub const FS_GOTGINT_val = packed struct {
         /// unused [0:1]
         _unused0: u2 = 0,
         /// SEDET [2:2]
@@ -26084,7 +26084,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GOTGINT = Register(FS_GOTGINT_val).init(base_address + 0x4);
 
     /// FS_GAHBCFG
-    const FS_GAHBCFG_val = packed struct {
+    pub const FS_GAHBCFG_val = packed struct {
         /// GINT [0:0]
         /// Global interrupt mask
         GINT: u1 = 0,
@@ -26105,7 +26105,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GAHBCFG = Register(FS_GAHBCFG_val).init(base_address + 0x8);
 
     /// FS_GUSBCFG
-    const FS_GUSBCFG_val = packed struct {
+    pub const FS_GUSBCFG_val = packed struct {
         /// TOCAL [0:2]
         /// FS timeout calibration
         TOCAL: u3 = 0,
@@ -26143,7 +26143,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GUSBCFG = Register(FS_GUSBCFG_val).init(base_address + 0xc);
 
     /// FS_GRSTCTL
-    const FS_GRSTCTL_val = packed struct {
+    pub const FS_GRSTCTL_val = packed struct {
         /// CSRST [0:0]
         /// Core soft reset
         CSRST: u1 = 0,
@@ -26176,7 +26176,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GRSTCTL = Register(FS_GRSTCTL_val).init(base_address + 0x10);
 
     /// FS_GINTSTS
-    const FS_GINTSTS_val = packed struct {
+    pub const FS_GINTSTS_val = packed struct {
         /// CMOD [0:0]
         /// Current mode of operation
         CMOD: u1 = 0,
@@ -26265,7 +26265,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GINTSTS = Register(FS_GINTSTS_val).init(base_address + 0x14);
 
     /// FS_GINTMSK
-    const FS_GINTMSK_val = packed struct {
+    pub const FS_GINTMSK_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// MMISM [1:1]
@@ -26356,7 +26356,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GINTMSK = Register(FS_GINTMSK_val).init(base_address + 0x18);
 
     /// FS_GRXSTSR_Device
-    const FS_GRXSTSR_Device_val = packed struct {
+    pub const FS_GRXSTSR_Device_val = packed struct {
         /// EPNUM [0:3]
         /// Endpoint number
         EPNUM: u4 = 0,
@@ -26379,7 +26379,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GRXSTSR_Device = Register(FS_GRXSTSR_Device_val).init(base_address + 0x1c);
 
     /// FS_GRXSTSR_Host
-    const FS_GRXSTSR_Host_val = packed struct {
+    pub const FS_GRXSTSR_Host_val = packed struct {
         /// EPNUM [0:3]
         /// Endpoint number
         EPNUM: u4 = 0,
@@ -26402,7 +26402,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GRXSTSR_Host = Register(FS_GRXSTSR_Host_val).init(base_address + 0x1c);
 
     /// FS_GRXFSIZ
-    const FS_GRXFSIZ_val = packed struct {
+    pub const FS_GRXFSIZ_val = packed struct {
         /// RXFD [0:15]
         /// RxFIFO depth
         RXFD: u16 = 512,
@@ -26414,7 +26414,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GRXFSIZ = Register(FS_GRXFSIZ_val).init(base_address + 0x24);
 
     /// FS_GNPTXFSIZ_Device
-    const FS_GNPTXFSIZ_Device_val = packed struct {
+    pub const FS_GNPTXFSIZ_Device_val = packed struct {
         /// TX0FSA [0:15]
         /// Endpoint 0 transmit RAM start
         TX0FSA: u16 = 512,
@@ -26426,7 +26426,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GNPTXFSIZ_Device = Register(FS_GNPTXFSIZ_Device_val).init(base_address + 0x28);
 
     /// FS_GNPTXFSIZ_Host
-    const FS_GNPTXFSIZ_Host_val = packed struct {
+    pub const FS_GNPTXFSIZ_Host_val = packed struct {
         /// NPTXFSA [0:15]
         /// Non-periodic transmit RAM start
         NPTXFSA: u16 = 512,
@@ -26438,7 +26438,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GNPTXFSIZ_Host = Register(FS_GNPTXFSIZ_Host_val).init(base_address + 0x28);
 
     /// FS_GNPTXSTS
-    const FS_GNPTXSTS_val = packed struct {
+    pub const FS_GNPTXSTS_val = packed struct {
         /// NPTXFSAV [0:15]
         /// Non-periodic TxFIFO space
         NPTXFSAV: u16 = 512,
@@ -26455,7 +26455,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GNPTXSTS = Register(FS_GNPTXSTS_val).init(base_address + 0x2c);
 
     /// FS_GCCFG
-    const FS_GCCFG_val = packed struct {
+    pub const FS_GCCFG_val = packed struct {
         /// unused [0:15]
         _unused0: u8 = 0,
         _unused8: u8 = 0,
@@ -26481,7 +26481,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_GCCFG = Register(FS_GCCFG_val).init(base_address + 0x38);
 
     /// FS_CID
-    const FS_CID_val = packed struct {
+    pub const FS_CID_val = packed struct {
         /// PRODUCT_ID [0:31]
         /// Product ID field
         PRODUCT_ID: u32 = 4096,
@@ -26490,7 +26490,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_CID = Register(FS_CID_val).init(base_address + 0x3c);
 
     /// FS_HPTXFSIZ
-    const FS_HPTXFSIZ_val = packed struct {
+    pub const FS_HPTXFSIZ_val = packed struct {
         /// PTXSA [0:15]
         /// Host periodic TxFIFO start
         PTXSA: u16 = 1536,
@@ -26502,7 +26502,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_HPTXFSIZ = Register(FS_HPTXFSIZ_val).init(base_address + 0x100);
 
     /// FS_DIEPTXF1
-    const FS_DIEPTXF1_val = packed struct {
+    pub const FS_DIEPTXF1_val = packed struct {
         /// INEPTXSA [0:15]
         /// IN endpoint FIFO2 transmit RAM start
         INEPTXSA: u16 = 1024,
@@ -26514,7 +26514,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_DIEPTXF1 = Register(FS_DIEPTXF1_val).init(base_address + 0x104);
 
     /// FS_DIEPTXF2
-    const FS_DIEPTXF2_val = packed struct {
+    pub const FS_DIEPTXF2_val = packed struct {
         /// INEPTXSA [0:15]
         /// IN endpoint FIFO3 transmit RAM start
         INEPTXSA: u16 = 1024,
@@ -26526,7 +26526,7 @@ pub const OTG_FS_GLOBAL = struct {
     pub const FS_DIEPTXF2 = Register(FS_DIEPTXF2_val).init(base_address + 0x108);
 
     /// FS_DIEPTXF3
-    const FS_DIEPTXF3_val = packed struct {
+    pub const FS_DIEPTXF3_val = packed struct {
         /// INEPTXSA [0:15]
         /// IN endpoint FIFO4 transmit RAM start
         INEPTXSA: u16 = 1024,
@@ -26542,7 +26542,7 @@ pub const OTG_FS_GLOBAL = struct {
 pub const OTG_FS_HOST = struct {
     const base_address = 0x50000400;
     /// FS_HCFG
-    const FS_HCFG_val = packed struct {
+    pub const FS_HCFG_val = packed struct {
         /// FSLSPCS [0:1]
         /// FS/LS PHY clock select
         FSLSPCS: u2 = 0,
@@ -26559,7 +26559,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCFG = Register(FS_HCFG_val).init(base_address + 0x0);
 
     /// HFIR
-    const HFIR_val = packed struct {
+    pub const HFIR_val = packed struct {
         /// FRIVL [0:15]
         /// Frame interval
         FRIVL: u16 = 60000,
@@ -26571,7 +26571,7 @@ pub const OTG_FS_HOST = struct {
     pub const HFIR = Register(HFIR_val).init(base_address + 0x4);
 
     /// FS_HFNUM
-    const FS_HFNUM_val = packed struct {
+    pub const FS_HFNUM_val = packed struct {
         /// FRNUM [0:15]
         /// Frame number
         FRNUM: u16 = 16383,
@@ -26583,7 +26583,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HFNUM = Register(FS_HFNUM_val).init(base_address + 0x8);
 
     /// FS_HPTXSTS
-    const FS_HPTXSTS_val = packed struct {
+    pub const FS_HPTXSTS_val = packed struct {
         /// PTXFSAVL [0:15]
         /// Periodic transmit data FIFO space
         PTXFSAVL: u16 = 256,
@@ -26598,7 +26598,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HPTXSTS = Register(FS_HPTXSTS_val).init(base_address + 0x10);
 
     /// HAINT
-    const HAINT_val = packed struct {
+    pub const HAINT_val = packed struct {
         /// HAINT [0:15]
         /// Channel interrupts
         HAINT: u16 = 0,
@@ -26610,7 +26610,7 @@ pub const OTG_FS_HOST = struct {
     pub const HAINT = Register(HAINT_val).init(base_address + 0x14);
 
     /// HAINTMSK
-    const HAINTMSK_val = packed struct {
+    pub const HAINTMSK_val = packed struct {
         /// HAINTM [0:15]
         /// Channel interrupt mask
         HAINTM: u16 = 0,
@@ -26622,7 +26622,7 @@ pub const OTG_FS_HOST = struct {
     pub const HAINTMSK = Register(HAINTMSK_val).init(base_address + 0x18);
 
     /// FS_HPRT
-    const FS_HPRT_val = packed struct {
+    pub const FS_HPRT_val = packed struct {
         /// PCSTS [0:0]
         /// Port connect status
         PCSTS: u1 = 0,
@@ -26672,7 +26672,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HPRT = Register(FS_HPRT_val).init(base_address + 0x40);
 
     /// FS_HCCHAR0
-    const FS_HCCHAR0_val = packed struct {
+    pub const FS_HCCHAR0_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26710,7 +26710,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR0 = Register(FS_HCCHAR0_val).init(base_address + 0x100);
 
     /// FS_HCCHAR1
-    const FS_HCCHAR1_val = packed struct {
+    pub const FS_HCCHAR1_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26748,7 +26748,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR1 = Register(FS_HCCHAR1_val).init(base_address + 0x120);
 
     /// FS_HCCHAR2
-    const FS_HCCHAR2_val = packed struct {
+    pub const FS_HCCHAR2_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26786,7 +26786,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR2 = Register(FS_HCCHAR2_val).init(base_address + 0x140);
 
     /// FS_HCCHAR3
-    const FS_HCCHAR3_val = packed struct {
+    pub const FS_HCCHAR3_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26824,7 +26824,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR3 = Register(FS_HCCHAR3_val).init(base_address + 0x160);
 
     /// FS_HCCHAR4
-    const FS_HCCHAR4_val = packed struct {
+    pub const FS_HCCHAR4_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26862,7 +26862,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR4 = Register(FS_HCCHAR4_val).init(base_address + 0x180);
 
     /// FS_HCCHAR5
-    const FS_HCCHAR5_val = packed struct {
+    pub const FS_HCCHAR5_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26900,7 +26900,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR5 = Register(FS_HCCHAR5_val).init(base_address + 0x1a0);
 
     /// FS_HCCHAR6
-    const FS_HCCHAR6_val = packed struct {
+    pub const FS_HCCHAR6_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26938,7 +26938,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR6 = Register(FS_HCCHAR6_val).init(base_address + 0x1c0);
 
     /// FS_HCCHAR7
-    const FS_HCCHAR7_val = packed struct {
+    pub const FS_HCCHAR7_val = packed struct {
         /// MPSIZ [0:10]
         /// Maximum packet size
         MPSIZ: u11 = 0,
@@ -26976,7 +26976,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCCHAR7 = Register(FS_HCCHAR7_val).init(base_address + 0x1e0);
 
     /// FS_HCINT0
-    const FS_HCINT0_val = packed struct {
+    pub const FS_HCINT0_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27017,7 +27017,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT0 = Register(FS_HCINT0_val).init(base_address + 0x108);
 
     /// FS_HCINT1
-    const FS_HCINT1_val = packed struct {
+    pub const FS_HCINT1_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27058,7 +27058,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT1 = Register(FS_HCINT1_val).init(base_address + 0x128);
 
     /// FS_HCINT2
-    const FS_HCINT2_val = packed struct {
+    pub const FS_HCINT2_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27099,7 +27099,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT2 = Register(FS_HCINT2_val).init(base_address + 0x148);
 
     /// FS_HCINT3
-    const FS_HCINT3_val = packed struct {
+    pub const FS_HCINT3_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27140,7 +27140,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT3 = Register(FS_HCINT3_val).init(base_address + 0x168);
 
     /// FS_HCINT4
-    const FS_HCINT4_val = packed struct {
+    pub const FS_HCINT4_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27181,7 +27181,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT4 = Register(FS_HCINT4_val).init(base_address + 0x188);
 
     /// FS_HCINT5
-    const FS_HCINT5_val = packed struct {
+    pub const FS_HCINT5_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27222,7 +27222,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT5 = Register(FS_HCINT5_val).init(base_address + 0x1a8);
 
     /// FS_HCINT6
-    const FS_HCINT6_val = packed struct {
+    pub const FS_HCINT6_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27263,7 +27263,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT6 = Register(FS_HCINT6_val).init(base_address + 0x1c8);
 
     /// FS_HCINT7
-    const FS_HCINT7_val = packed struct {
+    pub const FS_HCINT7_val = packed struct {
         /// XFRC [0:0]
         /// Transfer completed
         XFRC: u1 = 0,
@@ -27304,7 +27304,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINT7 = Register(FS_HCINT7_val).init(base_address + 0x1e8);
 
     /// FS_HCINTMSK0
-    const FS_HCINTMSK0_val = packed struct {
+    pub const FS_HCINTMSK0_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27346,7 +27346,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK0 = Register(FS_HCINTMSK0_val).init(base_address + 0x10c);
 
     /// FS_HCINTMSK1
-    const FS_HCINTMSK1_val = packed struct {
+    pub const FS_HCINTMSK1_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27388,7 +27388,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK1 = Register(FS_HCINTMSK1_val).init(base_address + 0x12c);
 
     /// FS_HCINTMSK2
-    const FS_HCINTMSK2_val = packed struct {
+    pub const FS_HCINTMSK2_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27430,7 +27430,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK2 = Register(FS_HCINTMSK2_val).init(base_address + 0x14c);
 
     /// FS_HCINTMSK3
-    const FS_HCINTMSK3_val = packed struct {
+    pub const FS_HCINTMSK3_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27472,7 +27472,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK3 = Register(FS_HCINTMSK3_val).init(base_address + 0x16c);
 
     /// FS_HCINTMSK4
-    const FS_HCINTMSK4_val = packed struct {
+    pub const FS_HCINTMSK4_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27514,7 +27514,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK4 = Register(FS_HCINTMSK4_val).init(base_address + 0x18c);
 
     /// FS_HCINTMSK5
-    const FS_HCINTMSK5_val = packed struct {
+    pub const FS_HCINTMSK5_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27556,7 +27556,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK5 = Register(FS_HCINTMSK5_val).init(base_address + 0x1ac);
 
     /// FS_HCINTMSK6
-    const FS_HCINTMSK6_val = packed struct {
+    pub const FS_HCINTMSK6_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27598,7 +27598,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK6 = Register(FS_HCINTMSK6_val).init(base_address + 0x1cc);
 
     /// FS_HCINTMSK7
-    const FS_HCINTMSK7_val = packed struct {
+    pub const FS_HCINTMSK7_val = packed struct {
         /// XFRCM [0:0]
         /// Transfer completed mask
         XFRCM: u1 = 0,
@@ -27640,7 +27640,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCINTMSK7 = Register(FS_HCINTMSK7_val).init(base_address + 0x1ec);
 
     /// FS_HCTSIZ0
-    const FS_HCTSIZ0_val = packed struct {
+    pub const FS_HCTSIZ0_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27657,7 +27657,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ0 = Register(FS_HCTSIZ0_val).init(base_address + 0x110);
 
     /// FS_HCTSIZ1
-    const FS_HCTSIZ1_val = packed struct {
+    pub const FS_HCTSIZ1_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27674,7 +27674,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ1 = Register(FS_HCTSIZ1_val).init(base_address + 0x130);
 
     /// FS_HCTSIZ2
-    const FS_HCTSIZ2_val = packed struct {
+    pub const FS_HCTSIZ2_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27691,7 +27691,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ2 = Register(FS_HCTSIZ2_val).init(base_address + 0x150);
 
     /// FS_HCTSIZ3
-    const FS_HCTSIZ3_val = packed struct {
+    pub const FS_HCTSIZ3_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27708,7 +27708,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ3 = Register(FS_HCTSIZ3_val).init(base_address + 0x170);
 
     /// FS_HCTSIZ4
-    const FS_HCTSIZ4_val = packed struct {
+    pub const FS_HCTSIZ4_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27725,7 +27725,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ4 = Register(FS_HCTSIZ4_val).init(base_address + 0x190);
 
     /// FS_HCTSIZ5
-    const FS_HCTSIZ5_val = packed struct {
+    pub const FS_HCTSIZ5_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27742,7 +27742,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ5 = Register(FS_HCTSIZ5_val).init(base_address + 0x1b0);
 
     /// FS_HCTSIZ6
-    const FS_HCTSIZ6_val = packed struct {
+    pub const FS_HCTSIZ6_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27759,7 +27759,7 @@ pub const OTG_FS_HOST = struct {
     pub const FS_HCTSIZ6 = Register(FS_HCTSIZ6_val).init(base_address + 0x1d0);
 
     /// FS_HCTSIZ7
-    const FS_HCTSIZ7_val = packed struct {
+    pub const FS_HCTSIZ7_val = packed struct {
         /// XFRSIZ [0:18]
         /// Transfer size
         XFRSIZ: u19 = 0,
@@ -27780,7 +27780,7 @@ pub const OTG_FS_HOST = struct {
 pub const OTG_FS_PWRCLK = struct {
     const base_address = 0x50000e00;
     /// FS_PCGCCTL
-    const FS_PCGCCTL_val = packed struct {
+    pub const FS_PCGCCTL_val = packed struct {
         /// STPPCLK [0:0]
         /// Stop PHY clock
         STPPCLK: u1 = 0,
@@ -27806,7 +27806,7 @@ pub const OTG_FS_PWRCLK = struct {
 pub const ETHERNET_MMC = struct {
     const base_address = 0x40028100;
     /// MMCCR
-    const MMCCR_val = packed struct {
+    pub const MMCCR_val = packed struct {
         /// CR [0:0]
         /// Counter reset
         CR: u1 = 0,
@@ -27829,7 +27829,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCCR = Register(MMCCR_val).init(base_address + 0x0);
 
     /// MMCRIR
-    const MMCRIR_val = packed struct {
+    pub const MMCRIR_val = packed struct {
         /// unused [0:4]
         _unused0: u5 = 0,
         /// RFCES [5:5]
@@ -27853,7 +27853,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCRIR = Register(MMCRIR_val).init(base_address + 0x4);
 
     /// MMCTIR
-    const MMCTIR_val = packed struct {
+    pub const MMCTIR_val = packed struct {
         /// unused [0:13]
         _unused0: u8 = 0,
         _unused8: u6 = 0,
@@ -27876,7 +27876,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCTIR = Register(MMCTIR_val).init(base_address + 0x8);
 
     /// MMCRIMR
-    const MMCRIMR_val = packed struct {
+    pub const MMCRIMR_val = packed struct {
         /// unused [0:4]
         _unused0: u5 = 0,
         /// RFCEM [5:5]
@@ -27900,7 +27900,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCRIMR = Register(MMCRIMR_val).init(base_address + 0xc);
 
     /// MMCTIMR
-    const MMCTIMR_val = packed struct {
+    pub const MMCTIMR_val = packed struct {
         /// unused [0:13]
         _unused0: u8 = 0,
         _unused8: u6 = 0,
@@ -27923,7 +27923,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCTIMR = Register(MMCTIMR_val).init(base_address + 0x10);
 
     /// MMCTGFSCCR
-    const MMCTGFSCCR_val = packed struct {
+    pub const MMCTGFSCCR_val = packed struct {
         /// TGFSCC [0:31]
         /// Transmitted good frames after a single
         TGFSCC: u32 = 0,
@@ -27932,7 +27932,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCTGFSCCR = Register(MMCTGFSCCR_val).init(base_address + 0x4c);
 
     /// MMCTGFMSCCR
-    const MMCTGFMSCCR_val = packed struct {
+    pub const MMCTGFMSCCR_val = packed struct {
         /// TGFMSCC [0:31]
         /// Transmitted good frames after more than
         TGFMSCC: u32 = 0,
@@ -27941,7 +27941,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCTGFMSCCR = Register(MMCTGFMSCCR_val).init(base_address + 0x50);
 
     /// MMCTGFCR
-    const MMCTGFCR_val = packed struct {
+    pub const MMCTGFCR_val = packed struct {
         /// TGFC [0:31]
         /// Transmitted good frames
         TGFC: u32 = 0,
@@ -27950,7 +27950,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCTGFCR = Register(MMCTGFCR_val).init(base_address + 0x68);
 
     /// MMCRFCECR
-    const MMCRFCECR_val = packed struct {
+    pub const MMCRFCECR_val = packed struct {
         /// RFCFC [0:31]
         /// Received frames with CRC error
         RFCFC: u32 = 0,
@@ -27959,7 +27959,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCRFCECR = Register(MMCRFCECR_val).init(base_address + 0x94);
 
     /// MMCRFAECR
-    const MMCRFAECR_val = packed struct {
+    pub const MMCRFAECR_val = packed struct {
         /// RFAEC [0:31]
         /// Received frames with alignment error
         RFAEC: u32 = 0,
@@ -27968,7 +27968,7 @@ pub const ETHERNET_MMC = struct {
     pub const MMCRFAECR = Register(MMCRFAECR_val).init(base_address + 0x98);
 
     /// MMCRGUFCR
-    const MMCRGUFCR_val = packed struct {
+    pub const MMCRGUFCR_val = packed struct {
         /// RGUFC [0:31]
         /// Received good unicast frames
         RGUFC: u32 = 0,
@@ -27981,7 +27981,7 @@ pub const ETHERNET_MMC = struct {
 pub const ETHERNET_MAC = struct {
     const base_address = 0x40028000;
     /// MACCR
-    const MACCR_val = packed struct {
+    pub const MACCR_val = packed struct {
         /// unused [0:1]
         _unused0: u2 = 0,
         /// RE [2:2]
@@ -28042,7 +28042,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACCR = Register(MACCR_val).init(base_address + 0x0);
 
     /// MACFFR
-    const MACFFR_val = packed struct {
+    pub const MACFFR_val = packed struct {
         /// PM [0:0]
         /// Promiscuous mode
         PM: u1 = 0,
@@ -28085,7 +28085,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACFFR = Register(MACFFR_val).init(base_address + 0x4);
 
     /// MACHTHR
-    const MACHTHR_val = packed struct {
+    pub const MACHTHR_val = packed struct {
         /// HTH [0:31]
         /// Hash table high
         HTH: u32 = 0,
@@ -28094,7 +28094,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACHTHR = Register(MACHTHR_val).init(base_address + 0x8);
 
     /// MACHTLR
-    const MACHTLR_val = packed struct {
+    pub const MACHTLR_val = packed struct {
         /// HTL [0:31]
         /// Hash table low
         HTL: u32 = 0,
@@ -28103,7 +28103,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACHTLR = Register(MACHTLR_val).init(base_address + 0xc);
 
     /// MACMIIAR
-    const MACMIIAR_val = packed struct {
+    pub const MACMIIAR_val = packed struct {
         /// MB [0:0]
         /// MII busy
         MB: u1 = 0,
@@ -28129,7 +28129,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACMIIAR = Register(MACMIIAR_val).init(base_address + 0x10);
 
     /// MACMIIDR
-    const MACMIIDR_val = packed struct {
+    pub const MACMIIDR_val = packed struct {
         /// MD [0:15]
         /// MII data
         MD: u16 = 0,
@@ -28141,7 +28141,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACMIIDR = Register(MACMIIDR_val).init(base_address + 0x14);
 
     /// MACFCR
-    const MACFCR_val = packed struct {
+    pub const MACFCR_val = packed struct {
         /// FCB_BPA [0:0]
         /// Flow control busy/back pressure
         FCB_BPA: u1 = 0,
@@ -28172,7 +28172,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACFCR = Register(MACFCR_val).init(base_address + 0x18);
 
     /// MACVLANTR
-    const MACVLANTR_val = packed struct {
+    pub const MACVLANTR_val = packed struct {
         /// VLANTI [0:15]
         /// VLAN tag identifier (for receive
         VLANTI: u16 = 0,
@@ -28187,7 +28187,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACVLANTR = Register(MACVLANTR_val).init(base_address + 0x1c);
 
     /// MACRWUFFR
-    const MACRWUFFR_val = packed struct {
+    pub const MACRWUFFR_val = packed struct {
         /// unused [0:31]
         _unused0: u8 = 0,
         _unused8: u8 = 0,
@@ -28198,7 +28198,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACRWUFFR = Register(MACRWUFFR_val).init(base_address + 0x28);
 
     /// MACPMTCSR
-    const MACPMTCSR_val = packed struct {
+    pub const MACPMTCSR_val = packed struct {
         /// PD [0:0]
         /// Power down
         PD: u1 = 0,
@@ -28234,7 +28234,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACPMTCSR = Register(MACPMTCSR_val).init(base_address + 0x2c);
 
     /// MACSR
-    const MACSR_val = packed struct {
+    pub const MACSR_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// PMTS [3:3]
@@ -28264,7 +28264,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACSR = Register(MACSR_val).init(base_address + 0x38);
 
     /// MACIMR
-    const MACIMR_val = packed struct {
+    pub const MACIMR_val = packed struct {
         /// unused [0:2]
         _unused0: u3 = 0,
         /// PMTIM [3:3]
@@ -28285,7 +28285,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACIMR = Register(MACIMR_val).init(base_address + 0x3c);
 
     /// MACA0HR
-    const MACA0HR_val = packed struct {
+    pub const MACA0HR_val = packed struct {
         /// MACA0H [0:15]
         /// MAC address0 high
         MACA0H: u16 = 65535,
@@ -28300,7 +28300,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA0HR = Register(MACA0HR_val).init(base_address + 0x40);
 
     /// MACA0LR
-    const MACA0LR_val = packed struct {
+    pub const MACA0LR_val = packed struct {
         /// MACA0L [0:31]
         /// MAC address0 low
         MACA0L: u32 = 4294967295,
@@ -28309,7 +28309,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA0LR = Register(MACA0LR_val).init(base_address + 0x44);
 
     /// MACA1HR
-    const MACA1HR_val = packed struct {
+    pub const MACA1HR_val = packed struct {
         /// MACA1H [0:15]
         /// MAC address1 high
         MACA1H: u16 = 65535,
@@ -28329,7 +28329,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA1HR = Register(MACA1HR_val).init(base_address + 0x48);
 
     /// MACA1LR
-    const MACA1LR_val = packed struct {
+    pub const MACA1LR_val = packed struct {
         /// MACA1L [0:31]
         /// MAC address1 low
         MACA1L: u32 = 4294967295,
@@ -28338,7 +28338,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA1LR = Register(MACA1LR_val).init(base_address + 0x4c);
 
     /// MACA2HR
-    const MACA2HR_val = packed struct {
+    pub const MACA2HR_val = packed struct {
         /// ETH_MACA2HR [0:15]
         /// Ethernet MAC address 2 high
         ETH_MACA2HR: u16 = 80,
@@ -28358,7 +28358,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA2HR = Register(MACA2HR_val).init(base_address + 0x50);
 
     /// MACA2LR
-    const MACA2LR_val = packed struct {
+    pub const MACA2LR_val = packed struct {
         /// MACA2L [0:30]
         /// MAC address2 low
         MACA2L: u31 = 2147483647,
@@ -28369,7 +28369,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA2LR = Register(MACA2LR_val).init(base_address + 0x54);
 
     /// MACA3HR
-    const MACA3HR_val = packed struct {
+    pub const MACA3HR_val = packed struct {
         /// MACA3H [0:15]
         /// MAC address3 high
         MACA3H: u16 = 65535,
@@ -28389,7 +28389,7 @@ pub const ETHERNET_MAC = struct {
     pub const MACA3HR = Register(MACA3HR_val).init(base_address + 0x58);
 
     /// MACA3LR
-    const MACA3LR_val = packed struct {
+    pub const MACA3LR_val = packed struct {
         /// MBCA3L [0:31]
         /// MAC address3 low
         MBCA3L: u32 = 4294967295,
@@ -28402,7 +28402,7 @@ pub const ETHERNET_MAC = struct {
 pub const ETHERNET_PTP = struct {
     const base_address = 0x40028700;
     /// PTPTSCR
-    const PTPTSCR_val = packed struct {
+    pub const PTPTSCR_val = packed struct {
         /// TSE [0:0]
         /// Time stamp enable
         TSE: u1 = 0,
@@ -28431,7 +28431,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSCR = Register(PTPTSCR_val).init(base_address + 0x0);
 
     /// PTPSSIR
-    const PTPSSIR_val = packed struct {
+    pub const PTPSSIR_val = packed struct {
         /// STSSI [0:7]
         /// System time subsecond
         STSSI: u8 = 0,
@@ -28444,7 +28444,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPSSIR = Register(PTPSSIR_val).init(base_address + 0x4);
 
     /// PTPTSHR
-    const PTPTSHR_val = packed struct {
+    pub const PTPTSHR_val = packed struct {
         /// STS [0:31]
         /// System time second
         STS: u32 = 0,
@@ -28453,7 +28453,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSHR = Register(PTPTSHR_val).init(base_address + 0x8);
 
     /// PTPTSLR
-    const PTPTSLR_val = packed struct {
+    pub const PTPTSLR_val = packed struct {
         /// STSS [0:30]
         /// System time subseconds
         STSS: u31 = 0,
@@ -28465,7 +28465,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSLR = Register(PTPTSLR_val).init(base_address + 0xc);
 
     /// PTPTSHUR
-    const PTPTSHUR_val = packed struct {
+    pub const PTPTSHUR_val = packed struct {
         /// TSUS [0:31]
         /// Time stamp update second
         TSUS: u32 = 0,
@@ -28474,7 +28474,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSHUR = Register(PTPTSHUR_val).init(base_address + 0x10);
 
     /// PTPTSLUR
-    const PTPTSLUR_val = packed struct {
+    pub const PTPTSLUR_val = packed struct {
         /// TSUSS [0:30]
         /// Time stamp update
         TSUSS: u31 = 0,
@@ -28486,7 +28486,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSLUR = Register(PTPTSLUR_val).init(base_address + 0x14);
 
     /// PTPTSAR
-    const PTPTSAR_val = packed struct {
+    pub const PTPTSAR_val = packed struct {
         /// TSA [0:31]
         /// Time stamp addend
         TSA: u32 = 0,
@@ -28495,7 +28495,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTSAR = Register(PTPTSAR_val).init(base_address + 0x18);
 
     /// PTPTTHR
-    const PTPTTHR_val = packed struct {
+    pub const PTPTTHR_val = packed struct {
         /// TTSH [0:31]
         /// Target time stamp high
         TTSH: u32 = 0,
@@ -28504,7 +28504,7 @@ pub const ETHERNET_PTP = struct {
     pub const PTPTTHR = Register(PTPTTHR_val).init(base_address + 0x1c);
 
     /// PTPTTLR
-    const PTPTTLR_val = packed struct {
+    pub const PTPTTLR_val = packed struct {
         /// TTSL [0:31]
         /// Target time stamp low
         TTSL: u32 = 0,
@@ -28517,7 +28517,7 @@ pub const ETHERNET_PTP = struct {
 pub const ETHERNET_DMA = struct {
     const base_address = 0x40029000;
     /// DMABMR
-    const DMABMR_val = packed struct {
+    pub const DMABMR_val = packed struct {
         /// SR [0:0]
         /// Software reset
         SR: u1 = 1,
@@ -28557,7 +28557,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMABMR = Register(DMABMR_val).init(base_address + 0x0);
 
     /// DMATPDR
-    const DMATPDR_val = packed struct {
+    pub const DMATPDR_val = packed struct {
         /// TPD [0:31]
         /// Transmit poll demand
         TPD: u32 = 0,
@@ -28566,7 +28566,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMATPDR = Register(DMATPDR_val).init(base_address + 0x4);
 
     /// DMARPDR
-    const DMARPDR_val = packed struct {
+    pub const DMARPDR_val = packed struct {
         /// RPD [0:31]
         /// Receive poll demand
         RPD: u32 = 0,
@@ -28575,7 +28575,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMARPDR = Register(DMARPDR_val).init(base_address + 0x8);
 
     /// DMARDLAR
-    const DMARDLAR_val = packed struct {
+    pub const DMARDLAR_val = packed struct {
         /// SRL [0:31]
         /// Start of receive list
         SRL: u32 = 0,
@@ -28584,7 +28584,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMARDLAR = Register(DMARDLAR_val).init(base_address + 0xc);
 
     /// DMATDLAR
-    const DMATDLAR_val = packed struct {
+    pub const DMATDLAR_val = packed struct {
         /// STL [0:31]
         /// Start of transmit list
         STL: u32 = 0,
@@ -28593,7 +28593,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMATDLAR = Register(DMATDLAR_val).init(base_address + 0x10);
 
     /// DMASR
-    const DMASR_val = packed struct {
+    pub const DMASR_val = packed struct {
         /// TS [0:0]
         /// Transmit status
         TS: u1 = 0,
@@ -28668,7 +28668,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMASR = Register(DMASR_val).init(base_address + 0x14);
 
     /// DMAOMR
-    const DMAOMR_val = packed struct {
+    pub const DMAOMR_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// SR [1:1]
@@ -28722,7 +28722,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMAOMR = Register(DMAOMR_val).init(base_address + 0x18);
 
     /// DMAIER
-    const DMAIER_val = packed struct {
+    pub const DMAIER_val = packed struct {
         /// TIE [0:0]
         /// Transmit interrupt enable
         TIE: u1 = 0,
@@ -28778,7 +28778,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMAIER = Register(DMAIER_val).init(base_address + 0x1c);
 
     /// DMAMFBOCR
-    const DMAMFBOCR_val = packed struct {
+    pub const DMAMFBOCR_val = packed struct {
         /// MFC [0:15]
         /// Missed frames by the
         MFC: u16 = 0,
@@ -28798,7 +28798,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMAMFBOCR = Register(DMAMFBOCR_val).init(base_address + 0x20);
 
     /// DMACHTDR
-    const DMACHTDR_val = packed struct {
+    pub const DMACHTDR_val = packed struct {
         /// HTDAP [0:31]
         /// Host transmit descriptor address
         HTDAP: u32 = 0,
@@ -28807,7 +28807,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMACHTDR = Register(DMACHTDR_val).init(base_address + 0x48);
 
     /// DMACHRDR
-    const DMACHRDR_val = packed struct {
+    pub const DMACHRDR_val = packed struct {
         /// HRDAP [0:31]
         /// Host receive descriptor address
         HRDAP: u32 = 0,
@@ -28816,7 +28816,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMACHRDR = Register(DMACHRDR_val).init(base_address + 0x4c);
 
     /// DMACHTBAR
-    const DMACHTBAR_val = packed struct {
+    pub const DMACHTBAR_val = packed struct {
         /// HTBAP [0:31]
         /// Host transmit buffer address
         HTBAP: u32 = 0,
@@ -28825,7 +28825,7 @@ pub const ETHERNET_DMA = struct {
     pub const DMACHTBAR = Register(DMACHTBAR_val).init(base_address + 0x50);
 
     /// DMACHRBAR
-    const DMACHRBAR_val = packed struct {
+    pub const DMACHRBAR_val = packed struct {
         /// HRBAP [0:31]
         /// Host receive buffer address
         HRBAP: u32 = 0,
@@ -28838,7 +28838,7 @@ pub const ETHERNET_DMA = struct {
 pub const NVIC = struct {
     const base_address = 0xe000e100;
     /// ISER0
-    const ISER0_val = packed struct {
+    pub const ISER0_val = packed struct {
         /// SETENA [0:31]
         /// SETENA
         SETENA: u32 = 0,
@@ -28847,7 +28847,7 @@ pub const NVIC = struct {
     pub const ISER0 = Register(ISER0_val).init(base_address + 0x0);
 
     /// ISER1
-    const ISER1_val = packed struct {
+    pub const ISER1_val = packed struct {
         /// SETENA [0:31]
         /// SETENA
         SETENA: u32 = 0,
@@ -28856,7 +28856,7 @@ pub const NVIC = struct {
     pub const ISER1 = Register(ISER1_val).init(base_address + 0x4);
 
     /// ICER0
-    const ICER0_val = packed struct {
+    pub const ICER0_val = packed struct {
         /// CLRENA [0:31]
         /// CLRENA
         CLRENA: u32 = 0,
@@ -28865,7 +28865,7 @@ pub const NVIC = struct {
     pub const ICER0 = Register(ICER0_val).init(base_address + 0x80);
 
     /// ICER1
-    const ICER1_val = packed struct {
+    pub const ICER1_val = packed struct {
         /// CLRENA [0:31]
         /// CLRENA
         CLRENA: u32 = 0,
@@ -28874,7 +28874,7 @@ pub const NVIC = struct {
     pub const ICER1 = Register(ICER1_val).init(base_address + 0x84);
 
     /// ISPR0
-    const ISPR0_val = packed struct {
+    pub const ISPR0_val = packed struct {
         /// SETPEND [0:31]
         /// SETPEND
         SETPEND: u32 = 0,
@@ -28883,7 +28883,7 @@ pub const NVIC = struct {
     pub const ISPR0 = Register(ISPR0_val).init(base_address + 0x100);
 
     /// ISPR1
-    const ISPR1_val = packed struct {
+    pub const ISPR1_val = packed struct {
         /// SETPEND [0:31]
         /// SETPEND
         SETPEND: u32 = 0,
@@ -28892,7 +28892,7 @@ pub const NVIC = struct {
     pub const ISPR1 = Register(ISPR1_val).init(base_address + 0x104);
 
     /// ICPR0
-    const ICPR0_val = packed struct {
+    pub const ICPR0_val = packed struct {
         /// CLRPEND [0:31]
         /// CLRPEND
         CLRPEND: u32 = 0,
@@ -28901,7 +28901,7 @@ pub const NVIC = struct {
     pub const ICPR0 = Register(ICPR0_val).init(base_address + 0x180);
 
     /// ICPR1
-    const ICPR1_val = packed struct {
+    pub const ICPR1_val = packed struct {
         /// CLRPEND [0:31]
         /// CLRPEND
         CLRPEND: u32 = 0,
@@ -28910,7 +28910,7 @@ pub const NVIC = struct {
     pub const ICPR1 = Register(ICPR1_val).init(base_address + 0x184);
 
     /// IABR0
-    const IABR0_val = packed struct {
+    pub const IABR0_val = packed struct {
         /// ACTIVE [0:31]
         /// ACTIVE
         ACTIVE: u32 = 0,
@@ -28919,7 +28919,7 @@ pub const NVIC = struct {
     pub const IABR0 = Register(IABR0_val).init(base_address + 0x200);
 
     /// IABR1
-    const IABR1_val = packed struct {
+    pub const IABR1_val = packed struct {
         /// ACTIVE [0:31]
         /// ACTIVE
         ACTIVE: u32 = 0,
@@ -28928,7 +28928,7 @@ pub const NVIC = struct {
     pub const IABR1 = Register(IABR1_val).init(base_address + 0x204);
 
     /// IPR0
-    const IPR0_val = packed struct {
+    pub const IPR0_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -28946,7 +28946,7 @@ pub const NVIC = struct {
     pub const IPR0 = Register(IPR0_val).init(base_address + 0x300);
 
     /// IPR1
-    const IPR1_val = packed struct {
+    pub const IPR1_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -28964,7 +28964,7 @@ pub const NVIC = struct {
     pub const IPR1 = Register(IPR1_val).init(base_address + 0x304);
 
     /// IPR2
-    const IPR2_val = packed struct {
+    pub const IPR2_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -28982,7 +28982,7 @@ pub const NVIC = struct {
     pub const IPR2 = Register(IPR2_val).init(base_address + 0x308);
 
     /// IPR3
-    const IPR3_val = packed struct {
+    pub const IPR3_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29000,7 +29000,7 @@ pub const NVIC = struct {
     pub const IPR3 = Register(IPR3_val).init(base_address + 0x30c);
 
     /// IPR4
-    const IPR4_val = packed struct {
+    pub const IPR4_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29018,7 +29018,7 @@ pub const NVIC = struct {
     pub const IPR4 = Register(IPR4_val).init(base_address + 0x310);
 
     /// IPR5
-    const IPR5_val = packed struct {
+    pub const IPR5_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29036,7 +29036,7 @@ pub const NVIC = struct {
     pub const IPR5 = Register(IPR5_val).init(base_address + 0x314);
 
     /// IPR6
-    const IPR6_val = packed struct {
+    pub const IPR6_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29054,7 +29054,7 @@ pub const NVIC = struct {
     pub const IPR6 = Register(IPR6_val).init(base_address + 0x318);
 
     /// IPR7
-    const IPR7_val = packed struct {
+    pub const IPR7_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29072,7 +29072,7 @@ pub const NVIC = struct {
     pub const IPR7 = Register(IPR7_val).init(base_address + 0x31c);
 
     /// IPR8
-    const IPR8_val = packed struct {
+    pub const IPR8_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29090,7 +29090,7 @@ pub const NVIC = struct {
     pub const IPR8 = Register(IPR8_val).init(base_address + 0x320);
 
     /// IPR9
-    const IPR9_val = packed struct {
+    pub const IPR9_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29108,7 +29108,7 @@ pub const NVIC = struct {
     pub const IPR9 = Register(IPR9_val).init(base_address + 0x324);
 
     /// IPR10
-    const IPR10_val = packed struct {
+    pub const IPR10_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29126,7 +29126,7 @@ pub const NVIC = struct {
     pub const IPR10 = Register(IPR10_val).init(base_address + 0x328);
 
     /// IPR11
-    const IPR11_val = packed struct {
+    pub const IPR11_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29144,7 +29144,7 @@ pub const NVIC = struct {
     pub const IPR11 = Register(IPR11_val).init(base_address + 0x32c);
 
     /// IPR12
-    const IPR12_val = packed struct {
+    pub const IPR12_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29162,7 +29162,7 @@ pub const NVIC = struct {
     pub const IPR12 = Register(IPR12_val).init(base_address + 0x330);
 
     /// IPR13
-    const IPR13_val = packed struct {
+    pub const IPR13_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29180,7 +29180,7 @@ pub const NVIC = struct {
     pub const IPR13 = Register(IPR13_val).init(base_address + 0x334);
 
     /// IPR14
-    const IPR14_val = packed struct {
+    pub const IPR14_val = packed struct {
         /// IPR_N0 [0:7]
         /// IPR_N0
         IPR_N0: u8 = 0,
@@ -29202,7 +29202,7 @@ pub const NVIC = struct {
 pub const MPU = struct {
     const base_address = 0xe000ed90;
     /// MPU_TYPER
-    const MPU_TYPER_val = packed struct {
+    pub const MPU_TYPER_val = packed struct {
         /// SEPARATE [0:0]
         /// Separate flag
         SEPARATE: u1 = 0,
@@ -29221,7 +29221,7 @@ pub const MPU = struct {
     pub const MPU_TYPER = Register(MPU_TYPER_val).init(base_address + 0x0);
 
     /// MPU_CTRL
-    const MPU_CTRL_val = packed struct {
+    pub const MPU_CTRL_val = packed struct {
         /// ENABLE [0:0]
         /// Enables the MPU
         ENABLE: u1 = 0,
@@ -29241,7 +29241,7 @@ pub const MPU = struct {
     pub const MPU_CTRL = Register(MPU_CTRL_val).init(base_address + 0x4);
 
     /// MPU_RNR
-    const MPU_RNR_val = packed struct {
+    pub const MPU_RNR_val = packed struct {
         /// REGION [0:7]
         /// MPU region
         REGION: u8 = 0,
@@ -29254,7 +29254,7 @@ pub const MPU = struct {
     pub const MPU_RNR = Register(MPU_RNR_val).init(base_address + 0x8);
 
     /// MPU_RBAR
-    const MPU_RBAR_val = packed struct {
+    pub const MPU_RBAR_val = packed struct {
         /// REGION [0:3]
         /// MPU region field
         REGION: u4 = 0,
@@ -29269,7 +29269,7 @@ pub const MPU = struct {
     pub const MPU_RBAR = Register(MPU_RBAR_val).init(base_address + 0xc);
 
     /// MPU_RASR
-    const MPU_RASR_val = packed struct {
+    pub const MPU_RASR_val = packed struct {
         /// ENABLE [0:0]
         /// Region enable bit.
         ENABLE: u1 = 0,
@@ -29314,7 +29314,7 @@ pub const MPU = struct {
 pub const SCB_ACTRL = struct {
     const base_address = 0xe000e008;
     /// ACTRL
-    const ACTRL_val = packed struct {
+    pub const ACTRL_val = packed struct {
         /// unused [0:1]
         _unused0: u2 = 0,
         /// DISFOLD [2:2]
@@ -29345,7 +29345,7 @@ pub const SCB_ACTRL = struct {
 pub const NVIC_STIR = struct {
     const base_address = 0xe000ef00;
     /// STIR
-    const STIR_val = packed struct {
+    pub const STIR_val = packed struct {
         /// INTID [0:8]
         /// Software generated interrupt
         INTID: u9 = 0,
@@ -29362,7 +29362,7 @@ pub const NVIC_STIR = struct {
 pub const SCB = struct {
     const base_address = 0xe000ed00;
     /// CPUID
-    const CPUID_val = packed struct {
+    pub const CPUID_val = packed struct {
         /// Revision [0:3]
         /// Revision number
         Revision: u4 = 1,
@@ -29383,7 +29383,7 @@ pub const SCB = struct {
     pub const CPUID = Register(CPUID_val).init(base_address + 0x0);
 
     /// ICSR
-    const ICSR_val = packed struct {
+    pub const ICSR_val = packed struct {
         /// VECTACTIVE [0:8]
         /// Active vector
         VECTACTIVE: u9 = 0,
@@ -29425,7 +29425,7 @@ pub const SCB = struct {
     pub const ICSR = Register(ICSR_val).init(base_address + 0x4);
 
     /// VTOR
-    const VTOR_val = packed struct {
+    pub const VTOR_val = packed struct {
         /// unused [0:8]
         _unused0: u8 = 0,
         _unused8: u1 = 0,
@@ -29439,7 +29439,7 @@ pub const SCB = struct {
     pub const VTOR = Register(VTOR_val).init(base_address + 0x8);
 
     /// AIRCR
-    const AIRCR_val = packed struct {
+    pub const AIRCR_val = packed struct {
         /// VECTRESET [0:0]
         /// VECTRESET
         VECTRESET: u1 = 0,
@@ -29467,7 +29467,7 @@ pub const SCB = struct {
     pub const AIRCR = Register(AIRCR_val).init(base_address + 0xc);
 
     /// SCR
-    const SCR_val = packed struct {
+    pub const SCR_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// SLEEPONEXIT [1:1]
@@ -29491,7 +29491,7 @@ pub const SCB = struct {
     pub const SCR = Register(SCR_val).init(base_address + 0x10);
 
     /// CCR
-    const CCR_val = packed struct {
+    pub const CCR_val = packed struct {
         /// NONBASETHRDENA [0:0]
         /// Configures how the processor enters
         NONBASETHRDENA: u1 = 0,
@@ -29523,7 +29523,7 @@ pub const SCB = struct {
     pub const CCR = Register(CCR_val).init(base_address + 0x14);
 
     /// SHPR1
-    const SHPR1_val = packed struct {
+    pub const SHPR1_val = packed struct {
         /// PRI_4 [0:7]
         /// Priority of system handler
         PRI_4: u8 = 0,
@@ -29540,7 +29540,7 @@ pub const SCB = struct {
     pub const SHPR1 = Register(SHPR1_val).init(base_address + 0x18);
 
     /// SHPR2
-    const SHPR2_val = packed struct {
+    pub const SHPR2_val = packed struct {
         /// unused [0:23]
         _unused0: u8 = 0,
         _unused8: u8 = 0,
@@ -29553,7 +29553,7 @@ pub const SCB = struct {
     pub const SHPR2 = Register(SHPR2_val).init(base_address + 0x1c);
 
     /// SHPR3
-    const SHPR3_val = packed struct {
+    pub const SHPR3_val = packed struct {
         /// unused [0:15]
         _unused0: u8 = 0,
         _unused8: u8 = 0,
@@ -29568,7 +29568,7 @@ pub const SCB = struct {
     pub const SHPR3 = Register(SHPR3_val).init(base_address + 0x20);
 
     /// SHCRS
-    const SHCRS_val = packed struct {
+    pub const SHCRS_val = packed struct {
         /// MEMFAULTACT [0:0]
         /// Memory management fault exception active
         MEMFAULTACT: u1 = 0,
@@ -29625,7 +29625,7 @@ pub const SCB = struct {
     pub const SHCRS = Register(SHCRS_val).init(base_address + 0x24);
 
     /// CFSR_UFSR_BFSR_MMFSR
-    const CFSR_UFSR_BFSR_MMFSR_val = packed struct {
+    pub const CFSR_UFSR_BFSR_MMFSR_val = packed struct {
         /// IACCVIOL [0:0]
         /// IACCVIOL
         IACCVIOL: u1 = 0,
@@ -29698,7 +29698,7 @@ pub const SCB = struct {
     pub const CFSR_UFSR_BFSR_MMFSR = Register(CFSR_UFSR_BFSR_MMFSR_val).init(base_address + 0x28);
 
     /// HFSR
-    const HFSR_val = packed struct {
+    pub const HFSR_val = packed struct {
         /// unused [0:0]
         _unused0: u1 = 0,
         /// VECTTBL [1:1]
@@ -29720,7 +29720,7 @@ pub const SCB = struct {
     pub const HFSR = Register(HFSR_val).init(base_address + 0x2c);
 
     /// MMFAR
-    const MMFAR_val = packed struct {
+    pub const MMFAR_val = packed struct {
         /// MMFAR [0:31]
         /// Memory management fault
         MMFAR: u32 = 0,
@@ -29729,7 +29729,7 @@ pub const SCB = struct {
     pub const MMFAR = Register(MMFAR_val).init(base_address + 0x34);
 
     /// BFAR
-    const BFAR_val = packed struct {
+    pub const BFAR_val = packed struct {
         /// BFAR [0:31]
         /// Bus fault address
         BFAR: u32 = 0,
@@ -29742,7 +29742,7 @@ pub const SCB = struct {
 pub const STK = struct {
     const base_address = 0xe000e010;
     /// CTRL
-    const CTRL_val = packed struct {
+    pub const CTRL_val = packed struct {
         /// ENABLE [0:0]
         /// Counter enable
         ENABLE: u1 = 0,
@@ -29766,7 +29766,7 @@ pub const STK = struct {
     pub const CTRL = Register(CTRL_val).init(base_address + 0x0);
 
     /// LOAD_
-    const LOAD__val = packed struct {
+    pub const LOAD__val = packed struct {
         /// RELOAD [0:23]
         /// RELOAD value
         RELOAD: u24 = 0,
@@ -29777,7 +29777,7 @@ pub const STK = struct {
     pub const LOAD_ = Register(LOAD__val).init(base_address + 0x4);
 
     /// VAL
-    const VAL_val = packed struct {
+    pub const VAL_val = packed struct {
         /// CURRENT [0:23]
         /// Current counter value
         CURRENT: u24 = 0,
@@ -29788,7 +29788,7 @@ pub const STK = struct {
     pub const VAL = Register(VAL_val).init(base_address + 0x8);
 
     /// CALIB
-    const CALIB_val = packed struct {
+    pub const CALIB_val = packed struct {
         /// TENMS [0:23]
         /// Calibration value
         TENMS: u24 = 0,
