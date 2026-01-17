@@ -1,8 +1,6 @@
 const std = @import("std");
 const regs = @import("registers");
 
-const Writer = std.Io.Writer;
-
 const clk_freq = 8_000_000;
 const timer_prescalar = 8;
 const timer_freq = @divFloor(clk_freq, timer_prescalar);
@@ -14,6 +12,9 @@ pub const std_options = std.Options{
 // Global State
 var serial_initialised = false;
 
+const MainUART = UART(.USART1);
+var global_uart: MainUART = .{};
+
 fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
     if (!cond) {
         std.debug.panic(msg, args);
@@ -23,13 +24,10 @@ fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
 fn log(comptime message_level: std.log.Level, comptime scope: @TypeOf(.enum_literal), comptime format: []const u8, args: anytype) void {
     const level_txt = comptime message_level.asText();
     const prefix2 = if (scope == .default) ": " else "(" ++ @tagName(scope) ++ "): ";
-    var buffer: [512]u8 = undefined;
-    const uart = UARTWriter(.USART1).init(&buffer);
-    var uart_writer = uart.writer;
-    if (serial_initialised) {
-        uart_writer.print(level_txt ++ prefix2 ++ format ++ "\r\n", args) catch return;
-        uart_writer.flush() catch return;
-    }
+    var uart_buf: [64]u8 = undefined;
+    var uart_writer = global_uart.writer(&uart_buf);
+    uart_writer.print(level_txt ++ prefix2 ++ format ++ "\r\n", args) catch return;
+    uart_writer.flush() catch return;
 }
 
 pub fn panic(
@@ -74,26 +72,6 @@ const UARTOptions = struct {
     baud: usize,
     pin_enable: bool,
 };
-
-fn usart_init(baud: usize) void {
-    // Enable Clocks
-    regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .USART1EN = 1, .AFIOEN = 1 });
-    regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 1 });
-    regs.GPIOB.CRL.modify(.{
-        // TX = PB6 in REMAP=1
-        .MODE6 = 0b10, // Output < 2 Mhz
-        .CNF6 = 0b10, // AFIO Push-Pull
-        // RX = PB7 in REMAP=1
-        .MODE7 = 0b00, // Input
-        .CNF7 = 0b10, // Pull down (ODR=0)
-    });
-    // Pull up tx
-    regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
-    const target_baud: u32 = @divFloor(clk_freq, baud);
-    regs.USART1.CR1.write(.{ .UE = 1 });
-    regs.USART1.BRR.write_raw(target_baud);
-    serial_initialised = true;
-}
 
 fn set_led() void {
     regs.GPIOC.ODR.modify(.{ .ODR13 = 0 });
@@ -194,74 +172,108 @@ const SongItem = struct {
 
 const Song = struct { bpm: usize, sequence: []SongItem };
 
-const UART = enum {
+const UARTType = enum {
     USART1,
     USART2,
+    USART3,
+    UART4,
+    UART5,
 };
 
-fn UARTWriter(uart: UART) type {
+fn UART(uart: UARTType) type {
     return struct {
+        initialised: bool = false,
+
         const Self = @This();
         const Regs: type = switch (uart) {
             .USART1 => regs.USART1,
             .USART2 => regs.USART2,
+            .USART3 => regs.USART3,
+            .UART4 => regs.UART4,
+            .UART5 => regs.UART5,
         };
+        const Peripheral: UARTType = uart;
 
-        writer: Writer,
-
-        pub fn init(buffer: []u8) Self {
+        pub fn writer(self: Self, buffer: []u8) std.Io.Writer {
+            assert(self.initialised, "{t} is not initialised, cannot get a writer!", .{Peripheral});
             return .{
-                .writer = .{
-                    .vtable = &.{
-                        .drain = Self.uart_drain,
-                    },
-                    .buffer = buffer,
+                .vtable = &.{
+                    .drain = Self.drain,
                 },
+                .buffer = buffer,
             };
         }
 
-        const UARTError = error{
+        pub fn init_peripheral(self: *Self, baud: u32) void {
+            switch (Peripheral) {
+                .USART1 => {
+                    regs.RCC.APB2ENR.modify(.{ .USART1EN = 1 });
+                },
+                .USART2 => {
+                    regs.RCC.APB1ENR.modify(.{ .USART2EN = 1 });
+                },
+                inline else => |uart_type| @compileError(@tagName(uart_type) ++ " not supported"),
+            }
+            regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .AFIOEN = 1 });
+            regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 1 });
+            regs.GPIOB.CRL.modify(.{
+                // TX = PB6 in REMAP=1
+                .MODE6 = 0b10, // Output < 2 Mhz
+                .CNF6 = 0b10, // AFIO Push-Pull
+                // RX = PB7 in REMAP=1
+                .MODE7 = 0b00, // Input
+                .CNF7 = 0b10, // Pull down (ODR=0)
+            });
+            // Pull up tx
+            regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
+            const target_baud: u32 = @divFloor(clk_freq, baud);
+            Self.Regs.CR1.write(.{ .UE = 1 });
+            Self.Regs.BRR.write_raw(target_baud);
+            self.initialised = true;
+        }
+
+        const Error = error{
             NotEnabled,
         };
 
-        fn uart_send_char(char: u8) void {
+        fn send_char(char: u8) void {
             while (Self.Regs.SR.read().TXE == 0) {}
 
             Self.Regs.DR.write(.{ .DR = char });
         }
 
-        fn uart_send_msg(msg: []const u8) UARTError!usize {
+        fn send_msg(msg: []const u8) Error!usize {
             if (msg.len == 0) return 0;
             Self.Regs.CR1.modify(.{ .TE = 1 });
             defer Self.Regs.CR1.modify(.{ .TE = 0 });
 
             const CR1 = Self.Regs.CR1.read();
             if (CR1.UE != 1 and CR1.TE != 1) {
-                return UARTError.NotEnabled;
+                return Error.NotEnabled;
             }
 
             var written_bytes: usize = 0;
             for (msg) |char| {
-                uart_send_char(char);
+                send_char(char);
                 written_bytes += 1;
             }
             while (Self.Regs.SR.read().TC == 0) {}
             return written_bytes;
         }
 
-        fn uart_drain(writer: *Writer, data: []const []const u8, splat: usize) Writer.Error!usize {
-            const buffered = writer.buffered();
+        fn drain(w: *std.Io.Writer, data: []const []const u8, splat: usize) std.Io.Writer.Error!usize {
+            const buffered = w.buffered();
             var total_bytes: usize = 0;
             if (buffered.len > 0) {
-                total_bytes += uart_send_msg(buffered) catch return Writer.Error.WriteFailed;
-                _ = writer.consumeAll();
+                total_bytes += send_msg(buffered) catch return std.Io.Writer.Error.WriteFailed;
+                _ = w.consumeAll();
             }
 
             for (data) |data_entry| {
-                total_bytes += uart_send_msg(data_entry) catch return Writer.Error.WriteFailed;
+                total_bytes += send_msg(data_entry) catch return std.Io.Writer.Error.WriteFailed;
             }
-            for (0..splat-1) |_| {
-                total_bytes += uart_send_msg(data[data.len - 1]) catch return Writer.Error.WriteFailed;
+            for (0..splat - 1) |_| {
+                total_bytes += send_msg(data[data.len - 1]) catch return std.Io.Writer.Error.WriteFailed;
             }
             return total_bytes;
         }
@@ -271,7 +283,7 @@ fn UARTWriter(uart: UART) type {
 fn init() void {
     // Configure System clock
     enable_systick(clk_freq);
-    usart_init(9600);
+    global_uart.init_peripheral(9600);
     gpio_init();
     timer_init();
 }
