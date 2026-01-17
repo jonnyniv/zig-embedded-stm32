@@ -56,6 +56,9 @@ pub fn build(b: *std.Build) void {
     exe.setLinkerScript(b.path("src/build/STM32F103C8Tx_FLASH.ld"));
 
     exe.entry = .{ .symbol_name = "Reset_Handler" };
+
+    b.installArtifact(exe);
+
     const assembly = b.addInstallFile(exe.getEmittedAsm(), "source.s");
     assembly.step.dependOn(&exe.step);
     b.default_step.dependOn(&assembly.step);
@@ -84,7 +87,9 @@ pub fn build(b: *std.Build) void {
     run_flash.step.dependOn(&copy_bin.step);
     b.step("flash", "Flash to microcontroller").dependOn(&run_flash.step);
 
-    const run_gdb = b.addSystemCommand(&.{ "arm-none-eabi-gdb", b.getInstallPath(copy_bin.dir, exe.name), "-ex", "target remote :3333" });
+    const run_gdb = b.addSystemCommand(&.{"arm-none-eabi-gdb"});
+    run_gdb.addArtifactArg(exe);
+    run_gdb.addArgs(&.{ "-ex", "target remote :3333" });
     run_gdb.step.dependOn(&copy_bin.step);
     b.step("gdb", "start gdb server and connect to 3333").dependOn(&run_gdb.step);
 
