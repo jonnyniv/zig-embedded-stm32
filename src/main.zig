@@ -1,5 +1,5 @@
 const std = @import("std");
-const regs = @import("registers.zig");
+const regs = @import("registers");
 
 const Writer = std.Io.Writer;
 

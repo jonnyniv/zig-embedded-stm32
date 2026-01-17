@@ -22,6 +22,11 @@ pub fn build(b: *std.Build) void {
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = std.builtin.OptimizeMode.ReleaseSafe;
+    const register_mod = b.createModule(.{
+        .root_source_file = b.path("src/registers/STM32F103_regs.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
 
     // We will also create a module for our other entry point, 'main.zig'.
     const exe_mod = b.createModule(.{
@@ -34,6 +39,7 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
         .single_threaded = true,
     });
+    exe_mod.addImport("registers", register_mod);
     const exe_name = "zig_embedded";
 
     const exe = b.addExecutable(.{
