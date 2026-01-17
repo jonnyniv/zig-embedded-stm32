@@ -9,8 +9,6 @@ pub const std_options = std.Options{
     .logFn = log,
 };
 
-// Global State
-var serial_initialised = false;
 
 const MainUART = UART(.USART1);
 var global_uart: MainUART = .{};
@@ -41,7 +39,7 @@ pub fn panic(
     gpio_init();
     set_led();
     // Blink the led if ther was an error and no serial
-    if (!serial_initialised) {
+    if (!global_uart.initialised) {
         while (true) {
             delay_ms(500);
             clear_led();
