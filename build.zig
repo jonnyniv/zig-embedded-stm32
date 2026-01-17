@@ -22,6 +22,7 @@ pub fn build(b: *std.Build) void {
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = std.builtin.OptimizeMode.ReleaseSafe;
+
     const register_mod = b.createModule(.{
         .root_source_file = b.path("src/registers/STM32F103_regs.zig"),
         .target = target,
@@ -40,8 +41,8 @@ pub fn build(b: *std.Build) void {
         .single_threaded = true,
     });
     exe_mod.addImport("registers", register_mod);
-    const exe_name = "zig_embedded";
 
+    const exe_name = "zig_embedded";
     const exe = b.addExecutable(.{
         .name = exe_name ++ ".elf",
         .root_module = exe_mod,
@@ -50,8 +51,10 @@ pub fn build(b: *std.Build) void {
     exe.link_gc_sections = true;
     exe.link_data_sections = true;
     exe.link_function_sections = true;
+
     exe.addAssemblyFile(b.path("src/build/startup_stm32f103xb.s"));
     exe.setLinkerScript(b.path("src/build/STM32F103C8Tx_FLASH.ld"));
+
     exe.entry = .{ .symbol_name = "Reset_Handler" };
     const assembly = b.addInstallFile(exe.getEmittedAsm(), "source.s");
     assembly.step.dependOn(&exe.step);
@@ -66,21 +69,10 @@ pub fn build(b: *std.Build) void {
     copy_bin.step.dependOn(&bin.step);
     b.default_step.dependOn(&copy_bin.step);
 
-    const run_qemu = b.addSystemCommand(&.{"qemu-system-arm"});
-    run_qemu.addArgs(&.{
-        "-M",
-        "stm32vldiscovery",
-        "-trace",
-        "stm32l4x5_usart_*",
-        "-serial",
-        "stdio",
-        "-display",
-        "none",
-        "-kernel",
-        b.getInstallPath(copy_bin.dir, copy_bin.dest_rel_path),
-    });
-    run_qemu.step.dependOn(&copy_bin.step);
-    b.step("qemu", "run in qemu").dependOn(&run_qemu.step);
+    const run_renode = b.addSystemCommand(&.{"renode", "--console"});
+    run_renode.addFileArg(b.path("resource/stm32f103.resc"));
+    run_renode.step.dependOn(&copy_bin.step);
+    b.step("renode", "run in renode").dependOn(&run_renode.step);
 
     const run_flash = b.addSystemCommand(&.{
         "st-flash",
