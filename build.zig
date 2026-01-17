@@ -69,7 +69,7 @@ pub fn build(b: *std.Build) void {
     copy_bin.step.dependOn(&bin.step);
     b.default_step.dependOn(&copy_bin.step);
 
-    const run_renode = b.addSystemCommand(&.{"renode", "--console"});
+    const run_renode = b.addSystemCommand(&.{ "renode", "--console" });
     run_renode.addFileArg(b.path("resource/stm32f103.resc"));
     run_renode.step.dependOn(&copy_bin.step);
     b.step("renode", "run in renode").dependOn(&run_renode.step);
@@ -83,6 +83,10 @@ pub fn build(b: *std.Build) void {
     });
     run_flash.step.dependOn(&copy_bin.step);
     b.step("flash", "Flash to microcontroller").dependOn(&run_flash.step);
+
+    const run_gdb = b.addSystemCommand(&.{ "arm-none-eabi-gdb", b.getInstallPath(copy_bin.dir, exe.name), "-ex", "target remote :3333" });
+    run_gdb.step.dependOn(&copy_bin.step);
+    b.step("gdb", "start gdb server and connect to 3333").dependOn(&run_gdb.step);
 
     // This declares intent for the executable to be installed into the
     // standard location when the user invokes the "install" step (the default

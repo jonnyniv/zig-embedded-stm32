@@ -13,4 +13,10 @@ macro reset
     sysbus LoadELF $bin
 """
 
+macro gdb
+"""
+    machine StartGdbServer 3333
+"""
+
+
 runMacro $reset
