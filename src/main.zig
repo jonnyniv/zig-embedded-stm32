@@ -231,6 +231,7 @@ fn UARTWriter(uart: UART) type {
         }
 
         fn uart_send_msg(msg: []const u8) UARTError!usize {
+            if (msg.len == 0) return 0;
             Self.Regs.CR1.modify(.{ .TE = 1 });
             defer Self.Regs.CR1.modify(.{ .TE = 0 });
 
@@ -259,7 +260,7 @@ fn UARTWriter(uart: UART) type {
             for (data) |data_entry| {
                 total_bytes += uart_send_msg(data_entry) catch return Writer.Error.WriteFailed;
             }
-            for (0..splat) |_| {
+            for (0..splat-1) |_| {
                 total_bytes += uart_send_msg(data[data.len - 1]) catch return Writer.Error.WriteFailed;
             }
             return total_bytes;
