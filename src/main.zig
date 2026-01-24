@@ -2,16 +2,31 @@ const std = @import("std");
 const regs = @import("registers");
 const periphs = @import("peripherals.zig");
 
-const clk_freq = 8_000_000;
-const timer_prescalar = 8;
-const timer_freq = @divFloor(clk_freq, timer_prescalar);
+// Types
+const MainUART = periphs.UART(.USART1);
+const I2CAddr = u7;
+const I2CRW = enum(u1) {
+    read = 1,
+    write = 0,
+};
+
+// Set up logging
 pub const std_options = std.Options{
     .log_level = .debug,
     .logFn = log,
 };
 
-const MainUART = periphs.UART(.USART1);
+// Hardware constants
+const base_freq = 8_000_000;
+const base_period_ns = 1_000_000_000 / base_freq;
+const i2c_freq = 100_000;
+const timer_prescalar = 8;
+const timer_freq = @divFloor(base_freq, timer_prescalar);
+const aht100_ic2addr: I2CAddr = 0b0111000;
+
+// Global state
 var global_uart: MainUART = .{};
+var i2c_initialised = false;
 
 fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
     if (!cond) {
@@ -49,6 +64,13 @@ pub fn panic(
     }
     std.log.err("Reached panic with message: {s}, ret_addr=0x{X}", .{ msg, addr_str });
     while (true) {}
+}
+
+fn init_xosc() void {
+    regs.RCC.CR.modify(.{ .HSEON = 1 });
+    regs.RCC.CFGR.modify(.{ .SW = 0b01 });
+    // Wait for settling
+    while (regs.RCC.CFGR.read().SWS != 0b01) {}
 }
 
 fn enable_systick(frequency: usize) void {
@@ -121,7 +143,7 @@ const Scale = enum { C, Cs, D, Ef, E, F, Fs, G, Gs, A, Bf, B };
 
 /// A mapping from note to timer value
 const TimerScale: std.EnumArray(Scale, u16) = blk: {
-    const base_freq = 440.0;
+    const base_freq_a = 440.0;
     const base_freq_pos: isize = @intFromEnum(Scale.A);
     const twelve_root_two = std.math.pow(f64, 2, -(1.0 / 12.0));
     var arr = std.EnumArray(Scale, u16).initUndefined();
@@ -129,7 +151,7 @@ const TimerScale: std.EnumArray(Scale, u16) = blk: {
     // Assign values based on 12 tet
     for (std.enums.values(Scale)) |note| {
         const note_pos: isize = @intFromEnum(note) - base_freq_pos;
-        const freq = base_freq * std.math.pow(f64, twelve_root_two, -@as(f64, note_pos));
+        const freq = base_freq_a * std.math.pow(f64, twelve_root_two, -@as(f64, note_pos));
         arr.set(note, freq_to_timer(@floatCast(freq)));
     }
     break :blk arr;
@@ -170,12 +192,105 @@ const SongItem = struct {
 
 const Song = struct { bpm: usize, sequence: []SongItem };
 
+fn init_i2c() void {
+    // Enable Clocks for GPIO and I2C
+    regs.RCC.APB1ENR.modify(.{ .I2C1EN = 1 });
+    regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .AFIOEN = 1 });
+
+    // Configure pins
+    regs.AFIO.MAPR.modify(.{ .I2C1_REMAP = 1 });
+    regs.GPIOB.CRH.modify(.{
+        // SCL = PB8 in REMAP=1
+        .MODE8 = 0b01, // Output < 10 Mhz
+        .CNF8 = 0b11, // AFIO Open-Drain
+        // SDA = PB0 in REMAP=1
+        .MODE9 = 0b01, // Output < 10 Mhz
+        .CNF9 = 0b11, // AFIO Open-Drain
+    });
+
+    // Configure I2C speed, clock control, and rise time (From datasheet)
+    regs.I2C1.CR2.modify(.{ .FREQ = 8 });
+    const ccr_div: u12 = @divFloor(base_freq, 2 * i2c_freq);
+    regs.I2C1.CCR.modify(.{ .CCR = ccr_div });
+
+    const sm_mode_risetime_ns = 1000;
+    const rise_time_reg: u6 = @divFloor(sm_mode_risetime_ns, base_period_ns) + 1;
+    regs.I2C1.TRISE.modify(.{ .TRISE = rise_time_reg });
+
+    regs.I2C1.CR1.modify(.{ .PE = 1 });
+}
+
+fn i2c_start() void {
+    regs.I2C1.CR1.modify(.{ .START = 1 });
+    while (regs.I2C1.SR1.read().SB != 1) {}
+}
+
+fn i2c_send_addr(addr: I2CAddr, mode: I2CRW) void {
+    const addr_byte: u8 = addr << 1 | @intFromEnum(mode);
+    regs.I2C1.DR.write(.{ .DR = addr_byte });
+    while (regs.I2C1.SR1.read().ADDR != 1) {}
+    const set_mode: I2CRW = switch (regs.I2C1.SR2.read().TRA) {
+        0 => .read,
+        1 => .write,
+    };
+    assert(set_mode == mode, "I2C Addr phase: set_mode({t}) != mode({t})", .{ set_mode, mode });
+}
+
+fn i2c_read(addr: I2CAddr, bytes: usize, result_buf: []u8) []u8 {
+    i2c_start();
+    i2c_send_addr(addr, .read);
+    if (bytes == 1) {
+        regs.I2C1.CR1.modify(.{ .ACK = 0 });
+        regs.I2C1.CR1.modify(.{ .STOP = 1 });
+        while (regs.I2C1.SR1.read().RxNE != 1) {}
+        result_buf[0] = regs.I2C1.DR.read().DR;
+        return result_buf[0..1];
+
+        // } else if (bytes == 2) {
+    } else {
+        regs.I2C1.CR1.modify(.{ .ACK = 1 });
+        regs.I2C1.CR1.modify(.{ .STOP = 0 });
+        var idx: usize = 0;
+        while (true) : (idx += 1) {
+            if (idx >= bytes) {
+                break;
+            }
+            const bytes_remaining = bytes - idx;
+            // Second-to-last byte, we must send NACK
+            if (bytes_remaining == 3) {
+                while (regs.I2C1.SR1.read().BTF != 1) {}
+                regs.I2C1.CR1.modify(.{ .ACK = 0 });
+            } else if (bytes_remaining == 2) {
+                regs.I2C1.CR1.modify(.{ .STOP = 1 });
+            } else {
+                while (regs.I2C1.SR1.read().RxNE != 1) {}
+            }
+            result_buf[idx] = regs.I2C1.DR.read().DR;
+        }
+        return result_buf[0..idx];
+    }
+}
+
+fn i2c_write(addr: I2CAddr, msg: []u8) void {
+    i2c_start();
+    i2c_send_addr(addr, .write);
+    while (regs.I2C1.SR1.read().TxE != 1) {}
+    for (msg) |byte| {
+        regs.I2C1.DR.write(.{ .DR = byte });
+        while (regs.I2C1.SR1.read().TxE != 1) {}
+    }
+    while (regs.I2C1.SR1.read().BTF != 1) {}
+    regs.I2C1.CR1.modify(.{ .STOP = 1 });
+}
+
 fn init() void {
     // Configure System clock
-    enable_systick(clk_freq);
-    global_uart.init_peripheral(clk_freq, 9600);
+    init_xosc();
+    enable_systick(base_freq);
+    global_uart.init_peripheral(base_freq, 9600);
+    init_i2c();
     gpio_init();
-    timer_init();
+    // timer_init();
 }
 
 fn delay_ms(delay: usize) void {
@@ -187,63 +302,124 @@ fn delay_ms(delay: usize) void {
     }
 }
 
+const AHT10Cmd = enum(u8) {
+    initialise = 0b11100001,
+    softReset = 0b10111010,
+    triggerMeasurement = 0b10101100,
+};
+
+const AHT10Mode = enum(u2) {
+    normal = 0,
+    cyclic = 1,
+    command_0 = 2,
+    command_1 = 3,
+};
+
+const AHT10Status = packed struct(u8) {
+    reserved_0: u3,
+    cal_enable: u1,
+    reserved_1: u1,
+    mode: AHT10Mode,
+    busy: u1,
+};
+
+const AHT10Data = struct {
+    humidity: u20,
+    temperature: u20,
+
+    pub fn fromSlice(data: []const u8) AHT10Data {
+        assert(data.len == 5, "AHT10 Reading must be a slice of 5 bytes, found {d}", .{data.len});
+        var humidity: u20 = 0;
+        var temperature: u20 = 0;
+        humidity = std.math.shl(u20, data[0], 12);
+        humidity |= std.math.shl(u20, data[1], 4);
+        const humidity_half = (data[2] & 0xf0) >> 4;
+        const temperature_half = (data[2] & 0x0f);
+        humidity |= humidity_half;
+
+        temperature = std.math.shl(u20, temperature_half, 16);
+        temperature |= std.math.shl(u20, data[3], 8);
+        temperature |= data[4];
+
+        return .{ .humidity = humidity, .temperature = temperature };
+    }
+
+    pub fn humidityToFloat(self: AHT10Data) f32 {
+        const division_factor: f32 = std.math.exp2(20.0);
+        const float_humidity: f32 = @floatFromInt(self.humidity);
+        const result = float_humidity * 100 / division_factor;
+        return result;
+    }
+
+    pub fn temperatureToFloat(self: AHT10Data) f32 {
+        const division_factor: f32 = std.math.exp2(20.0);
+        const float_temperature: f32 = @floatFromInt(self.temperature);
+        const result = (float_temperature / division_factor) * 200 - 50;
+        return result;
+    }
+};
+
 export fn main() noreturn {
     init();
     clear_led();
     delay_ms(1000);
-    //const c_major = [_]SongItem{
-    //    .{ .note = .{ .note = .A, .octave = -1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .B, .octave = -1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .C, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .D, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .E, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .F, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .Gs, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .A, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .B, .octave = 0 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .C, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .D, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .E, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .F, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .Gs, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .A, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .B, .octave = 1 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .C, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .D, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .E, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .F, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .Gs, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = .{ .note = .A, .octave = 2 }, .duration = .{ .fraction = 0x80 } },
-    //    .{ .note = null, .duration = .{ .mantissa = 1 } },
-    //};
-    const scale = [_]Scale{ .A, .B, .C, .D, .E, .F, .G };
+    std.log.info("-------------Initialised-------------", .{});
 
-    const bpm = 100;
-    const interval = Duration{ .fraction = 0x60 };
-    const octaves = 3;
+    var i2c_buf: [64]u8 = undefined;
+    var status: AHT10Status = @bitCast(i2c_read(aht100_ic2addr, 1, &i2c_buf)[0]);
+    var cmd: [1]u8 = .{@intFromEnum(AHT10Cmd.softReset)};
+    i2c_write(aht100_ic2addr, &cmd);
+    delay_ms(20);
+    cmd[0] = @intFromEnum(AHT10Cmd.initialise);
+    i2c_write(aht100_ic2addr, &cmd);
+    delay_ms(20);
 
     while (true) {
-        delay_ms(200);
-        var octave: i5 = -2;
-        while (true) octave_loop: {
-            for (scale) |scale_note| {
-                if (scale_note == .C) {
-                    octave += 1;
-                }
-                if (scale_note == scale[0] and octave > octaves) {
-                    octave = -2;
-                    break :octave_loop;
-                }
-                const item = SongItem{ .duration = interval, .note = .{ .note = scale_note, .octave = octave } };
-
-                if (item.note) |note| {
-                    std.log.info("Playing note {t} octave {d}", .{ note.note, note.octave });
-                    note.beep();
-                } else {
-                    beep_timer(0);
-                }
-                delay_ms(item.duration.to_us(bpm) / 1000);
-            }
+        cmd[0] = @intFromEnum(AHT10Cmd.triggerMeasurement);
+        i2c_write(aht100_ic2addr, &cmd);
+        status = @bitCast(i2c_read(aht100_ic2addr, 1, &i2c_buf)[0]);
+        while (status.busy == 1) {
+            delay_ms(75);
+            status = @bitCast(i2c_read(aht100_ic2addr, 1, &i2c_buf)[0]);
         }
+        const temperature_result = i2c_read(aht100_ic2addr, 6, &i2c_buf);
+        status = @bitCast(temperature_result[0]);
+        assert(status.busy == 0, "AHT10 is busy!", .{});
+        const aht10_reading: AHT10Data = .fromSlice(temperature_result[1..]);
+        const humidity = aht10_reading.humidityToFloat();
+        std.log.info("Humidity: {d:.2}%", .{humidity});
+        const temperature = aht10_reading.temperatureToFloat();
+        std.log.info("Temperature: {d:.2} C", .{temperature});
+        delay_ms(2000);
     }
+
+    // const scale = [_]Scale{ .A, .B, .C, .D, .E, .F, .G };
+    // const bpm = 100;
+    // const interval = Duration{ .fraction = 0x60 };
+    // const octaves = 3;
+    //
+    // while (true) {
+    //     delay_ms(200);
+    //     var octave: i5 = -2;
+    //     while (true) octave_loop: {
+    //         for (scale) |scale_note| {
+    //             if (scale_note == .C) {
+    //                 octave += 1;
+    //             }
+    //             if (scale_note == scale[0] and octave > octaves) {
+    //                 octave = -2;
+    //                 break :octave_loop;
+    //             }
+    //             const item = SongItem{ .duration = interval, .note = .{ .note = scale_note, .octave = octave } }jk;
+    //
+    //             if (item.note) |note| {
+    //                 std.log.info("Playing note {t} octave {d}", .{ note.note, note.octave });
+    //                 note.beep();
+    //             } else {
+    //                 beep_timer(0);
+    //             }
+    //             delay_ms(item.duration.to_us(bpm) / 1000);
+    //         }
+    //     }
+    // }
 }
