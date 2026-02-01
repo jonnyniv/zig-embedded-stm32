@@ -96,102 +96,102 @@ fn clear_led() void {
     regs.GPIOC.ODR.modify(.{ .ODR13 = 1 });
 }
 
-/// Enable but don't start the counter
-fn timer_init() void {
-    // Enable clocks
-    regs.RCC.APB2ENR.modify(.{ .IOPAEN = 1, .AFIOEN = 1 });
-    regs.RCC.APB1ENR.modify(.{ .TIM2EN = 1 });
-
-    regs.GPIOA.CRL.modify(.{
-        .MODE0 = 0b10, // Output < 2 Mhz
-        .CNF0 = 0b10, // AFIO Push-Pull
-    });
-
-    // 7 + 1
-    regs.TIM2.PSC.write(.{ .PSC = timer_prescalar - 1 });
-    regs.TIM2.CCMR1_Output.modify(.{
-        .OC1M = 0b011, // Toggle Mode
-    });
-    regs.TIM2.CCER.modify(.{ .CC1E = 1 });
-}
-
-fn freq_to_timer(freq: f32) u16 {
-    const timer_max = (1 << 16) - 1;
-    const timer_val = @divFloor(@divFloor(timer_freq, freq), 2) - 1;
-    assert(timer_val < timer_max, "Requested freq out of range for timer {d} Hz", .{freq});
-    return @intFromFloat(timer_val);
-}
-
-fn beep_timer(timer: u16) void {
-    if (timer == 0) {
-        regs.TIM2.CR1.write(.{ .CEN = 0 });
-        return;
-    }
-
-    regs.TIM2.ARR.write(.{ .ARR = timer });
-    regs.TIM2.CCR1.write(.{ .CCR1 = timer });
-    regs.TIM2.CNT.write(.{ .CNT = 0 });
-    regs.TIM2.CR1.write(.{ .CEN = 1 });
-}
-
-const Scale = enum { C, Cs, D, Ef, E, F, Fs, G, Gs, A, Bf, B };
-
-/// A mapping from note to timer value
-const TimerScale: std.EnumArray(Scale, u16) = blk: {
-    const base_freq_a = 440.0;
-    const base_freq_pos: isize = @intFromEnum(Scale.A);
-    const twelve_root_two = std.math.pow(f64, 2, -(1.0 / 12.0));
-    var arr = std.EnumArray(Scale, u16).initUndefined();
-    @setEvalBranchQuota(5000);
-    // Assign values based on 12 tet
-    for (std.enums.values(Scale)) |note| {
-        const note_pos: isize = @intFromEnum(note) - base_freq_pos;
-        const freq = base_freq_a * std.math.pow(f64, twelve_root_two, -@as(f64, note_pos));
-        arr.set(note, freq_to_timer(@floatCast(freq)));
-    }
-    break :blk arr;
-};
-
-const Note = struct {
-    note: Scale,
-    // Shifts only support u4, so store an extra bit for sign
-    octave: i5,
-
-    pub fn beep(self: Note) void {
-        const base_note = TimerScale.get(self.note);
-        const shift: u4 = @intCast(@abs(self.octave));
-        const timer_val = if (self.octave >= 0) base_note >> shift else base_note << shift;
-        beep_timer(timer_val);
-    }
-};
-
-const Duration = packed struct {
-    mantissa: u8 = 0,
-    fraction: u8 = 0,
-
-    /// Convert duration to microseconds
-    pub fn to_us(self: Duration, bpm: usize) usize {
-        const us_per_minute = 1_000_000 * 60;
-        const us_per_beat = @divFloor(us_per_minute, bpm);
-        const mantissa_us = self.mantissa * us_per_beat;
-        const frac_us = (us_per_beat >> 8) * self.fraction;
-        return mantissa_us + frac_us;
-    }
-};
-
-const SongItem = struct {
-    note: ?Note,
-    /// Duration is a fixed point representation of beats: 16-bits for frac, 16 bits mantissa
-    duration: Duration,
-};
-
-const Song = struct { bpm: usize, sequence: []SongItem };
+// /// Enable but don't start the counter
+// fn timer_init() void {
+//     // Enable clocks
+//     regs.RCC.APB2ENR.modify(.{ .IOPAEN = 1, .AFIOEN = 1 });
+//     regs.RCC.APB1ENR.modify(.{ .TIM2EN = 1 });
+//
+//     regs.GPIOA.CRL.modify(.{
+//         .MODE0 = 0b10, // Output < 2 Mhz
+//         .CNF0 = 0b10, // AFIO Push-Pull
+//     });
+//
+//     // 7 + 1
+//     regs.TIM2.PSC.write(.{ .PSC = timer_prescalar - 1 });
+//     regs.TIM2.CCMR1_Output.modify(.{
+//         .OC1M = 0b011, // Toggle Mode
+//     });
+//     regs.TIM2.CCER.modify(.{ .CC1E = 1 });
+// }
+//
+// fn freq_to_timer(freq: f32) u16 {
+//     const timer_max = (1 << 16) - 1;
+//     const timer_val = @divFloor(@divFloor(timer_freq, freq), 2) - 1;
+//     assert(timer_val < timer_max, "Requested freq out of range for timer {d} Hz", .{freq});
+//     return @intFromFloat(timer_val);
+// }
+//
+// fn beep_timer(timer: u16) void {
+//     if (timer == 0) {
+//         regs.TIM2.CR1.write(.{ .CEN = 0 });
+//         return;
+//     }
+//
+//     regs.TIM2.ARR.write(.{ .ARR = timer });
+//     regs.TIM2.CCR1.write(.{ .CCR1 = timer });
+//     regs.TIM2.CNT.write(.{ .CNT = 0 });
+//     regs.TIM2.CR1.write(.{ .CEN = 1 });
+// }
+//
+// const Scale = enum { C, Cs, D, Ef, E, F, Fs, G, Gs, A, Bf, B };
+//
+// /// A mapping from note to timer value
+// const TimerScale: std.EnumArray(Scale, u16) = blk: {
+//     const base_freq_a = 440.0;
+//     const base_freq_pos: isize = @intFromEnum(Scale.A);
+//     const twelve_root_two = std.math.pow(f64, 2, -(1.0 / 12.0));
+//     var arr = std.EnumArray(Scale, u16).initUndefined();
+//     @setEvalBranchQuota(5000);
+//     // Assign values based on 12 tet
+//     for (std.enums.values(Scale)) |note| {
+//         const note_pos: isize = @intFromEnum(note) - base_freq_pos;
+//         const freq = base_freq_a * std.math.pow(f64, twelve_root_two, -@as(f64, note_pos));
+//         arr.set(note, freq_to_timer(@floatCast(freq)));
+//     }
+//     break :blk arr;
+// };
+//
+// const Note = struct {
+//     note: Scale,
+//     // Shifts only support u4, so store an extra bit for sign
+//     octave: i5,
+//
+//     pub fn beep(self: Note) void {
+//         const base_note = TimerScale.get(self.note);
+//         const shift: u4 = @intCast(@abs(self.octave));
+//         const timer_val = if (self.octave >= 0) base_note >> shift else base_note << shift;
+//         beep_timer(timer_val);
+//     }
+// };
+//
+// const Duration = packed struct {
+//     mantissa: u8 = 0,
+//     fraction: u8 = 0,
+//
+//     /// Convert duration to microseconds
+//     pub fn to_us(self: Duration, bpm: usize) usize {
+//         const us_per_minute = 1_000_000 * 60;
+//         const us_per_beat = @divFloor(us_per_minute, bpm);
+//         const mantissa_us = self.mantissa * us_per_beat;
+//         const frac_us = (us_per_beat >> 8) * self.fraction;
+//         return mantissa_us + frac_us;
+//     }
+// };
+//
+// const SongItem = struct {
+//     note: ?Note,
+//     /// Duration is a fixed point representation of beats: 16-bits for frac, 16 bits mantissa
+//     duration: Duration,
+// };
+//
+// const Song = struct { bpm: usize, sequence: []SongItem };
 
 fn init() void {
     // Configure System clock
     init_xosc();
     enable_systick(base_freq);
-    global_uart.init_peripheral(base_freq, 9600);
+    global_uart.initPeripheral(.{ .clk_freq = base_freq, .baud = 9600 });
     I2C1.init(base_freq, i2c_freq);
     gpio_init();
     // timer_init();
@@ -213,16 +213,16 @@ export fn main() noreturn {
     std.log.info("-------------Initialised-------------", .{});
 
     // var status: AHT10.Status = @bitCast(I2C1.read(aht100_ic2addr, 1, &i2c_buf)[0]);
-    AHT10.write_cmd(.softReset);
+    AHT10.writeCmd(.softReset);
     delay_ms(20);
-    AHT10.write_cmd(.initialise);
+    AHT10.writeCmd(.initialise);
     delay_ms(20);
 
     while (true) {
-        const aht10_reading = AHT10.read_result_polling();
-        const humidity = aht10_reading.humidityToFloat();
+        const aht10Reading = AHT10.readResultPolling();
+        const humidity = aht10Reading.humidityToFloat();
         std.log.info("Humidity: {d:.2}%", .{humidity});
-        const temperature = aht10_reading.temperatureToFloat();
+        const temperature = aht10Reading.temperatureToFloat();
         std.log.info("Temperature: {d:.2} C", .{temperature});
         delay_ms(2000);
     }

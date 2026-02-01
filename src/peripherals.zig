@@ -8,10 +8,10 @@ fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
 }
 
 fn delay_ms(delay: usize) void {
-    var delay_counter = delay;
-    while (delay_counter > 0) {
+    var delayCounter = delay;
+    while (delayCounter > 0) {
         if (regs.STK.CTRL.read().COUNTFLAG != 0) {
-            delay_counter -= 1;
+            delayCounter -= 1;
         }
     }
 }
@@ -43,6 +43,11 @@ pub fn UART(uart: UARTType) type {
         };
         const Peripheral: UARTType = uart;
 
+        pub const Options = struct {
+            clk_freq: u32,
+            baud: u32,
+        };
+
         pub fn writer(self: Self, buffer: []u8) !std.Io.Writer {
             if (!self.initialised) return Error.NotEnabled;
             return .{
@@ -53,7 +58,7 @@ pub fn UART(uart: UARTType) type {
             };
         }
 
-        pub fn init_peripheral(self: *Self, clk_freq: u32, baud: u32) void {
+        pub fn initPeripheral(self: *Self, options: Options) void {
             switch (Peripheral) {
                 .USART1 => {
                     regs.RCC.APB2ENR.modify(.{ .USART1EN = 1 });
@@ -75,19 +80,19 @@ pub fn UART(uart: UARTType) type {
             });
             // Pull up tx
             regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
-            const target_baud: u32 = @divFloor(clk_freq, baud);
+            const targetBaud: u32 = @divFloor(options.clk_freq, options.baud);
             Self.Regs.CR1.write(.{ .UE = 1 });
-            Self.Regs.BRR.write_raw(target_baud);
+            Self.Regs.BRR.write_raw(targetBaud);
             self.initialised = true;
         }
 
-        fn send_char(char: u8) void {
+        fn sendChar(char: u8) void {
             while (Self.Regs.SR.read().TXE == 0) {}
 
             Self.Regs.DR.write(.{ .DR = char });
         }
 
-        fn send_msg(msg: []const u8) Error!usize {
+        fn sendMsg(msg: []const u8) Error!usize {
             if (msg.len == 0) return 0;
             Self.Regs.CR1.modify(.{ .TE = 1 });
             defer Self.Regs.CR1.modify(.{ .TE = 0 });
@@ -97,30 +102,30 @@ pub fn UART(uart: UARTType) type {
                 return Error.NotEnabled;
             }
 
-            var written_bytes: usize = 0;
+            var writtenBytes: usize = 0;
             for (msg) |char| {
-                send_char(char);
-                written_bytes += 1;
+                sendChar(char);
+                writtenBytes += 1;
             }
             while (Self.Regs.SR.read().TC == 0) {}
-            return written_bytes;
+            return writtenBytes;
         }
 
         fn drain(w: *std.Io.Writer, data: []const []const u8, splat: usize) std.Io.Writer.Error!usize {
             const buffered = w.buffered();
-            var total_bytes: usize = 0;
+            var totalBytes: usize = 0;
             if (buffered.len > 0) {
-                total_bytes += send_msg(buffered) catch return std.Io.Writer.Error.WriteFailed;
+                totalBytes += sendMsg(buffered) catch return std.Io.Writer.Error.WriteFailed;
                 _ = w.consumeAll();
             }
 
             for (data) |data_entry| {
-                total_bytes += send_msg(data_entry) catch return std.Io.Writer.Error.WriteFailed;
+                totalBytes += sendMsg(data_entry) catch return std.Io.Writer.Error.WriteFailed;
             }
             for (0..splat - 1) |_| {
-                total_bytes += send_msg(data[data.len - 1]) catch return std.Io.Writer.Error.WriteFailed;
+                totalBytes += sendMsg(data[data.len - 1]) catch return std.Io.Writer.Error.WriteFailed;
             }
-            return total_bytes;
+            return totalBytes;
         }
     };
 }
@@ -169,37 +174,37 @@ pub const I2C1 = struct {
         while (Self.Regs.SR1.read().SB != 1) {}
     }
 
-    pub fn send_addr(addr: Addr, mode: RWMode) void {
-        const addr_byte: u8 = addr << 1 | @intFromEnum(mode);
-        Self.Regs.DR.write(.{ .DR = addr_byte });
+    pub fn sendAddr(addr: Addr, mode: RWMode) void {
+        const addrByte: u8 = addr << 1 | @intFromEnum(mode);
+        Self.Regs.DR.write(.{ .DR = addrByte });
         while (Self.Regs.SR1.read().ADDR != 1) {}
-        const set_mode: RWMode = switch (Self.Regs.SR2.read().TRA) {
+        const setMode: RWMode = switch (Self.Regs.SR2.read().TRA) {
             0 => .read,
             1 => .write,
         };
-        assert(set_mode == mode, "I2C Addr phase: set_mode({t}) != mode({t})", .{ set_mode, mode });
+        assert(setMode == mode, "I2C Addr phase: set_mode({t}) != mode({t})", .{ setMode, mode });
     }
 
-    pub fn read(addr: Addr, bytes: usize, result_buf: []u8) []u8 {
-        assert(result_buf.len >= bytes, "result_buf is not long enough for i2c read! {d} < {d}", .{ result_buf.len, bytes });
+    pub fn read(addr: Addr, bytes: usize, resultBuf: []u8) []u8 {
+        assert(resultBuf.len >= bytes, "result_buf is not long enough for i2c read! {d} < {d}", .{ resultBuf.len, bytes });
         Self.start();
         if (bytes == 2) {
             Self.Regs.CR1.modify(.{ .POS = 1, .ACK = 1 });
         }
-        Self.send_addr(addr, .read);
+        Self.sendAddr(addr, .read);
         if (bytes == 1) {
             Self.Regs.CR1.modify(.{ .ACK = 0 });
             Self.Regs.CR1.modify(.{ .STOP = 1 });
             while (Self.Regs.SR1.read().RxNE != 1) {}
-            result_buf[0] = Self.Regs.DR.read().DR;
-            return result_buf[0..1];
+            resultBuf[0] = Self.Regs.DR.read().DR;
+            return resultBuf[0..1];
         } else if (bytes == 2) {
             Self.Regs.CR1.modify(.{ .ACK = 0, .POS = 0 });
             while (Self.Regs.SR1.read().BTF != 1) {}
             Self.Regs.CR1.modify(.{ .STOP = 1 });
-            result_buf[0] = Self.Regs.DR.read().DR;
-            result_buf[1] = Self.Regs.DR.read().DR;
-            return result_buf[0..2];
+            resultBuf[0] = Self.Regs.DR.read().DR;
+            resultBuf[1] = Self.Regs.DR.read().DR;
+            return resultBuf[0..2];
         } else {
             Self.Regs.CR1.modify(.{ .ACK = 1, .STOP = 0 });
             var idx: usize = 0;
@@ -207,25 +212,25 @@ pub const I2C1 = struct {
                 if (idx >= bytes) {
                     break;
                 }
-                const bytes_remaining = bytes - idx;
+                const bytesRemaining = bytes - idx;
                 // Second-to-last byte, we must send NACK
-                if (bytes_remaining == 3) {
+                if (bytesRemaining == 3) {
                     while (Self.Regs.SR1.read().BTF != 1) {}
                     Self.Regs.CR1.modify(.{ .ACK = 0 });
-                } else if (bytes_remaining == 2) {
+                } else if (bytesRemaining == 2) {
                     Self.Regs.CR1.modify(.{ .STOP = 1 });
                 } else {
                     while (Self.Regs.SR1.read().RxNE != 1) {}
                 }
-                result_buf[idx] = Self.Regs.DR.read().DR;
+                resultBuf[idx] = Self.Regs.DR.read().DR;
             }
-            return result_buf[0..idx];
+            return resultBuf[0..idx];
         }
     }
 
     pub fn write(addr: Addr, msg: []const u8) void {
         Self.start();
-        Self.send_addr(addr, .write);
+        Self.sendAddr(addr, .write);
         while (Self.Regs.SR1.read().TxE != 1) {}
         for (msg) |byte| {
             Self.Regs.DR.write(.{ .DR = byte });
@@ -262,30 +267,30 @@ pub const AHT10 = struct {
         busy: u1,
     };
 
-    pub fn write_cmd(cmd: Cmd) void {
+    pub fn writeCmd(cmd: Cmd) void {
         const cmd_buf: [1]u8 = .{@intFromEnum(cmd)};
         I2C1.write(I2CAddr, &cmd_buf);
     }
 
-    pub fn read_status() Status {
+    pub fn readStatus() Status {
         var status_buf: [@bitSizeOf(Status) / 8]u8 = undefined;
         const status: Status = @bitCast(I2C1.read(I2CAddr, 1, &status_buf)[0]);
         return status;
     }
 
-    pub fn read_result_polling() Data {
-        AHT10.write_cmd(.triggerMeasurement);
-        var data_buf: [DataReadLen]u8 = undefined;
+    pub fn readResultPolling() Data {
+        AHT10.writeCmd(.triggerMeasurement);
+        var dataBuf: [DataReadLen]u8 = undefined;
 
-        var status = AHT10.read_status();
+        var status = AHT10.readStatus();
         while (status.busy == 1) {
             delay_ms(75);
-            status = @bitCast(I2C1.read(I2CAddr, 1, &data_buf)[0]);
+            status = @bitCast(I2C1.read(I2CAddr, 1, &dataBuf)[0]);
         }
-        const temperature_result = I2C1.read(I2CAddr, 6, &data_buf);
-        status = @bitCast(temperature_result[0]);
+        const readingData = I2C1.read(I2CAddr, 6, &dataBuf);
+        status = @bitCast(readingData[0]);
         assert(status.busy == 0, "AHT10 is busy!", .{});
-        return .fromSlice(temperature_result[1..]);
+        return .fromSlice(readingData[1..]);
     }
 
     pub const Data = struct {
@@ -298,11 +303,11 @@ pub const AHT10 = struct {
             var temperature: u20 = 0;
             humidity = std.math.shl(u20, data[0], 12);
             humidity |= std.math.shl(u20, data[1], 4);
-            const humidity_half = (data[2] & 0xf0) >> 4;
-            const temperature_half = (data[2] & 0x0f);
-            humidity |= humidity_half;
+            const humidityHalf = (data[2] & 0xf0) >> 4;
+            const temperatureHalf = (data[2] & 0x0f);
+            humidity |= humidityHalf;
 
-            temperature = std.math.shl(u20, temperature_half, 16);
+            temperature = std.math.shl(u20, temperatureHalf, 16);
             temperature |= std.math.shl(u20, data[3], 8);
             temperature |= data[4];
 
@@ -310,16 +315,16 @@ pub const AHT10 = struct {
         }
 
         pub fn humidityToFloat(self: Data) f32 {
-            const division_factor: f32 = std.math.exp2(20.0);
-            const float_humidity: f32 = @floatFromInt(self.humidity);
-            const result = float_humidity * 100 / division_factor;
+            const divisionFactor: f32 = std.math.exp2(20.0);
+            const floatHumidity: f32 = @floatFromInt(self.humidity);
+            const result = floatHumidity * 100 / divisionFactor;
             return result;
         }
 
         pub fn temperatureToFloat(self: Data) f32 {
-            const division_factor: f32 = std.math.exp2(20.0);
-            const float_temperature: f32 = @floatFromInt(self.temperature);
-            const result = (float_temperature / division_factor) * 200 - 50;
+            const divisionFactor: f32 = std.math.exp2(20.0);
+            const floatTemperature: f32 = @floatFromInt(self.temperature);
+            const result = (floatTemperature / divisionFactor) * 200 - 50;
             return result;
         }
     };
