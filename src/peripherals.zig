@@ -323,6 +323,10 @@ pub fn AHT10(i2c: type) type {
             humidity: u20,
             temperature: u20,
 
+            // Based on the measurement bit width
+            const divisionFactor: f32 = std.math.exp2(20.0);
+
+
             pub fn fromSlice(data: []const u8) Data {
                 assert(data.len == 5, "Self Reading must be a slice of 5 bytes, found {d}", .{data.len});
                 var humidity: u20 = 0;
@@ -341,14 +345,12 @@ pub fn AHT10(i2c: type) type {
             }
 
             pub fn humidityToFloat(self: Data) f32 {
-                const divisionFactor: f32 = std.math.exp2(20.0);
                 const floatHumidity: f32 = @floatFromInt(self.humidity);
                 const result = floatHumidity * 100 / divisionFactor;
                 return result;
             }
 
             pub fn temperatureToFloat(self: Data) f32 {
-                const divisionFactor: f32 = std.math.exp2(20.0);
                 const floatTemperature: f32 = @floatFromInt(self.temperature);
                 const result = (floatTemperature / divisionFactor) * 200 - 50;
                 return result;
