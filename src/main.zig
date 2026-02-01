@@ -5,7 +5,7 @@ const periphs = @import("peripherals.zig");
 // Types
 const MainUART = periphs.UART(.USART1);
 const I2C1 = periphs.I2C1;
-const AHT10 = periphs.AHT10;
+const AHT10 = periphs.AHT10(I2C1);
 
 // Set up logging
 pub const std_options = std.Options{

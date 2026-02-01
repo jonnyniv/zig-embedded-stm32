@@ -221,9 +221,9 @@ pub const I2C1 = struct {
             resultBuf[0] = Self.Regs.DR.read().DR;
             return resultBuf[0..1];
         } else if (bytes == 2) {
-            Self.Regs.CR1.modify(.{ .ACK = 0, .POS = 0 });
+            Self.Regs.CR1.modify(.{ .ACK = 0 });
             while (Self.Regs.SR1.read().BTF != 1) {}
-            Self.Regs.CR1.modify(.{ .STOP = 1 });
+            Self.Regs.CR1.modify(.{ .STOP = 1, .POS = 0 });
             resultBuf[0] = Self.Regs.DR.read().DR;
             resultBuf[1] = Self.Regs.DR.read().DR;
             return resultBuf[0..2];
@@ -264,90 +264,95 @@ pub const I2C1 = struct {
 };
 
 /// AHT10 Temperature and Humidity Sensor
-pub const AHT10 = struct {
-    const DataReadLen = 6;
-    const I2CAddr: I2C1.Addr = 0b0111000;
+pub fn AHT10(i2c: type) type {
+    return struct {
+        const Self = @This();
+        const I2C = i2c;
+        const DataReadLen = 6;
+        const I2CAddr: I2C.Addr = 0b0111000;
 
-    pub const Cmd = enum(u8) {
-        initialise = 0b11100001,
-        softReset = 0b10111010,
-        triggerMeasurement = 0b10101100,
-    };
+        pub const Cmd = enum(u8) {
+            initialise = 0b11100001,
+            softReset = 0b10111010,
+            triggerMeasurement = 0b10101100,
+        };
 
-    pub const Mode = enum(u2) {
-        normal = 0,
-        cyclic = 1,
-        command_0 = 2,
-        command_1 = 3,
-    };
+        pub const Mode = enum(u2) {
+            normal = 0,
+            cyclic = 1,
+            // Both of these modes map to command
+            command_0 = 2,
+            command_1 = 3,
+        };
 
-    pub const Status = packed struct(u8) {
-        reserved_0: u3,
-        cal_enable: u1,
-        reserved_1: u1,
-        mode: Mode,
-        busy: u1,
-    };
+        pub const Status = packed struct(u8) {
+            reserved_0: u3,
+            cal_enable: u1,
+            reserved_1: u1,
+            mode: Mode,
+            busy: u1,
+        };
 
-    pub fn writeCmd(cmd: Cmd) void {
-        const cmd_buf: [1]u8 = .{@intFromEnum(cmd)};
-        I2C1.write(I2CAddr, &cmd_buf);
-    }
-
-    pub fn readStatus() Status {
-        var status_buf: [@bitSizeOf(Status) / 8]u8 = undefined;
-        const status: Status = @bitCast(I2C1.read(I2CAddr, 1, &status_buf)[0]);
-        return status;
-    }
-
-    pub fn readResultPolling() Data {
-        AHT10.writeCmd(.triggerMeasurement);
-        var dataBuf: [DataReadLen]u8 = undefined;
-
-        var status = AHT10.readStatus();
-        while (status.busy == 1) {
-            delay_ms(75);
-            status = @bitCast(I2C1.read(I2CAddr, 1, &dataBuf)[0]);
-        }
-        const readingData = I2C1.read(I2CAddr, 6, &dataBuf);
-        status = @bitCast(readingData[0]);
-        assert(status.busy == 0, "AHT10 is busy!", .{});
-        return .fromSlice(readingData[1..]);
-    }
-
-    pub const Data = struct {
-        humidity: u20,
-        temperature: u20,
-
-        pub fn fromSlice(data: []const u8) Data {
-            assert(data.len == 5, "AHT10 Reading must be a slice of 5 bytes, found {d}", .{data.len});
-            var humidity: u20 = 0;
-            var temperature: u20 = 0;
-            humidity = std.math.shl(u20, data[0], 12);
-            humidity |= std.math.shl(u20, data[1], 4);
-            const humidityHalf = (data[2] & 0xf0) >> 4;
-            const temperatureHalf = (data[2] & 0x0f);
-            humidity |= humidityHalf;
-
-            temperature = std.math.shl(u20, temperatureHalf, 16);
-            temperature |= std.math.shl(u20, data[3], 8);
-            temperature |= data[4];
-
-            return .{ .humidity = humidity, .temperature = temperature };
+        pub fn writeCmd(cmd: Cmd) void {
+            const cmd_buf: [1]u8 = .{@intFromEnum(cmd)};
+            I2C.write(I2CAddr, &cmd_buf);
         }
 
-        pub fn humidityToFloat(self: Data) f32 {
-            const divisionFactor: f32 = std.math.exp2(20.0);
-            const floatHumidity: f32 = @floatFromInt(self.humidity);
-            const result = floatHumidity * 100 / divisionFactor;
-            return result;
+        pub fn readStatus() Status {
+            var status_buf: [@bitSizeOf(Status) / 8]u8 = undefined;
+            const status: Status = @bitCast(I2C.read(I2CAddr, 1, &status_buf)[0]);
+            return status;
         }
 
-        pub fn temperatureToFloat(self: Data) f32 {
-            const divisionFactor: f32 = std.math.exp2(20.0);
-            const floatTemperature: f32 = @floatFromInt(self.temperature);
-            const result = (floatTemperature / divisionFactor) * 200 - 50;
-            return result;
+        pub fn readResultPolling() Data {
+            Self.writeCmd(.triggerMeasurement);
+            var dataBuf: [DataReadLen]u8 = undefined;
+
+            var status = Self.readStatus();
+            while (status.busy == 1) {
+                delay_ms(75);
+                status = @bitCast(I2C.read(I2CAddr, 1, &dataBuf)[0]);
+            }
+            const readingData = I2C.read(I2CAddr, 6, &dataBuf);
+            status = @bitCast(readingData[0]);
+            assert(status.busy == 0, "Self is busy!", .{});
+            return .fromSlice(readingData[1..]);
         }
+
+        pub const Data = struct {
+            humidity: u20,
+            temperature: u20,
+
+            pub fn fromSlice(data: []const u8) Data {
+                assert(data.len == 5, "Self Reading must be a slice of 5 bytes, found {d}", .{data.len});
+                var humidity: u20 = 0;
+                var temperature: u20 = 0;
+                humidity = std.math.shl(u20, data[0], 12);
+                humidity |= std.math.shl(u20, data[1], 4);
+                const humidityHalf = (data[2] & 0xf0) >> 4;
+                const temperatureHalf = (data[2] & 0x0f);
+                humidity |= humidityHalf;
+
+                temperature = std.math.shl(u20, temperatureHalf, 16);
+                temperature |= std.math.shl(u20, data[3], 8);
+                temperature |= data[4];
+
+                return .{ .humidity = humidity, .temperature = temperature };
+            }
+
+            pub fn humidityToFloat(self: Data) f32 {
+                const divisionFactor: f32 = std.math.exp2(20.0);
+                const floatHumidity: f32 = @floatFromInt(self.humidity);
+                const result = floatHumidity * 100 / divisionFactor;
+                return result;
+            }
+
+            pub fn temperatureToFloat(self: Data) f32 {
+                const divisionFactor: f32 = std.math.exp2(20.0);
+                const floatTemperature: f32 = @floatFromInt(self.temperature);
+                const result = (floatTemperature / divisionFactor) * 200 - 50;
+                return result;
+            }
+        };
     };
-};
+}
