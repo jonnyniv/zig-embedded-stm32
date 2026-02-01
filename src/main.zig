@@ -191,7 +191,7 @@ fn init() void {
     // Configure System clock
     init_xosc();
     enable_systick(base_freq);
-    global_uart.initPeripheral(.{ .clk_freq = base_freq, .baud = 9600 });
+    global_uart.initPeripheral(.{ .clk_freq = base_freq, .baud = 9600, .remap = false });
     I2C1.init(base_freq, i2c_freq);
     gpio_init();
     // timer_init();

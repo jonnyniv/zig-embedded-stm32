@@ -46,6 +46,7 @@ pub fn UART(uart: UARTType) type {
         pub const Options = struct {
             clk_freq: u32,
             baud: u32,
+            remap: bool,
         };
 
         pub fn writer(self: Self, buffer: []u8) !std.Io.Writer {
@@ -68,18 +69,39 @@ pub fn UART(uart: UARTType) type {
                 },
                 inline else => |uart_type| @compileError(@tagName(uart_type) ++ " not supported"),
             }
-            regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .AFIOEN = 1 });
-            regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 1 });
-            regs.GPIOB.CRL.modify(.{
-                // TX = PB6 in REMAP=1
-                .MODE6 = 0b10, // Output < 2 Mhz
-                .CNF6 = 0b10, // AFIO Push-Pull
-                // RX = PB7 in REMAP=1
-                .MODE7 = 0b00, // Input
-                .CNF7 = 0b10, // Pull down (ODR=0)
-            });
-            // Pull up tx
-            regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
+            regs.RCC.APB2ENR.modify(.{ .AFIOEN = 1 });
+            switch (Peripheral) {
+                .USART1 => {
+                    if (options.remap) {
+                        regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 1 });
+                        regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1 });
+                        regs.GPIOB.CRL.modify(.{
+                            // TX = PB6 in REMAP=1
+                            .MODE6 = 0b10, // Output < 2 Mhz
+                            .CNF6 = 0b10, // AFIO Push-Pull
+                            // RX = PB7 in REMAP=1
+                            .MODE7 = 0b00, // Input
+                            .CNF7 = 0b10, // Pull down (ODR=0)
+                        });
+                        // Pull up tx
+                        regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
+                    } else {
+                        regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 0 });
+                        regs.RCC.APB2ENR.modify(.{ .IOPAEN = 1 });
+                        regs.GPIOA.CRH.modify(.{
+                            // TX = PA9 in REMAP=0
+                            .MODE9 = 0b10, // Output < 2 Mhz
+                            .CNF9 = 0b10, // AFIO Push-Pull
+                            // RX = PA10 in REMAP=0
+                            .MODE10 = 0b00, // Input
+                            .CNF10 = 0b10, // Pull down (ODR=0)
+                        });
+                        // Pull up tx
+                        regs.GPIOA.ODR.modify(.{ .ODR9 = 1 });
+                    }
+                },
+                inline else => |uart_type| @compileError(@tagName(uart_type) ++ " not supported"),
+            }
             const targetBaud: u32 = @divFloor(options.clk_freq, options.baud);
             Self.Regs.CR1.write(.{ .UE = 1 });
             Self.Regs.BRR.write_raw(targetBaud);
