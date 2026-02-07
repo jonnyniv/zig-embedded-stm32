@@ -17,9 +17,6 @@ pub fn build(b: *std.Build) void {
         .cpu_model = .{ .explicit = &std.Target.arm.cpu.cortex_m3 },
     });
 
-    // Standard optimization options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
-    // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = std.builtin.OptimizeMode.ReleaseSafe;
 
     const register_mod = b.createModule(.{
@@ -30,15 +27,11 @@ pub fn build(b: *std.Build) void {
 
     // We will also create a module for our other entry point, 'main.zig'.
     const exe_mod = b.createModule(.{
-        // `root_source_file` is the Zig "entry point" of the module. If a module
-        // only contains e.g. external object files, you can make this `null`.
-        // In this case the main source file is merely a path, however, in more
-        // complicated build scripts, this could be a generated file.
         .root_source_file = b.path("src/main.zig"),
         .target = target,
         .optimize = optimize,
-        .single_threaded = true,
     });
+
     exe_mod.addImport("registers", register_mod);
 
     const exe_name = "zig_embedded";
@@ -47,6 +40,7 @@ pub fn build(b: *std.Build) void {
         .root_module = exe_mod,
         .linkage = .static,
     });
+
     exe.link_gc_sections = true;
     exe.link_data_sections = true;
     exe.link_function_sections = true;
