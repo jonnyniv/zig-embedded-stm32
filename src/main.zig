@@ -9,7 +9,11 @@ const AHT10 = periphs.AHT10(I2C1);
 
 // Set up logging
 pub const std_options = std.Options{
-    .log_level = .debug,
+    .log_scope_levels = &.{
+        .{ .scope = .default, .level = .info },
+        .{ .scope = .aht10, .level = .info },
+    },
+    .log_level = .warn,
     .logFn = log,
 };
 
@@ -221,9 +225,9 @@ export fn main() noreturn {
     while (true) {
         const aht10Reading = AHT10.readResultPolling();
         const humidity = aht10Reading.humidityToFloat();
-        std.log.info("Humidity: {d:.2}%", .{humidity});
+        AHT10.log.info("Humidity: {d:.2}%", .{humidity});
         const temperature = aht10Reading.temperatureToFloat();
-        std.log.info("Temperature: {d:.2} C", .{temperature});
+        AHT10.log.info("Temperature: {d:.2} C", .{temperature});
         delay_ms(2000);
     }
 
