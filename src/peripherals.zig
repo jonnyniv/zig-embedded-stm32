@@ -44,7 +44,7 @@ pub fn UART(uart: UARTType) type {
         const Peripheral: UARTType = uart;
 
         pub const Options = struct {
-            clk_freq: u32,
+            base_freq: u32,
             baud: u32,
             remap: bool,
         };
@@ -102,7 +102,7 @@ pub fn UART(uart: UARTType) type {
                 },
                 inline else => |uart_type| @compileError(@tagName(uart_type) ++ " not supported"),
             }
-            const targetBaud: u32 = @divFloor(options.clk_freq, options.baud);
+            const targetBaud: u32 = @divFloor(options.base_freq, options.baud);
             Self.Regs.CR1.write(.{ .UE = 1 });
             Self.Regs.BRR.write_raw(targetBaud);
             self.initialised = true;
@@ -158,32 +158,42 @@ pub const I2C1 = struct {
 
     const log = std.log.scoped(.i2c);
 
+    pub const Options = struct {
+        base_freq: u32,
+        i2c_freq: u32,
+        remap: bool,
+    };
+
     pub const Addr = u7;
     pub const RWMode = enum(u1) {
         read = 1,
         write = 0,
     };
 
-    pub fn init(base_freq: u32, i2c_freq: u32) void {
-        const base_period_ns = 1_000_000_000 / base_freq;
+    pub fn init(options: Options) void {
+        const base_period_ns = 1_000_000_000 / options.base_freq;
         // Enable Clocks for GPIO and I2C
         regs.RCC.APB1ENR.modify(.{ .I2C1EN = 1 });
         regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .AFIOEN = 1 });
 
         // Configure pins
-        regs.AFIO.MAPR.modify(.{ .I2C1_REMAP = 1 });
-        regs.GPIOB.CRH.modify(.{
-            // SCL = PB8 in REMAP=1
-            .MODE8 = 0b01, // Output < 10 Mhz
-            .CNF8 = 0b11, // AFIO Open-Drain
-            // SDA = PB0 in REMAP=1
-            .MODE9 = 0b01, // Output < 10 Mhz
-            .CNF9 = 0b11, // AFIO Open-Drain
-        });
+        if (options.remap) {
+            regs.AFIO.MAPR.modify(.{ .I2C1_REMAP = 1 });
+            regs.GPIOB.CRH.modify(.{
+                // SCL = PB8 in REMAP=1
+                .MODE8 = 0b01, // Output < 10 Mhz
+                .CNF8 = 0b11, // AFIO Open-Drain
+                // SDA = PB0 in REMAP=1
+                .MODE9 = 0b01, // Output < 10 Mhz
+                .CNF9 = 0b11, // AFIO Open-Drain
+            });
+        } else {
+            assert(false, "Unsupported: I2C Remap = false", .{});
+        }
 
         // Configure I2C speed, clock control, and rise time (From datasheet)
         Self.Regs.CR2.modify(.{ .FREQ = 8 });
-        const ccr_div: u12 = @intCast(@divFloor(base_freq, 2 * i2c_freq));
+        const ccr_div: u12 = @intCast(@divFloor(options.base_freq, 2 * options.i2c_freq));
         Self.Regs.CCR.modify(.{ .CCR = ccr_div });
 
         const sm_mode_risetime_ns = 1000;

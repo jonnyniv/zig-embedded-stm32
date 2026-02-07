@@ -190,8 +190,8 @@ fn init() void {
     // Configure System clock
     init_xosc();
     enable_systick(base_freq);
-    global_uart.initPeripheral(.{ .clk_freq = base_freq, .baud = 9600, .remap = false });
-    I2C1.init(base_freq, i2c_freq);
+    global_uart.initPeripheral(.{ .base_freq = base_freq, .baud = 9600, .remap = false });
+    I2C1.init(.{.remap = true, .base_freq = base_freq, .i2c_freq = i2c_freq});
     gpio_init();
     // timer_init();
 }
@@ -211,7 +211,6 @@ export fn main() noreturn {
     delay_ms(1000);
     std.log.info("-------------Initialised-------------", .{});
 
-    // var status: AHT10.Status = @bitCast(I2C1.read(aht100_ic2addr, 1, &i2c_buf)[0]);
     AHT10.writeCmd(.softReset);
     delay_ms(20);
     AHT10.writeCmd(.initialise);
