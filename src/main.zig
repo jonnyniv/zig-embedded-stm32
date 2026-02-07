@@ -87,11 +87,6 @@ fn gpio_init() void {
     regs.GPIOA.CRL.modify(.{ .MODE7 = 0b10, .CNF7 = 0b00 });
 }
 
-const UARTOptions = struct {
-    baud: usize,
-    pin_enable: bool,
-};
-
 fn set_led() void {
     regs.GPIOC.ODR.modify(.{ .ODR13 = 0 });
 }
