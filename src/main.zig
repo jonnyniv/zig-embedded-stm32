@@ -42,6 +42,16 @@ fn log(comptime message_level: std.log.Level, comptime scope: @TypeOf(.enum_lite
     uart_writer.flush() catch return;
 }
 
+fn delay_ms(delay: usize) void {
+    var delay_counter = delay;
+    while (delay_counter > 0) {
+        if (regs.STK.CTRL.read().COUNTFLAG != 0) {
+            delay_counter -= 1;
+        }
+    }
+}
+
+
 pub fn panic(
     msg: []const u8,
     trace: ?*std.builtin.StackTrace,
@@ -193,29 +203,14 @@ fn init() void {
     global_uart.initPeripheral(.{ .base_freq = base_freq, .baud = 9600, .remap = false });
     I2C1.init(.{.remap = true, .base_freq = base_freq, .i2c_freq = i2c_freq});
     gpio_init();
-    // timer_init();
-}
-
-fn delay_ms(delay: usize) void {
-    var delay_counter = delay;
-    while (delay_counter > 0) {
-        if (regs.STK.CTRL.read().COUNTFLAG != 0) {
-            delay_counter -= 1;
-        }
-    }
 }
 
 export fn main() noreturn {
     init();
     clear_led();
     delay_ms(1000);
+    AHT10.init();
     std.log.info("-------------Initialised-------------", .{});
-
-    AHT10.writeCmd(.softReset);
-    delay_ms(20);
-    AHT10.writeCmd(.initialise);
-    delay_ms(20);
-
     while (true) {
         const aht10Reading = AHT10.readResultPolling();
         const humidity = aht10Reading.humidityToFloat();

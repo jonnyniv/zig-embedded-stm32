@@ -329,6 +329,13 @@ pub fn AHT10(i2c: type) type {
             busy: u1,
         };
 
+        pub fn init() void {
+            Self.writeCmd(.softReset);
+            delay_ms(20);
+            Self.writeCmd(.initialise);
+            delay_ms(20);
+        }
+
         pub fn writeCmd(cmd: Cmd) void {
             const cmd_buf: [1]u8 = .{@intFromEnum(cmd)};
             I2C.write(I2CAddr, &cmd_buf);
