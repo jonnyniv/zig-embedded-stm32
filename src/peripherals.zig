@@ -41,7 +41,36 @@ pub fn GPIO(port: GPIOPort) type {
             .D => regs.GPIOD,
         };
 
-        pub const log = std.log.scoped(.gpio);
+        pub const scoped_log = std.log.scoped(.gpio);
+        const log = struct {
+            pub fn err(
+                comptime format: []const u8,
+                args: anytype,
+            ) void {
+                scoped_log.err(@typeName(Self) ++ ": " ++ format, args);
+            }
+
+            pub fn warn(
+                comptime format: []const u8,
+                args: anytype,
+            ) void {
+                scoped_log.warn(@typeName(Self) ++ ": " ++ format, args);
+            }
+
+            pub fn info(
+                comptime format: []const u8,
+                args: anytype,
+            ) void {
+                scoped_log.info(@typeName(Self) ++ ": " ++ format, args);
+            }
+
+            pub fn debug(
+                comptime format: []const u8,
+                args: anytype,
+            ) void {
+                scoped_log.debug(@typeName(Self) ++ ": " ++ format, args);
+            }
+        };
 
         pub const Mode = enum {
             outputPushPull,
@@ -72,9 +101,20 @@ pub fn GPIO(port: GPIOPort) type {
             tieMode: TieMode = .pullDown,
         };
 
+        pub const Pin = struct {
+            options: Options,
+            number: u4,
+
+            pub fn set(self: Pin) void {
+                switch (self.options.mode) {
+                    .outputPushPull => {},
+                }
+            }
+        };
+
         /// Sets up a GPIO pin including speed and ties
         pub fn configurePin(pin: u4, options: Options) void {
-            log.debug("{s}: configuring pin {d} mode {t} speed {t}", .{ @typeName(Self), pin, options.mode, options.speed });
+            log.debug("configuring pin {d} mode {t} speed {t}", .{ pin, options.mode, options.speed });
 
             const apb2enr = blk: {
                 var val = regs.RCC.APB2ENR.read();
@@ -108,14 +148,14 @@ pub fn GPIO(port: GPIOPort) type {
                 },
             };
 
-            log.debug("{s}: Cnf val will be 0b{b}", .{ @typeName(Self), cnfVal });
+            log.debug("Cnf val will be 0b{b}", .{ cnfVal });
 
             const modeVal: u2 = switch (options.mode) {
                 .input, .inputAnalog => 0b00,
                 else => @intFromEnum(options.speed),
             };
 
-            log.debug("{s}: Mode val will be 0b{b}", .{ @typeName(Self), modeVal });
+            log.debug("Mode val will be 0b{b}", .{ modeVal });
 
             const newPinCfg: u4 = std.math.shl(u4, cnfVal, 2) | modeVal;
             const shiftVal: u32 = @as(u32, @intCast(pin % 8)) * 4;
@@ -281,7 +321,36 @@ pub const I2C1 = struct {
     const Self = @This();
     const Regs = regs.I2C1;
 
-    const log = std.log.scoped(.i2c);
+    const scoped_log = std.log.scoped(.i2c);
+    const log = struct {
+        pub fn err(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.err(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn warn(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.warn(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn info(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.info(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn debug(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.debug(@typeName(Self) ++ ": " ++ format, args);
+        }
+    };
 
     pub const Options = struct {
         base_freq: u32,
@@ -324,17 +393,17 @@ pub const I2C1 = struct {
         Self.Regs.TRISE.modify(.{ .TRISE = rise_time_reg });
 
         Self.Regs.CR1.modify(.{ .PE = 1 });
-        log.info("{s}: initialised", .{@typeName(Self)});
+        log.info("initialised", .{});
     }
 
     pub fn start() void {
         Self.Regs.CR1.modify(.{ .START = 1 });
         while (Self.Regs.SR1.read().SB != 1) {}
-        log.debug("{s}: start bit sent", .{@typeName(Self)});
+        log.debug("start bit sent", .{});
     }
 
     pub fn sendAddr(addr: Addr, mode: RWMode) void {
-        log.debug("{s}: sending address 0x{x}, mode {t}", .{ @typeName(Self), addr, mode });
+        log.debug("sending address 0x{x}, mode {t}", .{ addr, mode });
         const addrByte: u8 = addr << 1 | @intFromEnum(mode);
         Self.Regs.DR.write(.{ .DR = addrByte });
         while (Self.Regs.SR1.read().ADDR != 1) {}
@@ -346,7 +415,7 @@ pub const I2C1 = struct {
     }
 
     pub fn read(addr: Addr, bytes: usize, resultBuf: []u8) []u8 {
-        log.info("{s}: Reading {d} bytes from device 0x{x}", .{ @typeName(Self), bytes, addr });
+        log.info("Reading {d} bytes from device 0x{x}", .{ bytes, addr });
         assert(resultBuf.len >= bytes, "result_buf is not long enough for i2c read! {d} < {d}", .{ resultBuf.len, bytes });
         Self.start();
         if (bytes == 2) {
@@ -358,9 +427,9 @@ pub const I2C1 = struct {
             Self.Regs.CR1.modify(.{ .STOP = 1 });
             while (Self.Regs.SR1.read().RxNE != 1) {}
             const byte = Self.Regs.DR.read().DR;
-            log.debug("{s}: Read byte 0x{x}", .{ @typeName(Self), byte });
+            log.debug("Read byte 0x{x}", .{byte});
             resultBuf[0] = byte;
-            log.debug("{s}: Read complete", .{@typeName(Self)});
+            log.debug("Read complete", .{});
             return resultBuf[0..1];
         } else if (bytes == 2) {
             Self.Regs.CR1.modify(.{ .ACK = 0 });
@@ -369,14 +438,14 @@ pub const I2C1 = struct {
             {
                 const byte = Self.Regs.DR.read().DR;
                 resultBuf[0] = byte;
-                log.debug("{s}: Read byte 0x{x}", .{ @typeName(Self), byte });
+                log.debug("Read byte 0x{x}", .{byte});
             }
             {
                 const byte = Self.Regs.DR.read().DR;
                 resultBuf[1] = byte;
-                log.debug("{s}: Read byte 0x{x}", .{ @typeName(Self), byte });
+                log.debug("Read byte 0x{x}", .{byte});
             }
-            log.debug("{s}: Read complete", .{@typeName(Self)});
+            log.debug("Read complete", .{});
             return resultBuf[0..2];
         } else {
             Self.Regs.CR1.modify(.{ .ACK = 1, .STOP = 0 });
@@ -396,27 +465,27 @@ pub const I2C1 = struct {
                     while (Self.Regs.SR1.read().RxNE != 1) {}
                 }
                 const byte = Self.Regs.DR.read().DR;
-                log.debug("{s}: Read byte 0x{x}", .{ @typeName(Self), byte });
+                log.debug("Read byte 0x{x}", .{byte});
                 resultBuf[idx] = byte;
             }
-            log.debug("{s}: Read complete", .{@typeName(Self)});
+            log.debug("Read complete", .{});
             return resultBuf[0..idx];
         }
     }
 
     pub fn write(addr: Addr, msg: []const u8) void {
-        log.info("{s}: Writing {d} bytes to addr 0x{x}", .{ @typeName(Self), msg.len, addr });
+        log.info("Writing {d} bytes to addr 0x{x}", .{ msg.len, addr });
         Self.start();
         Self.sendAddr(addr, .write);
         while (Self.Regs.SR1.read().TxE != 1) {}
         for (msg) |byte| {
-            log.debug("{s}: Wrote 0x{x}", .{ @typeName(Self), byte });
+            log.debug("Wrote 0x{x}", .{byte});
             Self.Regs.DR.write(.{ .DR = byte });
             while (Self.Regs.SR1.read().TxE != 1) {}
         }
         while (Self.Regs.SR1.read().BTF != 1) {}
         Self.Regs.CR1.modify(.{ .STOP = 1 });
-        log.debug("{s}: Write complete", .{@typeName(Self)});
+        log.debug("Write complete", .{});
     }
 };
 
