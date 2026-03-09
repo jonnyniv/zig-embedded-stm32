@@ -3,7 +3,14 @@ const regs = @import("registers");
 
 fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
     if (!cond) {
-        std.debug.panic(msg, args);
+        switch (@import("builtin").mode) {
+            .Debug, .ReleaseSafe => {
+                std.debug.panic(msg, args);
+            },
+            inline else => {
+                unreachable;
+            },
+        }
     }
 }
 
@@ -16,7 +23,139 @@ fn delay_ms(delay: usize) void {
     }
 }
 
-pub const UARTType = enum {
+pub const GPIOPort = enum {
+    A,
+    B,
+    C,
+    D,
+};
+
+pub fn GPIO(port: GPIOPort) type {
+    return struct {
+        pub const Self = @This();
+        pub const Port = port;
+        pub const Regs = switch (Port) {
+            .A => regs.GPIOA,
+            .B => regs.GPIOB,
+            .C => regs.GPIOC,
+            .D => regs.GPIOD,
+        };
+
+        pub const log = std.log.scoped(.gpio);
+
+        pub const Mode = enum {
+            outputPushPull,
+            outputOpenDrain,
+            afioPushPull,
+            afioOpenDrain,
+            inputAnalog,
+            input,
+        };
+
+        pub const TieMode = enum {
+            floating,
+            pullUp,
+            pullDown,
+        };
+
+        pub const Speed = enum(u2) {
+            max2Mhz = 0b10,
+            max10Mhz = 0b01,
+            max50Mhz = 0b11,
+        };
+
+        /// tieMode is only used in afioPushPull and input modes.
+        /// speed is only used in output modes
+        pub const Options = struct {
+            mode: Mode,
+            speed: Speed = .max2Mhz,
+            tieMode: TieMode = .pullDown,
+        };
+
+        /// Sets up a GPIO pin including speed and ties
+        pub fn configurePin(pin: u4, options: Options) void {
+            log.debug("{s}: configuring pin {d} mode {t} speed {t}", .{ @typeName(Self), pin, options.mode, options.speed });
+
+            const apb2enr = blk: {
+                var val = regs.RCC.APB2ENR.read();
+                switch (Port) {
+                    .A => {
+                        val.IOPAEN = 1;
+                    },
+                    .B => {
+                        val.IOPBEN = 1;
+                    },
+                    .C => {
+                        val.IOPCEN = 1;
+                    },
+                    .D => {
+                        val.IOPDEN = 1;
+                    },
+                }
+                break :blk val;
+            };
+
+            regs.RCC.APB2ENR.write(apb2enr);
+
+            const cnfVal: u2 = switch (options.mode) {
+                .outputPushPull, .inputAnalog => 0b00,
+                .outputOpenDrain => 0b01,
+                .afioPushPull => 0b10,
+                .afioOpenDrain => 0b11,
+                .input => switch (options.tieMode) {
+                    .floating => 0b01,
+                    .pullDown, .pullUp => 0b10,
+                },
+            };
+
+            log.debug("{s}: Cnf val will be 0b{b}", .{ @typeName(Self), cnfVal });
+
+            const modeVal: u2 = switch (options.mode) {
+                .input, .inputAnalog => 0b00,
+                else => @intFromEnum(options.speed),
+            };
+
+            log.debug("{s}: Mode val will be 0b{b}", .{ @typeName(Self), modeVal });
+
+            const newPinCfg: u4 = std.math.shl(u4, cnfVal, 2) | modeVal;
+            const shiftVal: u32 = @as(u32, @intCast(pin % 8)) * 4;
+            const pinCfgMask: u32 = std.math.shl(u32, 0xf, shiftVal);
+
+            if (pin < 8) {
+                const pinCfgOrig = Regs.CRL.read();
+                var pinCfgVal: u32 = @bitCast(pinCfgOrig);
+                pinCfgVal &= ~pinCfgMask;
+                pinCfgVal |= std.math.shl(u32, newPinCfg, shiftVal);
+                Regs.CRL.write_raw(pinCfgVal);
+            } else {
+                const pinCfgOrig = Regs.CRH.read();
+                var pinCfgVal: u32 = @bitCast(pinCfgOrig);
+                pinCfgVal &= ~pinCfgMask;
+                pinCfgVal |= std.math.shl(u32, newPinCfg, shiftVal);
+                Regs.CRH.write_raw(pinCfgVal);
+            }
+
+            if (options.tieMode == .pullDown) {
+                var odrVal = Regs.ODR.read_raw();
+                const pinMask = std.math.shl(u16, 1, pin);
+                odrVal = odrVal & (~pinMask);
+                Regs.ODR.write_raw(odrVal);
+            } else if (options.tieMode == .pullUp) {
+                var odrVal = Regs.ODR.read_raw();
+                const pinMask = std.math.shl(u16, 1, pin);
+                odrVal = odrVal | pinMask;
+                Regs.ODR.write_raw(odrVal);
+            }
+        }
+    };
+}
+
+pub const GPIOA = GPIO(.A);
+pub const GPIOB = GPIO(.B);
+pub const GPIOC = GPIO(.C);
+pub const GPIOD = GPIO(.D);
+
+pub const UARTPeripheral = enum {
     USART1,
     USART2,
     USART3,
@@ -24,7 +163,7 @@ pub const UARTType = enum {
     UART5,
 };
 
-pub fn UART(uart: UARTType) type {
+pub fn UART(uart: UARTPeripheral) type {
     return struct {
         initialised: bool = false,
 
@@ -41,7 +180,7 @@ pub fn UART(uart: UARTType) type {
             .UART4 => regs.UART4,
             .UART5 => regs.UART5,
         };
-        const Peripheral: UARTType = uart;
+        const Peripheral: UARTPeripheral = uart;
 
         pub const Options = struct {
             base_freq: u32,
@@ -74,30 +213,16 @@ pub fn UART(uart: UARTType) type {
                 .USART1 => {
                     if (options.remap) {
                         regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 1 });
-                        regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1 });
-                        regs.GPIOB.CRL.modify(.{
-                            // TX = PB6 in REMAP=1
-                            .MODE6 = 0b10, // Output < 2 Mhz
-                            .CNF6 = 0b10, // AFIO Push-Pull
-                            // RX = PB7 in REMAP=1
-                            .MODE7 = 0b00, // Input
-                            .CNF7 = 0b10, // Pull down (ODR=0)
-                        });
-                        // Pull up tx
-                        regs.GPIOB.ODR.modify(.{ .ODR6 = 1 });
+                        // TX
+                        GPIOB.configurePin(6, .{ .mode = .afioPushPull, .tieMode = .pullUp });
+                        // RX
+                        GPIOB.configurePin(7, .{ .mode = .input });
                     } else {
                         regs.AFIO.MAPR.modify(.{ .USART1_REMAP = 0 });
-                        regs.RCC.APB2ENR.modify(.{ .IOPAEN = 1 });
-                        regs.GPIOA.CRH.modify(.{
-                            // TX = PA9 in REMAP=0
-                            .MODE9 = 0b10, // Output < 2 Mhz
-                            .CNF9 = 0b10, // AFIO Push-Pull
-                            // RX = PA10 in REMAP=0
-                            .MODE10 = 0b00, // Input
-                            .CNF10 = 0b10, // Pull down (ODR=0)
-                        });
-                        // Pull up tx
-                        regs.GPIOA.ODR.modify(.{ .ODR9 = 1 });
+                        // TX
+                        GPIOA.configurePin(9, .{ .mode = .afioPushPull, .tieMode = .pullUp });
+                        // RX
+                        GPIOA.configurePin(10, .{ .mode = .input });
                     }
                 },
                 inline else => |uart_type| @compileError(@tagName(uart_type) ++ " not supported"),
@@ -172,21 +297,19 @@ pub const I2C1 = struct {
 
     pub fn init(options: Options) void {
         const base_period_ns = 1_000_000_000 / options.base_freq;
+        //TODO: Configure for generic I2C
+
         // Enable Clocks for GPIO and I2C
         regs.RCC.APB1ENR.modify(.{ .I2C1EN = 1 });
-        regs.RCC.APB2ENR.modify(.{ .IOPBEN = 1, .AFIOEN = 1 });
+        regs.RCC.APB2ENR.modify(.{ .AFIOEN = 1 });
 
         // Configure pins
         if (options.remap) {
             regs.AFIO.MAPR.modify(.{ .I2C1_REMAP = 1 });
-            regs.GPIOB.CRH.modify(.{
-                // SCL = PB8 in REMAP=1
-                .MODE8 = 0b01, // Output < 10 Mhz
-                .CNF8 = 0b11, // AFIO Open-Drain
-                // SDA = PB0 in REMAP=1
-                .MODE9 = 0b01, // Output < 10 Mhz
-                .CNF9 = 0b11, // AFIO Open-Drain
-            });
+            // SCL
+            GPIOB.configurePin(8, .{ .mode = .afioOpenDrain, .speed = .max10Mhz });
+            // SDA
+            GPIOB.configurePin(9, .{ .mode = .afioOpenDrain, .speed = .max10Mhz });
         } else {
             assert(false, "Unsupported: I2C Remap = false", .{});
         }
@@ -297,6 +420,130 @@ pub const I2C1 = struct {
     }
 };
 
+pub const SPI1 = struct {
+    pub const Self = @This();
+    pub const Regs = regs.SPI1;
+
+    pub const Options = struct {
+        pub const CLKPolarity = enum(u1) {
+            idleLow = 0,
+            idleHigh = 1,
+        };
+
+        pub const ClkPhase = enum(u1) {
+            dataFirst = 0,
+            dataSecond = 1,
+        };
+
+        pub const SlaveSelectOutput = enum(u1) {
+            /// SS output is disabled in master mode and the cell can work in multimaster configuration
+            disabled = 0,
+            /// SS output is enabled in master mode and when the cell is enabled. The cell cannot work in a multimaster environment.
+            enabled = 1,
+        };
+
+        pub const FrameFormat = enum(u1) {
+            msbFirst = 0,
+            lsbFirst = 1,
+        };
+
+        pub const DuplexMode = enum {
+            fullDuplex,
+            bidirectionalHalf,
+            rxOnly,
+            txOnly,
+        };
+
+        /// Prescalar is computed 2**(baud_prescalar + 1)
+        baudPrescalar: u3,
+        clkPolarity: CLKPolarity,
+        clkPhase: ClkPhase,
+        slaveSelectOutput: SlaveSelectOutput,
+        frameFormat: FrameFormat,
+        duplexMode: DuplexMode,
+
+        /// Function Pin RemapPin
+        /// SPI1_NSS PA4 PA15
+        /// SPI1_SCK PA5 PB3
+        /// SPI1_MISO PA6 PB4
+        /// SPI1_MOSI PA7 PB5
+        remap: bool,
+    };
+
+    options: Options,
+
+    pub fn init(options: Options) Self {
+        // TODO: Configure for generic SPI
+        regs.RCC.APB2ENR.modify(.{ .SPI1EN = 1, .AFIOEN = 1 });
+
+        if (!options.remap) {
+            // SCK
+            GPIOA.configurePin(5, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+            if (options.duplexMode == .fullDuplex or options.duplexMode == .bidirectionalHalf or options.duplexMode == .txOnly) {
+                // MOSI
+                GPIOA.configurePin(7, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+            }
+            if (options.duplexMode == .fullDuplex or options.duplexMode == .rxOnly) {
+                // MISO
+                GPIOA.configurePin(6, .{ .mode = .input, .tieMode = .pullUp });
+
+                if (options.slaveSelectOutput == .enabled) {
+                    // NSS
+                    GPIOA.configurePin(4, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+                }
+            }
+        } else {
+            regs.AFIO.MAPR.modify(.{ .SPI1_REMAP = 1 });
+            // SCK
+            GPIOB.configurePin(3, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+
+            if (options.duplexMode == .fullDuplex or options.duplexMode == .bidirectionalHalf or options.duplexMode == .txOnly) {
+                // MOSI
+                GPIOB.configurePin(5, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+            }
+            if (options.duplexMode == .fullDuplex or options.duplexMode == .rxOnly) {
+                // MISO
+                GPIOB.configurePin(6, .{ .mode = .input, .tieMode = .pullUp });
+                if (options.slaveSelectOutput == .enabled) {
+                    // NSS
+                    GPIOA.configurePin(15, .{ .mode = .afioPushPull, .speed = .max10Mhz });
+                }
+            }
+        }
+
+        if (options.slaveSelectOutput == .enabled) {
+            Regs.CR2.modify(.{ .SSOE = @intFromEnum(options.slaveSelectOutput) });
+        }
+
+        Regs.CR1.modify(.{
+            .SPE = 1, // Enable
+            .MSTR = 1, // Master mode
+            .BR = options.baudPrescalar,
+            .CPOL = @intFromEnum(options.clkPolarity),
+            .CPHA = @intFromEnum(options.clkPhase),
+            .DFF = @intFromEnum(options.frameFormat),
+        });
+        return Self{ .options = options };
+    }
+
+    pub fn write(self: Self, bytes: []u8) void {
+        Regs.DR.write(.{ .DR = bytes[0] });
+        while (Regs.SR.read().TXE == 0) {}
+        if (bytes.len > 1) {
+            for (bytes[1..]) |byte| {
+                Regs.DR.write(.{ .DR = byte });
+                if (self.options.duplexMode == .fullDuplex) {
+                    while (Regs.SR.read().RXNE == 0) {}
+                }
+            }
+            while (Regs.SR.read().TXE == 0) {}
+        }
+        while (Regs.SR.read().BSY == 1) {}
+    }
+};
+
+// External Peripherals
+
 /// AHT10 Temperature and Humidity Sensor
 pub fn AHT10(i2c: type) type {
     return struct {
@@ -334,6 +581,8 @@ pub fn AHT10(i2c: type) type {
             delay_ms(20);
             Self.writeCmd(.initialise);
             delay_ms(20);
+            const status = Self.readStatus();
+            assert(status.cal_enable == 1, "AHT10 not in cal after init!", .{});
         }
 
         pub fn writeCmd(cmd: Cmd) void {

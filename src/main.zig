@@ -25,7 +25,6 @@ const timer_freq = @divFloor(base_freq, timer_prescalar);
 
 // Global state
 var global_uart: MainUART = .{};
-var i2c_initialised = false;
 
 fn assert(cond: bool, comptime msg: []const u8, args: anytype) void {
     if (!cond) {
@@ -50,7 +49,6 @@ fn delay_ms(delay: usize) void {
         }
     }
 }
-
 
 pub fn panic(
     msg: []const u8,
@@ -90,19 +88,42 @@ fn enable_systick(frequency: usize) void {
 }
 
 fn gpio_init() void {
-    // Turn on clock for port C
-    regs.RCC.APB2ENR.modify(.{ .IOPCEN = 1, .IOPAEN = 1 });
-    // Pin 13 output, open drain
-    regs.GPIOC.CRH.modify(.{ .MODE13 = 0b10, .CNF13 = 0b01 });
-    regs.GPIOA.CRL.modify(.{ .MODE7 = 0b10, .CNF7 = 0b00 });
+    // LED pin
+    periphs.GPIOC.configurePin(13, .{ .mode = .outputOpenDrain, .speed = .max2Mhz });
 }
 
 fn set_led() void {
-    regs.GPIOC.ODR.modify(.{ .ODR13 = 0 });
+    regs.GPIOC.BRR.write(.{ .BR13 = 1 });
 }
 
 fn clear_led() void {
-    regs.GPIOC.ODR.modify(.{ .ODR13 = 1 });
+    regs.GPIOC.BSRR.write(.{ .BS13 = 1 });
+}
+
+fn init() void {
+    // Configure System clock
+    init_xosc();
+    enable_systick(base_freq);
+    global_uart.initPeripheral(.{ .base_freq = base_freq, .baud = 9600, .remap = false });
+    I2C1.init(.{ .remap = true, .base_freq = base_freq, .i2c_freq = i2c_freq });
+    gpio_init();
+}
+
+export fn main() noreturn {
+    init();
+    clear_led();
+    delay_ms(1000);
+    AHT10.init();
+    std.log.info("-------------Initialised-------------", .{});
+
+    while (true) {
+        const aht10Reading = AHT10.readResultPolling();
+        const humidity = aht10Reading.humidityToFloat();
+        AHT10.log.info("Humidity: {d:.2}%", .{humidity});
+        const temperature = aht10Reading.temperatureToFloat();
+        AHT10.log.info("Temperature: {d:.2} C", .{temperature});
+        delay_ms(2000);
+    }
 }
 
 // /// Enable but don't start the counter
@@ -195,58 +216,3 @@ fn clear_led() void {
 // };
 //
 // const Song = struct { bpm: usize, sequence: []SongItem };
-
-fn init() void {
-    // Configure System clock
-    init_xosc();
-    enable_systick(base_freq);
-    global_uart.initPeripheral(.{ .base_freq = base_freq, .baud = 9600, .remap = false });
-    I2C1.init(.{.remap = true, .base_freq = base_freq, .i2c_freq = i2c_freq});
-    gpio_init();
-}
-
-export fn main() noreturn {
-    init();
-    clear_led();
-    delay_ms(1000);
-    AHT10.init();
-    std.log.info("-------------Initialised-------------", .{});
-    while (true) {
-        const aht10Reading = AHT10.readResultPolling();
-        const humidity = aht10Reading.humidityToFloat();
-        AHT10.log.info("Humidity: {d:.2}%", .{humidity});
-        const temperature = aht10Reading.temperatureToFloat();
-        AHT10.log.info("Temperature: {d:.2} C", .{temperature});
-        delay_ms(2000);
-    }
-
-    // const scale = [_]Scale{ .A, .B, .C, .D, .E, .F, .G };
-    // const bpm = 100;
-    // const interval = Duration{ .fraction = 0x60 };
-    // const octaves = 3;
-    //
-    // while (true) {
-    //     delay_ms(200);
-    //     var octave: i5 = -2;
-    //     while (true) octave_loop: {
-    //         for (scale) |scale_note| {
-    //             if (scale_note == .C) {
-    //                 octave += 1;
-    //             }
-    //             if (scale_note == scale[0] and octave > octaves) {
-    //                 octave = -2;
-    //                 break :octave_loop;
-    //             }
-    //             const item = SongItem{ .duration = interval, .note = .{ .note = scale_note, .octave = octave } }jk;
-    //
-    //             if (item.note) |note| {
-    //                 std.log.info("Playing note {t} octave {d}", .{ note.note, note.octave });
-    //                 note.beep();
-    //             } else {
-    //                 beep_timer(0);
-    //             }
-    //             delay_ms(item.duration.to_us(bpm) / 1000);
-    //         }
-    //     }
-    // }
-}
