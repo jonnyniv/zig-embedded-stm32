@@ -114,7 +114,7 @@ pub fn GPIO(port: GPIOPort) type {
 
         /// Sets up a GPIO pin including speed and ties
         pub fn configurePin(pin: u4, options: Options) void {
-            log.debug("configuring pin {d} mode {t} speed {t}", .{ pin, options.mode, options.speed });
+            log.info("configuring pin {d} mode {t} speed {t}", .{ pin, options.mode, options.speed });
 
             const apb2enr = blk: {
                 var val = regs.RCC.APB2ENR.read();
@@ -493,6 +493,37 @@ pub const SPI1 = struct {
     pub const Self = @This();
     pub const Regs = regs.SPI1;
 
+    const scoped_log = std.log.scoped(.spi);
+    const log = struct {
+        pub fn err(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.err(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn warn(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.warn(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn info(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.info(@typeName(Self) ++ ": " ++ format, args);
+        }
+
+        pub fn debug(
+            comptime format: []const u8,
+            args: anytype,
+        ) void {
+            scoped_log.debug(@typeName(Self) ++ ": " ++ format, args);
+        }
+    };
+
     pub const Options = struct {
         pub const CLKPolarity = enum(u1) {
             idleLow = 0,
@@ -525,23 +556,24 @@ pub const SPI1 = struct {
 
         /// Prescalar is computed 2**(baud_prescalar + 1)
         baudPrescalar: u3,
-        clkPolarity: CLKPolarity,
-        clkPhase: ClkPhase,
-        slaveSelectOutput: SlaveSelectOutput,
-        frameFormat: FrameFormat,
         duplexMode: DuplexMode,
+        clkPolarity: CLKPolarity = .idleLow,
+        clkPhase: ClkPhase = .dataFirst,
+        slaveSelectOutput: SlaveSelectOutput,
+        frameFormat: FrameFormat = .msbFirst,
 
         /// Function Pin RemapPin
         /// SPI1_NSS PA4 PA15
         /// SPI1_SCK PA5 PB3
         /// SPI1_MISO PA6 PB4
         /// SPI1_MOSI PA7 PB5
-        remap: bool,
+        remap: bool = false,
     };
 
     options: Options,
 
     pub fn init(options: Options) Self {
+        log.info("Initialising {any}", .{options});
         // TODO: Configure for generic SPI
         regs.RCC.APB2ENR.modify(.{ .SPI1EN = 1, .AFIOEN = 1 });
 
@@ -595,17 +627,20 @@ pub const SPI1 = struct {
         return Self{ .options = options };
     }
 
-    pub fn write(self: Self, bytes: []u8) void {
+    pub fn write(self: Self, bytes: []const u8) void {
+        log.info("Writing {s}", .{bytes});
         Regs.DR.write(.{ .DR = bytes[0] });
+        log.debug("sending byte 0x{X} ({c})", .{bytes[0], bytes[0]});
         while (Regs.SR.read().TXE == 0) {}
         if (bytes.len > 1) {
             for (bytes[1..]) |byte| {
                 Regs.DR.write(.{ .DR = byte });
+                log.debug("sending byte 0x{X} ({c})", .{byte, byte});
+                while (Regs.SR.read().TXE == 0) {}
                 if (self.options.duplexMode == .fullDuplex) {
                     while (Regs.SR.read().RXNE == 0) {}
                 }
             }
-            while (Regs.SR.read().TXE == 0) {}
         }
         while (Regs.SR.read().BSY == 1) {}
     }

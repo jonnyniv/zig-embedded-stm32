@@ -12,6 +12,7 @@ pub const std_options = std.Options{
     .log_scope_levels = &.{
         .{ .scope = .default, .level = .info },
         .{ .scope = .aht10, .level = .info },
+        .{ .scope = .spi, .level = .info },
     },
     .log_level = .warn,
     .logFn = log,
@@ -114,14 +115,18 @@ export fn main() noreturn {
     clear_led();
     delay_ms(1000);
     AHT10.init();
+    const spi = periphs.SPI1.init(.{.baudPrescalar = 2, .clkPolarity = .idleLow, .duplexMode = .txOnly, .slaveSelectOutput = .enabled});
     std.log.info("-------------Initialised-------------", .{});
+    const msg ="abcdefgh";
 
     while (true) {
-        const aht10Reading = AHT10.readResultPolling();
-        const humidity = aht10Reading.humidityToFloat();
-        AHT10.log.info("Humidity: {d:.2}%", .{humidity});
-        const temperature = aht10Reading.temperatureToFloat();
-        AHT10.log.info("Temperature: {d:.2} C", .{temperature});
+        // const aht10Reading = AHT10.readResultPolling();
+        // const humidity = aht10Reading.humidityToFloat();
+        // AHT10.log.info("Humidity: {d:.2}%", .{humidity});
+        // const temperature = aht10Reading.temperatureToFloat();
+        // AHT10.log.info("Temperature: {d:.2} C", .{temperature});
+        spi.write(msg);
+
         delay_ms(2000);
     }
 }
